@@ -16,7 +16,13 @@ final public class BasisTheoryElements {
     public static var apiKey: String = ""
 
     public static func tokenize(body: TextElementUITextField, apiKey: String, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> Void {
-        let payload = AnyCodable(body.values)
+        // TODO: find way to allow user to decide what the tokenize request looks like. possible option:
+        // 1. allow user to pass in path for dictionary for pulling out the values
+        var bodyValues: [String: Codable] = ["data": body.values["textValue"]]
+        bodyValues["search_indexes"] = ["{{ data }}"]
+        bodyValues["type"] = "token"
+
+        let payload = AnyCodable(bodyValues)
         let apiKeyForTokenize = !BasisTheoryElements.apiKey.isEmpty ? BasisTheoryElements.apiKey : apiKey
         TokenizeAPI.tokenizeWithRequestBuilder(body: payload).addHeader(name: "BT-API-KEY", value: apiKeyForTokenize).execute { result in
             do {
@@ -49,6 +55,7 @@ internal protocol InternalTextElementProtocol {
     var values: [String: String] { get set }
 }
 
+// possibly use this to pull data out of any Element
 extension InternalTextElementProtocol {
     internal func getValues() {
         print("value")
@@ -67,9 +74,7 @@ struct TextElementView: UIViewRepresentable, InternalTextElementProtocol, TextEl
         return input
     }
 
-    func updateUIView(_ uiView: TextElementUITextField, context: Context) {
-        print("updateUIView")
-    }
+    func updateUIView(_ uiView: TextElementUITextField, context: Context) { }
 }
 
 // UIKit
@@ -95,7 +100,7 @@ final public class TextElementUITextField: UITextField, InternalTextElementProto
     
     public override var text: String? {
         set { values["textValue"] = newValue }
-        get { return "" }
+        get { "" }
     }
     
     @objc private func textFieldDidChange() {
