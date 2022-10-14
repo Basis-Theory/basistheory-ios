@@ -99,7 +99,10 @@ final public class TextElementUITextField: UITextField, InternalTextElementProto
     }
     
     public override var text: String? {
-        set { values["textValue"] = newValue }
+        set {
+            values["textValue"] = newValue
+            super.text = newValue
+        }
         get { "" }
     }
     
