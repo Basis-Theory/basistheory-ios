@@ -17,7 +17,8 @@ final public class BasisTheoryElements {
 
     public static func tokenize(body: TextElementUITextField, apiKey: String, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> Void {
         let payload = AnyCodable(body.values)
-        TokenizeAPI.tokenizeWithRequestBuilder(body: payload).addHeader(name: "BT-API-KEY", value: apiKey).execute { result in
+        let apiKeyForTokenize = !BasisTheoryElements.apiKey.isEmpty ? BasisTheoryElements.apiKey : apiKey
+        TokenizeAPI.tokenizeWithRequestBuilder(body: payload).addHeader(name: "BT-API-KEY", value: apiKeyForTokenize).execute { result in
             do {
                 let app = try result.get()
 
@@ -79,6 +80,7 @@ final public class TextElementUITextField: UITextField, InternalTextElementProto
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        subject.send(ElementEvent(type: "ready", complete: true, empty: true, errors: []))
     }
     
     required init?(coder: NSCoder) {
