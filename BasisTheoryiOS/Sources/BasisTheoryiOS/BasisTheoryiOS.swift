@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  iostest
+//  BasisTheoryiOS
 //
 //  Created by Brian Gonzalez on 10/13/22.
 //
@@ -15,14 +15,8 @@ import AnyCodable
 final public class BasisTheoryElements {
     public static var apiKey: String = ""
 
-    public static func tokenize(body: TextElementUITextField, apiKey: String, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> Void {
-        // TODO: find way to allow user to decide what the tokenize request looks like. possible option:
-        // 1. allow user to pass in path for dictionary for pulling out the values
-        var bodyValues: [String: Codable] = ["data": body.values["textValue"]]
-        bodyValues["search_indexes"] = ["{{ data }}"]
-        bodyValues["type"] = "token"
-
-        let payload = AnyCodable(bodyValues)
+    public static func tokenize(body: [String: Any], apiKey: String, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> Void {
+        let payload = AnyCodable(replaceElementRefs(body: body))
         let apiKeyForTokenize = !BasisTheoryElements.apiKey.isEmpty ? BasisTheoryElements.apiKey : apiKey
         TokenizeAPI.tokenizeWithRequestBuilder(body: payload).addHeader(name: "BT-API-KEY", value: apiKeyForTokenize).execute { result in
             do {
@@ -33,6 +27,27 @@ final public class BasisTheoryElements {
                 print(error)
             }
         }
+    }
+    
+    private static func replaceElementRefs(body: [String:Any]) -> [String:Any] {
+        var bodyData = [String: Any]()
+        
+        for (key, val) in body["data"] as! [String:Any] {
+            if let v = val as? TextElementUITextField {
+                bodyData[key] = v.values["textValue"]
+            }
+            if let v = val as? String {
+                bodyData[key] = v
+            }
+        }
+        
+        var result = ["data": bodyData] as [String : Any]
+        
+        result.merge(body) { current, _ in
+            current
+        }
+        
+        return result
     }
 }
 
@@ -103,7 +118,7 @@ final public class TextElementUITextField: UITextField, InternalTextElementProto
             values["textValue"] = newValue
             super.text = newValue
         }
-        get { "" }
+        get { nil }
     }
     
     @objc private func textFieldDidChange() {
