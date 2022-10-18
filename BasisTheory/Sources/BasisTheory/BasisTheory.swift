@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  BasisTheoryiOS
+//  BasisTheory.swift
+//  BasisTheory
 //
 //  Created by Brian Gonzalez on 10/13/22.
 //
