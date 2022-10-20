@@ -1,0 +1,8 @@
+platform :ios, '16.0'
+
+target 'IntegrationTester' do
+  pod 'EarlGreyApp'
+end
+target 'IntegrationTesterUITests' do
+  pod 'EarlGreyTest'
+end

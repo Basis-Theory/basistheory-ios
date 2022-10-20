@@ -1,0 +1,1 @@
+../../../EarlGreyTest/AppFramework/IdlingResources/GREYManagedObjectContextIdlingResource.h

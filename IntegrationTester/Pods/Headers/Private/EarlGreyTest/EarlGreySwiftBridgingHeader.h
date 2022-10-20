@@ -1,0 +1,1 @@
+../../../EarlGreyTest/TestLib/Swift/EarlGreySwiftBridgingHeader.h
