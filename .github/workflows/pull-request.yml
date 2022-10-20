@@ -15,7 +15,7 @@ jobs:
 
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '14.0'
+          xcode-version: '13.2.1'
 
       - name: Testing with IntegrationTester app
         run: exec ./.github/scripts/test_app.sh
