@@ -36,9 +36,7 @@ class ViewController: UIViewController {
             "type": "token"
         ]
 
-        // TODO: insert API key from somewhere else
         let config = Configuration.getConfiguration()
-        print(config)
         BasisTheoryElements.tokenize(body: body, apiKey: config.btApiKey!) { data, error in
             print(data)
         }
