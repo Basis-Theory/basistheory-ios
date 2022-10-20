@@ -60,7 +60,7 @@
 		924576A928FF46C200A01E70 /* IntegrationTesterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationTesterUITests.swift; sourceTree = "<group>"; };
 		924576AB28FF46C200A01E70 /* IntegrationTesterUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationTesterUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		924576B828FF474300A01E70 /* BasisTheory */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BasisTheory; path = ../BasisTheory; sourceTree = "<group>"; };
-		924576BC28FF606C00A01E70 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		924576BC28FF606C00A01E70 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		924576BD28FF6BCA00A01E70 /* libEarlGreyTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEarlGreyTest.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		924576BF28FF6BCA00A01E70 /* libPods-IntegrationTester.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-IntegrationTester.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		924576C529004B8200A01E70 /* Env.Local.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Env.Local.plist; sourceTree = "<group>"; };
