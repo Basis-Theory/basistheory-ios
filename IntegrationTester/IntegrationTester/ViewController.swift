@@ -7,7 +7,7 @@
 
 import UIKit
 import Combine
-import BasisTheory
+import BasisTheoryElements
 
 class ViewController: UIViewController {
     private let lightBackgroundColor : UIColor = UIColor( red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0 )

@@ -1,6 +1,6 @@
 //
-//  BasisTheory.swift
-//  BasisTheory
+//  BasisTheoryElements.swift
+//  BasisTheoryElements
 //
 //  Created by Brian Gonzalez on 10/13/22.
 //
