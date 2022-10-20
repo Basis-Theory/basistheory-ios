@@ -18,6 +18,6 @@ jobs:
           xcode-version: '13.2.1'
 
       - name: Testing with IntegrationTester app
-        run: exec ./.github/scripts/test_app.sh
+        run: exec ./.github/scripts/integration-test.sh
         env:
           DEV_BT_API_KEY: ${{ secrets.DEV_BT_API_KEY }}
