@@ -30,7 +30,11 @@ class ViewController: UIViewController {
             "data": [
                 "name": self.nameTextField,
                 "phoneNumber": self.phoneTextField,
-                "myProp": "myValue"
+                "myProp": "myValue",
+                "object": [
+                    "nestedProp": "nestedValue",
+                    "phoneNumber": self.phoneTextField,
+                ]
             ],
             "search_indexes": ["{{ data.phoneNumber }}"],
             "type": "token"
