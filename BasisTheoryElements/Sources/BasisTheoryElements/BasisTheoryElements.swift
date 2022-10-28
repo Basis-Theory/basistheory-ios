@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import OpenAPIClient
+import BasisTheory
 import AnyCodable
 import Combine
 
