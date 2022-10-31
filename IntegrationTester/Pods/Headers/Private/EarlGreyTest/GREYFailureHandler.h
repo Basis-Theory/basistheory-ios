@@ -1,1 +1,0 @@
-../../../EarlGreyTest/CommonLib/Exceptions/GREYFailureHandler.h

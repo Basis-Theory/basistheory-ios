@@ -1,1 +1,0 @@
-../../../EarlGreyTest/CommonLib/Error/GREYObjectFormatter.h

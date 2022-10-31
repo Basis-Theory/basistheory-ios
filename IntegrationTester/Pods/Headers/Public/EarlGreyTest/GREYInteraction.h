@@ -1,1 +1,0 @@
-../../../EarlGreyTest/AppFramework/Core/GREYInteraction.h

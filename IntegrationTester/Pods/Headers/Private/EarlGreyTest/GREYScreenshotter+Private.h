@@ -1,1 +1,0 @@
-../../../EarlGreyTest/UILib/GREYScreenshotter+Private.h

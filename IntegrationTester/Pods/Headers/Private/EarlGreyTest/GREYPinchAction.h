@@ -1,1 +1,0 @@
-../../../EarlGreyTest/AppFramework/Action/GREYPinchAction.h

@@ -1,1 +1,0 @@
-../../../EarlGreyTest/AppFramework/Matcher/GREYMatchersShorthand.h

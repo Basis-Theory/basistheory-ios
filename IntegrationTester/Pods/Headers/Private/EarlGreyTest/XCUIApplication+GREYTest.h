@@ -1,1 +1,0 @@
-../../../EarlGreyTest/TestLib/EarlGreyImpl/XCUIApplication+GREYTest.h

@@ -1,1 +1,0 @@
-../../../EarlGreyTest/AppFramework/Additions/UIWindow+GREYApp.h

@@ -1,1 +1,0 @@
-../../../EarlGreyTest/CommonLib/Provider/GREYProvider.h

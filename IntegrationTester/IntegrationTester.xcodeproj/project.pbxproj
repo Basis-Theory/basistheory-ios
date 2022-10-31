@@ -21,7 +21,9 @@
 		924576CA2900515B00A01E70 /* Env.CI.plist in Resources */ = {isa = PBXBuildFile; fileRef = 924576C92900515B00A01E70 /* Env.CI.plist */; };
 		924576CC2900519900A01E70 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924576CB2900519900A01E70 /* Configuration.swift */; };
 		926E39FB290209D3007A64E1 /* BasisTheoryElements in Frameworks */ = {isa = PBXBuildFile; productRef = 926E39FA290209D3007A64E1 /* BasisTheoryElements */; };
-		BFBC376AB93FFD2C40F5E1E7 /* libPods-IntegrationTesterUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6702461FEA1D9869379CA7FC /* libPods-IntegrationTesterUITests.a */; };
+		9288699529105E0D004E75E3 /* EarlGrey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9288699429105E0D004E75E3 /* EarlGrey.swift */; };
+		DD631B106CC700BA3DE531B2 /* Pods_IntegrationTester.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCF3CF5204D270301AC5B7A8 /* Pods_IntegrationTester.framework */; };
+		FFFA499C57F01499E2497598 /* Pods_IntegrationTesterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7609624AD01C6F15A46869 /* Pods_IntegrationTesterUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,7 +46,7 @@
 /* Begin PBXFileReference section */
 		0ABCA439638AF2CE853D88F0 /* Pods-IntegrationTesterUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntegrationTesterUITests.release.xcconfig"; path = "Target Support Files/Pods-IntegrationTesterUITests/Pods-IntegrationTesterUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1BC339317CC68C3EFDD88D83 /* Pods-IntegrationTesterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntegrationTesterUITests.debug.xcconfig"; path = "Target Support Files/Pods-IntegrationTesterUITests/Pods-IntegrationTesterUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		6702461FEA1D9869379CA7FC /* libPods-IntegrationTesterUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IntegrationTesterUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D7609624AD01C6F15A46869 /* Pods_IntegrationTesterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IntegrationTesterUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8978E7C6996DC0E12EE348A5 /* libPods-IntegrationTester.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IntegrationTester.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9245768528FF46C100A01E70 /* IntegrationTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IntegrationTester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9245768828FF46C100A01E70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -61,13 +63,16 @@
 		924576AB28FF46C200A01E70 /* IntegrationTesterUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationTesterUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		924576BC28FF606C00A01E70 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		924576BD28FF6BCA00A01E70 /* libEarlGreyTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEarlGreyTest.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		924576BF28FF6BCA00A01E70 /* libPods-IntegrationTester.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-IntegrationTester.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		924576C529004B8200A01E70 /* Env.Local.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Env.Local.plist; sourceTree = "<group>"; };
 		924576C729004C4D00A01E70 /* Env.plist.example */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Env.plist.example; sourceTree = "<group>"; };
 		924576C92900515B00A01E70 /* Env.CI.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Env.CI.plist; sourceTree = "<group>"; };
 		924576CB2900519900A01E70 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		926E39F9290209C3007A64E1 /* BasisTheoryElements */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BasisTheoryElements; path = ../BasisTheoryElements; sourceTree = "<group>"; };
+		9288699229103D15004E75E3 /* libEarlGreyTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEarlGreyTest.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9288699429105E0D004E75E3 /* EarlGrey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarlGrey.swift; sourceTree = "<group>"; };
+		9288699D291065C4004E75E3 /* EarlGrey2BridgingHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EarlGrey2BridgingHeader.h; sourceTree = "<group>"; };
 		B51C61EE4217BFF8CFD1298B /* Pods-IntegrationTester.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntegrationTester.release.xcconfig"; path = "Target Support Files/Pods-IntegrationTester/Pods-IntegrationTester.release.xcconfig"; sourceTree = "<group>"; };
+		CCF3CF5204D270301AC5B7A8 /* Pods_IntegrationTester.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IntegrationTester.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFC24AA4D8C3339579843A92 /* Pods-IntegrationTester.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntegrationTester.debug.xcconfig"; path = "Target Support Files/Pods-IntegrationTester/Pods-IntegrationTester.debug.xcconfig"; sourceTree = "<group>"; };
 		DCBF495F76F3088914EC34CB /* EarlGrey.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EarlGrey.framework; path = Pods/EarlGrey/EarlGrey/EarlGrey.framework; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -78,6 +83,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				926E39FB290209D3007A64E1 /* BasisTheoryElements in Frameworks */,
+				DD631B106CC700BA3DE531B2 /* Pods_IntegrationTester.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,7 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFBC376AB93FFD2C40F5E1E7 /* libPods-IntegrationTesterUITests.a in Frameworks */,
+				FFFA499C57F01499E2497598 /* Pods_IntegrationTesterUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,8 +158,10 @@
 		924576A828FF46C200A01E70 /* IntegrationTesterUITests */ = {
 			isa = PBXGroup;
 			children = (
+				9288699D291065C4004E75E3 /* EarlGrey2BridgingHeader.h */,
 				924576A928FF46C200A01E70 /* IntegrationTesterUITests.swift */,
 				924576AB28FF46C200A01E70 /* IntegrationTesterUITestsLaunchTests.swift */,
+				9288699429105E0D004E75E3 /* EarlGrey.swift */,
 			);
 			path = IntegrationTesterUITests;
 			sourceTree = "<group>";
@@ -161,11 +169,12 @@
 		924576B928FF475100A01E70 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9288699229103D15004E75E3 /* libEarlGreyTest.a */,
 				924576BD28FF6BCA00A01E70 /* libEarlGreyTest.a */,
-				924576BF28FF6BCA00A01E70 /* libPods-IntegrationTester.a */,
 				DCBF495F76F3088914EC34CB /* EarlGrey.framework */,
 				8978E7C6996DC0E12EE348A5 /* libPods-IntegrationTester.a */,
-				6702461FEA1D9869379CA7FC /* libPods-IntegrationTesterUITests.a */,
+				CCF3CF5204D270301AC5B7A8 /* Pods_IntegrationTester.framework */,
+				7D7609624AD01C6F15A46869 /* Pods_IntegrationTesterUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -232,6 +241,7 @@
 				924576A128FF46C200A01E70 /* Sources */,
 				924576A228FF46C200A01E70 /* Frameworks */,
 				924576A328FF46C200A01E70 /* Resources */,
+				96A2C56E15D3F7E28830FA4E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -378,6 +388,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		96A2C56E15D3F7E28830FA4E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-IntegrationTesterUITests/Pods-IntegrationTesterUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-IntegrationTesterUITests/Pods-IntegrationTesterUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IntegrationTesterUITests/Pods-IntegrationTesterUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -406,6 +433,7 @@
 			files = (
 				924576AC28FF46C200A01E70 /* IntegrationTesterUITestsLaunchTests.swift in Sources */,
 				924576AA28FF46C200A01E70 /* IntegrationTesterUITests.swift in Sources */,
+				9288699529105E0D004E75E3 /* EarlGrey.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -667,10 +695,17 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/EarlGreyTest\"",
+					"\"${PODS_ROOT}/Headers/Public/eDistantObject\"",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = basistheory.IntegrationTesterUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = IntegrationTesterUITests/EarlGrey2BridgingHeader.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = IntegrationTester;
@@ -685,10 +720,17 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/EarlGreyTest\"",
+					"\"${PODS_ROOT}/Headers/Public/eDistantObject\"",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = basistheory.IntegrationTesterUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = IntegrationTesterUITests/EarlGrey2BridgingHeader.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = IntegrationTester;

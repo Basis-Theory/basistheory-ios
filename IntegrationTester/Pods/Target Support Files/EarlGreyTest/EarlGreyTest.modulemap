@@ -1,0 +1,6 @@
+framework module EarlGreyTest {
+  umbrella header "EarlGreyTest-umbrella.h"
+
+  export *
+  module * { export * }
+}

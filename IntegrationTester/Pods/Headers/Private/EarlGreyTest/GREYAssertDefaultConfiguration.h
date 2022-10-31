@@ -1,1 +1,0 @@
-../../../EarlGreyTest/TestLib/Assertion/GREYAssertDefaultConfiguration.h

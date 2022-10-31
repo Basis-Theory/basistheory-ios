@@ -1,1 +1,0 @@
-../../../EarlGreyTest/AppFramework/Config/GREYAppConfiguration.h

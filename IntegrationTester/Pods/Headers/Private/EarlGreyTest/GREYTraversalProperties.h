@@ -1,1 +1,0 @@
-../../../EarlGreyTest/UILib/Traversal/GREYTraversalProperties.h

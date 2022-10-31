@@ -51,6 +51,9 @@ class ViewController: UIViewController {
 
         setStyles(textField: nameTextField, placeholder: "Name")
         setStyles(textField: phoneTextField, placeholder: "Phone Number")
+        
+        nameTextField.accessibilityIdentifier = "Name Textfield"
+        phoneTextField.accessibilityIdentifier = "Phone Number Textfield"
 
         nameTextField.subject.sink { completion in
             print(completion)

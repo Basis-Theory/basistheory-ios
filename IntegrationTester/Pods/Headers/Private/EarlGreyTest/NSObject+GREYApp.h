@@ -1,1 +1,0 @@
-../../../EarlGreyTest/AppFramework/Additions/NSObject+GREYApp.h
