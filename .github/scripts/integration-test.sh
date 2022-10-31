@@ -15,7 +15,7 @@ cat <<EOT > ./IntegrationTester/Env.Local.plist
 EOT
 
 xcodebuild clean test DEV_BT_API_KEY=${DEV_BT_API_KEY} \
-    -workspace ./IntegrationTester/IntegrationTester.xcworkspace \
+    -project ./IntegrationTester/IntegrationTester.xcodeproj \
     -scheme IntegrationTester-CI \
     -configuration Debug \
     -destination platform="iOS Simulator,OS=16.1,name=iPhone 14 Pro" \

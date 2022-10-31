@@ -28,28 +28,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9245769A28FF46C200A01E70"
-               BuildableName = "IntegrationTesterTests.xctest"
-               BlueprintName = "IntegrationTesterTests"
-               ReferencedContainer = "container:IntegrationTester.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "924576A428FF46C200A01E70"
-               BuildableName = "IntegrationTesterUITests.xctest"
-               BlueprintName = "IntegrationTesterUITests"
-               ReferencedContainer = "container:IntegrationTester.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -72,13 +50,6 @@
             ReferencedContainer = "container:IntegrationTester.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "EarlGreyStandaloneMode"
-            value = "1"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

@@ -28,18 +28,14 @@ final class IntegrationTesterUITests: XCTestCase {
         app.launch()
         
         XCUIDevice.shared.orientation = .portrait
-        
-        let nameTextField = app.textFields["name"]
-        nameTextField.tap()
-        nameTextField.typeText("Drewsue Webuino")
-        XCTAssertEqual(nameTextField.value as! String, "Drewsue Webuino")
 
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         
-//        EarlGrey.selectElement(with: grey_keyWindow()).perform(grey_tap())
-//        EarlGrey.selectElement(with: grey_accessibilityID("Name")).perform(grey_typeText("Drewsue Webuino")).assert(grey_anyTextFieldTextEquals("Drewsue Webuino"))
-        
-//        EarlGrey.selectElement(with: grey_accessibilityID("Top Button")).assert(grey_anyTextFieldTextEquals("Drewsue Webuino"))
+        let expectedText = "Drewsue Webuino"
+        let nameTextField = app.textFields["name"]
+        nameTextField.tap()
+        nameTextField.typeText(expectedText)
+        XCTAssertEqual(nameTextField.value as! String, expectedText)
     }
 
     func testLaunchPerformance() throws {

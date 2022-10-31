@@ -1,6 +1,0 @@
-framework module eDistantObject {
-  umbrella header "eDistantObject-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -1,2 +1,0 @@
-${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EarlGreyTest.framework
-${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/eDistantObject.framework
