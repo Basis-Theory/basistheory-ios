@@ -22,6 +22,7 @@
 		924576CC2900519900A01E70 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924576CB2900519900A01E70 /* Configuration.swift */; };
 		926E39FB290209D3007A64E1 /* BasisTheoryElements in Frameworks */ = {isa = PBXBuildFile; productRef = 926E39FA290209D3007A64E1 /* BasisTheoryElements */; };
 		9288699529105E0D004E75E3 /* EarlGrey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9288699429105E0D004E75E3 /* EarlGrey.swift */; };
+		9288699F291076E5004E75E3 /* BasisTheoryElements in Frameworks */ = {isa = PBXBuildFile; productRef = 9288699E291076E5004E75E3 /* BasisTheoryElements */; };
 		DD631B106CC700BA3DE531B2 /* Pods_IntegrationTester.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCF3CF5204D270301AC5B7A8 /* Pods_IntegrationTester.framework */; };
 		FFFA499C57F01499E2497598 /* Pods_IntegrationTesterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7609624AD01C6F15A46869 /* Pods_IntegrationTesterUITests.framework */; };
 /* End PBXBuildFile section */
@@ -99,6 +100,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFFA499C57F01499E2497598 /* Pods_IntegrationTesterUITests.framework in Frameworks */,
+				9288699F291076E5004E75E3 /* BasisTheoryElements in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,6 +251,9 @@
 				924576A728FF46C200A01E70 /* PBXTargetDependency */,
 			);
 			name = IntegrationTesterUITests;
+			packageProductDependencies = (
+				9288699E291076E5004E75E3 /* BasisTheoryElements */,
+			);
 			productName = IntegrationTesterUITests;
 			productReference = 924576A528FF46C200A01E70 /* IntegrationTesterUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -780,6 +785,10 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		926E39FA290209D3007A64E1 /* BasisTheoryElements */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BasisTheoryElements;
+		};
+		9288699E291076E5004E75E3 /* BasisTheoryElements */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BasisTheoryElements;
 		};

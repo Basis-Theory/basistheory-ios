@@ -15,6 +15,8 @@
 //
 
 import Foundation
+import BasisTheoryElements
+
 public func GREYAssert(
   _ expression: @autoclosure () -> Bool,
   _ reason: @autoclosure () -> String = "Assert on expression Failed"
@@ -251,4 +253,42 @@ extension GREYInteraction {
   ) -> Self {
     return self.__usingSearch(action, onElementWith: matcher)
   }
+}
+
+public func grey_accessibilityLabelContains(text subString: String, _ ignoreCase: Bool = true) -> GREYMatcher {
+    let matches: GREYMatchesBlock = { (element: Any) -> Bool in
+        let viewElement = element as? UIView
+        guard let label: String = viewElement?.accessibilityLabel else { return false }
+        return ignoreCase ? label.localizedCaseInsensitiveContains(subString) : label.contains(subString)
+    }
+    
+    let description: GREYDescribeToBlock = { (description: GREYDescription!) -> Void in
+        guard let description = description else {
+            return
+        }
+        let descriptionText:String = "accessibility label contains text " + subString + " with case ignorance " + ignoreCase.description
+        description.appendText(descriptionText)
+    }
+    
+    return GREYElementMatcherBlock.init(matchesBlock: matches, descriptionBlock: description)
+}
+
+
+let grey_anyTextFieldTextEquals = { (text: String) -> GREYAssertionBlock in
+    return GREYAssertionBlock.assertion(withName: "Assert Alpha Equal",
+                                        assertionBlockWithError: {
+        (element: Any?, errorOrNil: UnsafeMutablePointer<NSError?>?) -> Bool in
+        guard let view = element! as! UIView as UIView? else {
+            let errorInfo = [NSLocalizedDescriptionKey:
+                                NSLocalizedString("Element is not a UITextfield",
+                                                  comment: "")]
+            errorOrNil?.pointee =
+            NSError(domain: kGREYInteractionErrorDomain,
+                    code: 2,
+                    userInfo: errorInfo)
+            return false
+        }
+
+        return view.alpha == 1.0
+    })
 }

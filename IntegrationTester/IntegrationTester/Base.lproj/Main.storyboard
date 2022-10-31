@@ -20,6 +20,7 @@
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kQp-jO-Cdh" customClass="TextElementUITextField" customModule="BasisTheoryElements">
                                 <rect key="frame" x="84" y="123" width="222" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="name"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -54,6 +55,7 @@
                     <connections>
                         <outlet property="nameTextField" destination="kQp-jO-Cdh" id="iSI-8W-ola"/>
                         <outlet property="phoneTextField" destination="FzU-Vy-Q9j" id="IOw-Un-bDm"/>
+                        <outlet property="topButton" destination="a8E-nw-DFA" id="Iau-Mw-g6d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     private let darkBackgroundColor : UIColor = UIColor( red: 200/255, green: 200/255, blue: 200/255, alpha: 1.0 )
     private var cancellables = Set<AnyCancellable>()
 
+    @IBOutlet weak var topButton: UIButton!
     @IBOutlet private weak var nameTextField: TextElementUITextField!
     @IBOutlet private weak var phoneTextField: TextElementUITextField!
     
@@ -52,8 +53,9 @@ class ViewController: UIViewController {
         setStyles(textField: nameTextField, placeholder: "Name")
         setStyles(textField: phoneTextField, placeholder: "Phone Number")
         
-        nameTextField.accessibilityIdentifier = "Name Textfield"
-        phoneTextField.accessibilityIdentifier = "Phone Number Textfield"
+//        nameTextField.accessibilityIdentifier = "Name"
+//        phoneTextField.accessibilityIdentifier = "Phone Number"
+//        topButton.accessibilityIdentifier = "Top Button"
 
         nameTextField.subject.sink { completion in
             print(completion)
