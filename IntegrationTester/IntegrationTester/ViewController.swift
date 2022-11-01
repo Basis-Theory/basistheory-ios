@@ -14,9 +14,9 @@ class ViewController: UIViewController {
     private let darkBackgroundColor : UIColor = UIColor( red: 200/255, green: 200/255, blue: 200/255, alpha: 1.0 )
     private var cancellables = Set<AnyCancellable>()
 
-    @IBOutlet weak var topButton: UIButton!
     @IBOutlet private weak var nameTextField: TextElementUITextField!
     @IBOutlet private weak var phoneTextField: TextElementUITextField!
+    @IBOutlet weak var output: UILabel!
     
     @IBAction func printToConsoleLog(_ sender: Any) {
         nameTextField.text = "Tom Cruise"
@@ -43,7 +43,10 @@ class ViewController: UIViewController {
 
         let config = Configuration.getConfiguration()
         BasisTheoryElements.tokenize(body: body, apiKey: config.btApiKey!) { data, error in
-            print(data)
+            let stringifiedData = String(data: try! JSONSerialization.data(withJSONObject: data!.value as! [String: Any], options: .prettyPrinted), encoding: .utf8)!
+
+            self.output.text = stringifiedData
+            print(stringifiedData)
         }
     }
 
@@ -52,10 +55,6 @@ class ViewController: UIViewController {
 
         setStyles(textField: nameTextField, placeholder: "Name")
         setStyles(textField: phoneTextField, placeholder: "Phone Number")
-        
-//        nameTextField.accessibilityIdentifier = "Name"
-//        phoneTextField.accessibilityIdentifier = "Phone Number"
-//        topButton.accessibilityIdentifier = "Top Button"
 
         nameTextField.subject.sink { completion in
             print(completion)

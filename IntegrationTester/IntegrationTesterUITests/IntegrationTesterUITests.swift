@@ -27,8 +27,6 @@ final class IntegrationTesterUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
         
-        XCUIDevice.shared.orientation = .portrait
-
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         
         let expectedText = "Drewsue Webuino"

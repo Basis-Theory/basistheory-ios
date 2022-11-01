@@ -18,44 +18,51 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kQp-jO-Cdh" customClass="TextElementUITextField" customModule="BasisTheoryElements">
-                                <rect key="frame" x="84" y="123" width="222" height="34"/>
+                                <rect key="frame" x="41" y="73" width="309" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <accessibility key="accessibilityConfiguration" identifier="name"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a8E-nw-DFA">
-                                <rect key="frame" x="84" y="326" width="222" height="88"/>
+                                <rect key="frame" x="190" y="207" width="160" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Set text and print from name and phone number textfields"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Set Text"/>
                                 <connections>
                                     <action selector="printToConsoleLog:" destination="BYZ-38-t0r" eventType="touchUpInside" id="h1I-Fd-2hT"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XrL-EZ-kQu">
-                                <rect key="frame" x="84" y="479" width="222" height="57"/>
+                                <rect key="frame" x="41" y="207" width="141" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Tokenize name and phone number"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Tokenize"/>
                                 <connections>
                                     <action selector="tokenize:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OfW-Te-CsA"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FzU-Vy-Q9j" customClass="TextElementUITextField" customModule="BasisTheoryElements">
-                                <rect key="frame" x="84" y="205" width="222" height="34"/>
+                                <rect key="frame" x="41" y="137" width="309" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pKx-JL-Nc4">
+                                <rect key="frame" x="41" y="289" width="309" height="521"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
                         <outlet property="nameTextField" destination="kQp-jO-Cdh" id="iSI-8W-ola"/>
+                        <outlet property="output" destination="pKx-JL-Nc4" id="ZKn-lB-Gf7"/>
                         <outlet property="phoneTextField" destination="FzU-Vy-Q9j" id="IOw-Un-bDm"/>
-                        <outlet property="topButton" destination="a8E-nw-DFA" id="Iau-Mw-g6d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
