@@ -12,12 +12,14 @@ import Combine
 
 final public class BasisTheoryElements {
     public static var apiKey: String = ""
+    public static var basePath: String = "https://api.basistheory.com"
 
     public static func tokenize(body: [String: Any], apiKey: String, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> Void {
         var mutableBody = body
         replaceElementRefs(body: &mutableBody)
 
         let apiKeyForTokenize = !BasisTheoryElements.apiKey.isEmpty ? BasisTheoryElements.apiKey : apiKey
+        BasisTheoryAPI.basePath = basePath
 
         TokenizeAPI.tokenizeWithRequestBuilder(body: AnyCodable(mutableBody)).addHeader(name: "BT-API-KEY", value: apiKeyForTokenize).execute { result in
             do {

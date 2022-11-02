@@ -15,26 +15,26 @@ class ViewController: UIViewController {
     private var cancellables = Set<AnyCancellable>()
 
     @IBOutlet private weak var nameTextField: TextElementUITextField!
-    @IBOutlet private weak var phoneTextField: TextElementUITextField!
-    @IBOutlet weak var output: UILabel!
+    @IBOutlet weak var output: UITextView!
+    @IBOutlet private weak var phoneNumberTextField: TextElementUITextField!
     
     @IBAction func printToConsoleLog(_ sender: Any) {
         nameTextField.text = "Tom Cruise"
-        phoneTextField.text = "555-123-4567"
+        phoneNumberTextField.text = "555-123-4567"
         
         print("nameTextField.text: \(nameTextField.text)")
-        print("phoneTextField.text: \(phoneTextField.text)")
+        print("phoneTextField.text: \(phoneNumberTextField.text)")
     }
     
     @IBAction func tokenize(_ sender: Any) {
         let body: [String: Any] = [
             "data": [
                 "name": self.nameTextField,
-                "phoneNumber": self.phoneTextField,
+                "phoneNumber": self.phoneNumberTextField,
                 "myProp": "myValue",
                 "object": [
                     "nestedProp": "nestedValue",
-                    "phoneNumber": self.phoneTextField,
+                    "phoneNumber": self.phoneNumberTextField,
                 ]
             ],
             "search_indexes": ["{{ data.phoneNumber }}"],
@@ -42,6 +42,7 @@ class ViewController: UIViewController {
         ]
 
         let config = Configuration.getConfiguration()
+        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
         BasisTheoryElements.tokenize(body: body, apiKey: config.btApiKey!) { data, error in
             let stringifiedData = String(data: try! JSONSerialization.data(withJSONObject: data!.value as! [String: Any], options: .prettyPrinted), encoding: .utf8)!
 
@@ -54,7 +55,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         setStyles(textField: nameTextField, placeholder: "Name")
-        setStyles(textField: phoneTextField, placeholder: "Phone Number")
+        setStyles(textField: phoneNumberTextField, placeholder: "Phone Number")
 
         nameTextField.subject.sink { completion in
             print(completion)
