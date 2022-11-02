@@ -15,12 +15,12 @@ struct EnvConfig: Decodable {
     }
 }
 
+extension String: Error {}
+
 class Configuration {
     static public func getConfiguration() -> EnvConfig {
-        let resource = ProcessInfo.processInfo.environment["CI"] == "1" ? "Env.CI" : "Env.Local"
-
         do {
-            let url = Bundle(for: Configuration.self).path(forResource: resource, ofType: "plist")!
+            let url = Bundle(for: Configuration.self).path(forResource: "Env", ofType: "plist")!
             let data = FileManager.default.contents(atPath: url)!
             
             return try PropertyListDecoder().decode(EnvConfig.self, from: data)

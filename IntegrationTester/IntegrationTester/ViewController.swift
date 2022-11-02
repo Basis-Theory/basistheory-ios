@@ -40,7 +40,7 @@ class ViewController: UIViewController {
             "search_indexes": ["{{ data.phoneNumber }}"],
             "type": "token"
         ]
-
+        
         let config = Configuration.getConfiguration()
         BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
         BasisTheoryElements.tokenize(body: body, apiKey: config.btApiKey!) { data, error in

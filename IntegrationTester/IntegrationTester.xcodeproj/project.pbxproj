@@ -15,20 +15,17 @@
 		9245769528FF46C200A01E70 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9245769328FF46C200A01E70 /* LaunchScreen.storyboard */; };
 		924576A028FF46C200A01E70 /* TextElementUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9245769F28FF46C200A01E70 /* TextElementUITextFieldTests.swift */; };
 		924576AA28FF46C200A01E70 /* TextElementUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924576A928FF46C200A01E70 /* TextElementUITextFieldTests.swift */; };
-		924576C629004B8200A01E70 /* Env.Local.plist in Resources */ = {isa = PBXBuildFile; fileRef = 924576C529004B8200A01E70 /* Env.Local.plist */; };
 		924576C829004C4D00A01E70 /* Env.plist.example in Resources */ = {isa = PBXBuildFile; fileRef = 924576C729004C4D00A01E70 /* Env.plist.example */; };
-		924576CA2900515B00A01E70 /* Env.CI.plist in Resources */ = {isa = PBXBuildFile; fileRef = 924576C92900515B00A01E70 /* Env.CI.plist */; };
 		924576CC2900519900A01E70 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924576CB2900519900A01E70 /* Configuration.swift */; };
 		926E39FB290209D3007A64E1 /* BasisTheoryElements in Frameworks */ = {isa = PBXBuildFile; productRef = 926E39FA290209D3007A64E1 /* BasisTheoryElements */; };
 		928869A129118B88004E75E3 /* XCTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928869A029118B88004E75E3 /* XCTestExtensions.swift */; };
 		928869A229118DC4004E75E3 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924576CB2900519900A01E70 /* Configuration.swift */; };
 		928869A42911B475004E75E3 /* BasisTheoryElements in Frameworks */ = {isa = PBXBuildFile; productRef = 928869A32911B475004E75E3 /* BasisTheoryElements */; };
-		928869A52911B560004E75E3 /* Env.CI.plist in Resources */ = {isa = PBXBuildFile; fileRef = 924576C92900515B00A01E70 /* Env.CI.plist */; };
-		928869A62911B560004E75E3 /* Env.CI.plist in Resources */ = {isa = PBXBuildFile; fileRef = 924576C92900515B00A01E70 /* Env.CI.plist */; };
 		928869A72911B564004E75E3 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924576CB2900519900A01E70 /* Configuration.swift */; };
-		928869A82911B568004E75E3 /* Env.Local.plist in Resources */ = {isa = PBXBuildFile; fileRef = 924576C529004B8200A01E70 /* Env.Local.plist */; };
-		928869A92911B568004E75E3 /* Env.Local.plist in Resources */ = {isa = PBXBuildFile; fileRef = 924576C529004B8200A01E70 /* Env.Local.plist */; };
 		928869AB2912C20E004E75E3 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928869AA2912C20E004E75E3 /* Utils.swift */; };
+		92C3019629132287009F8D92 /* Env.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92C3019529132287009F8D92 /* Env.plist */; };
+		92C3019729132287009F8D92 /* Env.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92C3019529132287009F8D92 /* Env.plist */; };
+		92C3019829132287009F8D92 /* Env.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92C3019529132287009F8D92 /* Env.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,14 +59,13 @@
 		924576A528FF46C200A01E70 /* IntegrationTesterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntegrationTesterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		924576A928FF46C200A01E70 /* TextElementUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextElementUITextFieldTests.swift; sourceTree = "<group>"; };
 		924576BD28FF6BCA00A01E70 /* libEarlGreyTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEarlGreyTest.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		924576C529004B8200A01E70 /* Env.Local.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Env.Local.plist; sourceTree = "<group>"; };
 		924576C729004C4D00A01E70 /* Env.plist.example */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Env.plist.example; sourceTree = "<group>"; };
-		924576C92900515B00A01E70 /* Env.CI.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Env.CI.plist; sourceTree = "<group>"; };
 		924576CB2900519900A01E70 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		926E39F9290209C3007A64E1 /* BasisTheoryElements */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BasisTheoryElements; path = ../BasisTheoryElements; sourceTree = "<group>"; };
 		9288699229103D15004E75E3 /* libEarlGreyTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEarlGreyTest.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		928869A029118B88004E75E3 /* XCTestExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExtensions.swift; sourceTree = "<group>"; };
 		928869AA2912C20E004E75E3 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		92C3019529132287009F8D92 /* Env.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Env.plist; sourceTree = "<group>"; };
 		DCBF495F76F3088914EC34CB /* EarlGrey.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EarlGrey.framework; path = Pods/EarlGrey/EarlGrey/EarlGrey.framework; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -103,11 +99,10 @@
 		9245767C28FF46C100A01E70 = {
 			isa = PBXGroup;
 			children = (
+				92C3019529132287009F8D92 /* Env.plist */,
 				926E39F9290209C3007A64E1 /* BasisTheoryElements */,
 				924576CB2900519900A01E70 /* Configuration.swift */,
-				924576C92900515B00A01E70 /* Env.CI.plist */,
 				924576C729004C4D00A01E70 /* Env.plist.example */,
-				924576C529004B8200A01E70 /* Env.Local.plist */,
 				9245768728FF46C100A01E70 /* IntegrationTester */,
 				9245769E28FF46C200A01E70 /* IntegrationTesterTests */,
 				924576A828FF46C200A01E70 /* IntegrationTesterUITests */,
@@ -278,12 +273,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				924576C629004B8200A01E70 /* Env.Local.plist in Resources */,
 				9245769528FF46C200A01E70 /* LaunchScreen.storyboard in Resources */,
 				9245769228FF46C200A01E70 /* Assets.xcassets in Resources */,
 				924576C829004C4D00A01E70 /* Env.plist.example in Resources */,
 				9245769028FF46C100A01E70 /* Main.storyboard in Resources */,
-				924576CA2900515B00A01E70 /* Env.CI.plist in Resources */,
+				92C3019629132287009F8D92 /* Env.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,8 +285,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				928869A62911B560004E75E3 /* Env.CI.plist in Resources */,
-				928869A82911B568004E75E3 /* Env.Local.plist in Resources */,
+				92C3019729132287009F8D92 /* Env.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,8 +293,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				928869A52911B560004E75E3 /* Env.CI.plist in Resources */,
-				928869A92911B568004E75E3 /* Env.Local.plist in Resources */,
+				92C3019829132287009F8D92 /* Env.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,6 +583,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
