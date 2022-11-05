@@ -15,7 +15,7 @@ jobs:
         with:
           repository: Basis-Theory/basistheory-ios-example
           token: ${{ secrets.BT_IOS_EXAMPLE_PAT }}
-          args: git config submodule.BasisTheoryiOS.branch ${{ github.base_ref }}
+          args: git config submodule.BasisTheoryiOS.branch ${{ github.head_ref }}
 
       - name: Checkout ios example submodule
         run: git submodule update --init --recursive
@@ -25,6 +25,6 @@ jobs:
           xcode-version: '14.1.0'
 
       - name: Testing with IntegrationTester app
-        run: exec ./.github/scripts/integration-test.sh
+        run: exec ./BasisTheoryiOS/.github/scripts/integration-test.sh
         env:
           DEV_BT_API_KEY: ${{ secrets.DEV_BT_API_KEY }}
