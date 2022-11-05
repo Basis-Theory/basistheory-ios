@@ -1,8 +1,8 @@
 name: Pull Request
 
 on:
-  :
-    branches:pull_request
+  pull_request:
+    branches:
     - master
 
 jobs:
