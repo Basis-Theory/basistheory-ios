@@ -15,10 +15,10 @@ jobs:
         with:
           repository: Basis-Theory/basistheory-ios-example
           token: ${{ secrets.BT_IOS_EXAMPLE_PAT }}
-          args: git config submodule.BasisTheoryiOS.branch ${{ github.head_ref }}
+          submodules: recursive
 
       - name: Checkout ios example submodule
-        run: git submodule update --init --recursive
+        run: git config submodule.BasisTheoryiOS.branch ${{ github.head_ref }} && git submodule update --init --recursive
 
       - uses: maxim-lobanov/setup-xcode@v1
         with:
