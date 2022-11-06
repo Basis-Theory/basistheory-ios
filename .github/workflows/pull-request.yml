@@ -19,14 +19,11 @@ jobs:
           submodules: recursive
 
       - name: Checkout ios example submodule
-        run: git config submodule.BasisTheoryiOS.branch ${{ github.head_ref }} && git submodule update --init --recursive
+        run: git config submodule.BasisTheoryiOS.branch ${{ github.head_ref }} && git submodule update --remote
 
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: '14.1.0'
-
-      - name: Testing
-        run: ls -al
 
       - name: Testing with IntegrationTester app
         run: exec ./BasisTheoryiOS/.github/scripts/integration-test.sh
