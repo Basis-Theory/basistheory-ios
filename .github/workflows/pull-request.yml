@@ -18,10 +18,10 @@ jobs:
           token: ${{ secrets.BT_IOS_EXAMPLE_PAT }}
           submodules: true
 
-     - name: Git Sumbodule Update
-       run: |
-        git pull --recurse-submodules
-        git submodule update --remote --recursive
+      - name: Git Sumbodule Update
+        run: |
+         git pull --recurse-submodules
+         git submodule update --remote --recursive
 
       - uses: maxim-lobanov/setup-xcode@v1
         with:
