@@ -16,6 +16,7 @@ jobs:
           repository: Basis-Theory/basistheory-ios-example
           ref: adds-integration-tester
           token: ${{ secrets.BT_IOS_EXAMPLE_PAT }}
+          submodules: true
 
       - name: Checkout ios example submodule
         run: |
