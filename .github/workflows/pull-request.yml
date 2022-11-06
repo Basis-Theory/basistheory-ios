@@ -19,7 +19,11 @@ jobs:
           submodules: recursive
 
       - name: Checkout ios example submodule
-        run: cd BasisTheoryiOS && git checkout ${{ github.head_ref }} && cd ..
+        run: |
+          git config -f .gitmodules submodule.BasisTheoryiOS.url git@github.com:Basis-Theory/basistheory-ios-example.git
+          git config -f .gitmodules submodule.BasisTheoryiOS.branch ${{ github.head_ref }}
+          git submodule sync
+          git submodule update --init --recursive --remote
 
       - uses: maxim-lobanov/setup-xcode@v1
         with:
