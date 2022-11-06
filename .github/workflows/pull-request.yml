@@ -21,6 +21,7 @@ jobs:
       - name: Git Sumbodule Update
         run: |
          git pull --recurse-submodules
+         git config submodule.BasisTheoryiOS.branch ${{ github.head_ref }}
          git submodule update --remote --recursive
 
       - uses: maxim-lobanov/setup-xcode@v1
