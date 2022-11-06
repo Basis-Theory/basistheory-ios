@@ -21,6 +21,7 @@ jobs:
       - name: Git Sumbodule Update
         run: |
          git pull --recurse-submodules
+         git ls-remote --heads git@github.com:Basis-Theory/basistheory-ios.git
          git config submodule.BasisTheoryiOS.branch ${{ github.head_ref }}
          git submodule update --init --recursive --remote --force
 
