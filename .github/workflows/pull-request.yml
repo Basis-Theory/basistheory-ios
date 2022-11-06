@@ -22,7 +22,7 @@ jobs:
         run: cat .gitmodules
 
       - name: Checkout ios example submodule
-        run: git config submodule.BasisTheoryiOS.branch ${{ github.head_ref }} && cat .gitmodules && git submodule update --init --remote
+        run: git config -f .gitmodules submodule.BasisTheoryiOS.branch ${{ github.head_ref }} && cat .gitmodules && git submodule update --init --remote
 
       - uses: maxim-lobanov/setup-xcode@v1
         with:
