@@ -17,9 +17,12 @@ jobs:
           ref: adds-integration-tester
           token: ${{ secrets.BT_IOS_EXAMPLE_PAT }}
           submodules: recursive
+          
+      - name: Testing
+        run: cat .gitmodules
 
       - name: Checkout ios example submodule
-        run: git config submodule.BasisTheoryiOS.branch ${{ github.head_ref }} && git submodule update --init --remote
+        run: git config submodule.BasisTheoryiOS.branch ${{ github.head_ref }} && cat .gitmodules && git submodule update --init --remote
 
       - uses: maxim-lobanov/setup-xcode@v1
         with:
