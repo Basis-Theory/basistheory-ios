@@ -20,7 +20,7 @@ jobs:
         uses: mathieudutour/github-tag-action@v6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          default_bump: minor
+          default_bump: false
           tag_prefix: ""
 
       - name: Commit files
