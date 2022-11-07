@@ -10,4 +10,33 @@
 
 ## Installation
 
+### Swift Package Manager
 
+#### Via Xcode
+
+Add through Xcode via _File -> Add Packages_. Search for "https://github.com/Basis-Theory/basistheory-ios" and click on "Copy Dependency".
+
+#### Via Package.swift
+
+Add the following line under `dependencies` to your `Package.swift`:
+
+```swift
+    .package(url: "https://github.com/Basis-Theory/basistheory-ios", from: "X.X.X"),
+```
+
+And add `BasisTheoryElements` as a dependency to your `target`:
+
+```swift
+    dependencies: [
+        .product(name: "BasisTheoryElements", package: "basistheory-ios"),
+        ...
+    ],
+```
+
+### CocoaPods
+
+Add the following line to your `Podfile` under your `target`:
+
+```ruby
+    pod 'BasisTheoryElements', :git => 'https://github.com/Basis-Theory/basistheory-ios.git'
+```
