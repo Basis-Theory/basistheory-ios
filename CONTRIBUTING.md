@@ -16,4 +16,4 @@ swift build
 
 ## Tests
 
-The tests for this package exist on the [basistheory-ios-example](https://github.com/Basis-Theory/basistheory-ios-example) repo. You're able to run tests there, and contribute to this repo and the `basistheory-ios-example` repo from there.
+The tests for this package exist on the [basistheory-ios-example](https://github.com/Basis-Theory/basistheory-ios-example) repo. It's recommended that you checkout the `basistheory-ios-example` repo and follow instructions for contributing there. `basistheory-ios-example` has this repo (`basistheory-ios`) as a git submodule, which means you're able to contribute to both repos from one directory. This is necessary for the `IntegrationTester` app in `basistheory-ios-example` to link to the `BasisTheoryElements` package here.
