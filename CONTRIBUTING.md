@@ -14,12 +14,6 @@ Xcode will automatically download all of the necessary dependencies on build. If
 swift build
 ```
 
-## Running Locally
+## Tests
 
-The `IntegrationTester` project is a small sample project that shows examples of integrating `BasisTheoryElements` modules.
-
-To run the `IntegrationTester` project:
-1. Ensure `IntegrationTester` scheme is set
-2. Pick an iOS simulator to run
-3. Copy the contents `Env.plist.example` to a `Env.plist` file in the same directory and replace all necessary secrets
-4. Run the app! 🎉
+The tests for this package exist on the [basistheory-ios-example](https://github.com/Basis-Theory/basistheory-ios-example) repo. You're able to run tests there, and contribute to this repo and the `basistheory-ios-example` repo from there.
