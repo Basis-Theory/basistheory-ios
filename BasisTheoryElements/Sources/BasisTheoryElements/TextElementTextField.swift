@@ -10,6 +10,8 @@ import Combine
 import Foundation
 
 struct TextElementView: UIViewRepresentable, InternalElementProtocol, ElementProtocol {
+    var validation: ((String?) -> Bool)?
+    
     public var subject = PassthroughSubject<ElementEvent, Error>()
     typealias UIViewType = TextElementUITextField
 
