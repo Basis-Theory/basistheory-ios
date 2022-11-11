@@ -9,6 +9,8 @@ cat <<EOT > ./IntegrationTester/Env.plist
 <dict>
 	<key>btApiKey</key>
 	<string>${DEV_BT_API_KEY}</string>
+	<key>nonPublicBtApiKey</key>
+	<string>${DEV_PRIVATE_BT_API_KEY}</string>
 </dict>
 </plist>
 EOT
