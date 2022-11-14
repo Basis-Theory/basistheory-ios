@@ -56,20 +56,29 @@ final public class BasisTheoryElements {
         }
     }
     
-    public static func createToken(body: CreateTokenRequest, apiKey: String, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> Void {
+    public static func createToken(body: CreateTokenRequest, apiKey: String, completion: @escaping ((_ data: CreateTokenResponse?, _ error: Error?) -> Void)) -> Void {
         var mutableBody = body
+        var mutableData = (body.data?.value as! [[String: Any]]).first
+        
+        if var mutableData = mutableData {
+            replaceElementRefs(body: (&mutableData)! )
+        }
+
+        mutableBody.data = AnyCodable(mutableData)
 
         let apiKeyForTokenize = !BasisTheoryElements.apiKey.isEmpty ? BasisTheoryElements.apiKey : apiKey
+        
         BasisTheoryAPI.basePath = basePath
 
-        TokenizeAPI.tokenizeWithRequestBuilder(body: AnyCodable(mutableBody)).addHeader(name: "BT-API-KEY", value: apiKeyForTokenize).execute { result in
-            do {
-                let app = try result.get()
-
-                completion(app.body, nil)
-            } catch {
-                print(error)
-            }
+        getApplicationKey(apiKey: getApiKey(apiKey)) {data, error in
+             guard data?.type == "public" else {
+                completion(nil, TokenizingError.applicationNotPublic)
+                return
+             }
+            
+            TokensAPI.createWithRequestBuilder(createTokenRequest: mutableBody).addHeader(name: "BT-API-KEY", value: apiKeyForTokenize).execute { result in
+                completeApiRequest(result: result, completion: completion)
+             }
         }
     }
 
