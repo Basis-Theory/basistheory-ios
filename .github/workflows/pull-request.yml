@@ -30,3 +30,4 @@ jobs:
         run: exec ./BasisTheoryiOS/.github/scripts/integration-test.sh
         env:
           DEV_BT_API_KEY: ${{ secrets.DEV_BT_API_KEY }}
+          DEV_PRIVATE_BT_API_KEY: ${{ secrets.DEV_PRIVATE_BT_API_KEY }}
