@@ -58,14 +58,11 @@ final public class BasisTheoryElements {
     
     public static func createToken(body: CreateTokenRequest, apiKey: String, completion: @escaping ((_ data: CreateTokenResponse?, _ error: Error?) -> Void)) -> Void {
         var mutableBody = body
-        var mutableData = (body.data?.value as! [[String: Any]]).first
-        
-        if var mutableData = mutableData {
-            replaceElementRefs(body: (&mutableData)! )
-        }
-
+        var mutableData = body.data?.value as! [String: Any]
+        replaceElementRefs(body: &mutableData)
+    
         mutableBody.data = AnyCodable(mutableData)
-
+        
         let apiKeyForTokenize = !BasisTheoryElements.apiKey.isEmpty ? BasisTheoryElements.apiKey : apiKey
         
         BasisTheoryAPI.basePath = basePath
