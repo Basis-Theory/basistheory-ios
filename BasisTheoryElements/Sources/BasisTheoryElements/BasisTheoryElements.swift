@@ -63,17 +63,14 @@ final public class BasisTheoryElements {
     
         mutableBody.data = AnyCodable(mutableData)
         
-        let apiKeyForTokenize = !BasisTheoryElements.apiKey.isEmpty ? BasisTheoryElements.apiKey : apiKey
-        
         BasisTheoryAPI.basePath = basePath
-
         getApplicationKey(apiKey: getApiKey(apiKey)) {data, error in
              guard data?.type == "public" else {
                 completion(nil, TokenizingError.applicationNotPublic)
                 return
              }
             
-            TokensAPI.createWithRequestBuilder(createTokenRequest: mutableBody).addHeader(name: "BT-API-KEY", value: apiKeyForTokenize).execute { result in
+            TokensAPI.createWithRequestBuilder(createTokenRequest: mutableBody).addHeader(name: "BT-API-KEY", value: getApiKey(apiKey)).execute { result in
                 completeApiRequest(result: result, completion: completion)
              }
         }
