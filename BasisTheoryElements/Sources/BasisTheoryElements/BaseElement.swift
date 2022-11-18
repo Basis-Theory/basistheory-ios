@@ -13,5 +13,7 @@ public protocol ElementProtocol {
 }
 
 internal protocol InternalElementProtocol {
+    var validation: ((_ text: String?) -> Bool)? { get set }
+    
     func getValue() -> String?
 }
