@@ -56,12 +56,13 @@ final public class BasisTheoryElements {
         }
     }
     
-    public static func createToken(body: CreateTokenRequest, apiKey: String, completion: @escaping ((_ data: CreateTokenResponse?, _ error: Error?) -> Void)) -> Void {
+    public static func createToken(body: CreateToken, apiKey: String, completion: @escaping ((_ data: CreateTokenResponse?, _ error: Error?) -> Void)) -> Void {
+        
         var mutableBody = body
-        var mutableData = body.data?.value as! [String: Any]
+        var mutableData = body.data
         replaceElementRefs(body: &mutableData)
     
-        mutableBody.data = AnyCodable(mutableData)
+        mutableBody.data = mutableData
         
         BasisTheoryAPI.basePath = basePath
         getApplicationKey(apiKey: getApiKey(apiKey)) {data, error in
@@ -70,7 +71,9 @@ final public class BasisTheoryElements {
                 return
              }
             
-            TokensAPI.createWithRequestBuilder(createTokenRequest: mutableBody).addHeader(name: "BT-API-KEY", value: getApiKey(apiKey)).execute { result in
+            let createTokenRequest = mutableBody.toCreateTokenRequest()
+            
+            TokensAPI.createWithRequestBuilder(createTokenRequest: createTokenRequest).addHeader(name: "BT-API-KEY", value: getApiKey(apiKey)).execute { result in
                 completeApiRequest(result: result, completion: completion)
              }
         }
