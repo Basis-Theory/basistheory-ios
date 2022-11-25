@@ -14,6 +14,11 @@ Xcode will automatically download all of the necessary dependencies on build. If
 swift build
 ```
 
-## Tests
+## Running Locally
 
-The tests for this package exist on the [basistheory-ios-example](https://github.com/Basis-Theory/basistheory-ios-example) repo. It's recommended that you checkout the `basistheory-ios-example` repo and follow instructions for contributing there. `basistheory-ios-example` has this repo (`basistheory-ios`) as a git submodule, which means you're able to contribute to both repos from one directory. This is necessary for the `IntegrationTester` app in `basistheory-ios-example` to link to the `BasisTheoryElements` package here.
+The `IntegrationTester` project is a small sample project that shows examples of integrating `BasisTheoryElements` modules. By following the instructions below, you're able to run all tests and examples:
+
+1. Ensure `IntegrationTester` scheme is set
+2. Pick an iOS simulator to run
+3. Copy the contents `Env.plist.example` to a `Env.plist` file in the same directory and replace all necessary secrets. All API keys should be keys for dev. The `privateBtApiKey` should have read permissions with a reveal transform, and the `btApiKey` should be a public key with create permissions
+4. Run the app! 🎉
