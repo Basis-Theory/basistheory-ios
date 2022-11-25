@@ -26,7 +26,7 @@ let package = Package(
             dependencies: [
                 .product(name: "BasisTheory", package: "basistheory-swift")
             ],
-            path: "BasisTheoryElements/BasisTheoryElements"
+            path: "BasisTheoryElements/Sources"
         )
     ]
 )
