@@ -97,10 +97,16 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     }
     
     @objc private func textFieldDidChange() {
+        var maskComplete = true
+
         if inputMask != nil {
             let previousValue = super.text
 
             super.text = conformToMask(text: super.text!)
+            
+            if (super.text!.count != inputMask!.count ) {
+                maskComplete = false
+            }
 
             guard previousValue == super.text else {
                 return
@@ -114,7 +120,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
             invalid = !validation(currentTextValue)
         }
         
-        let complete = !invalid
+        let complete = !invalid && maskComplete
         
         subject.send(ElementEvent(type: "textChange", complete: complete, empty: currentTextValue?.isEmpty ?? true, invalid: invalid))
     }
