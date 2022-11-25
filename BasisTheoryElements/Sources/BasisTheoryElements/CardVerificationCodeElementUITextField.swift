@@ -8,7 +8,7 @@
 import UIKit
 
 final public class CardVerificationCodeElementUITextField: TextElementUITextField {
-    override var validation: ((String?) -> Bool)? {
+    public override var validation: ((String?) -> Bool)? {
         get {
             validateCvc
         }
