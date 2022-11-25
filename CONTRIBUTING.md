@@ -22,3 +22,7 @@ The `IntegrationTester` project is a small sample project that shows examples of
 2. Pick an iOS simulator to run
 3. Copy the contents `Env.plist.example` to a `Env.plist` file in the same directory and replace all necessary secrets. All API keys should be keys for dev. The `privateBtApiKey` should have read permissions with a reveal transform, and the `btApiKey` should be a public key with create permissions
 4. Run the app! 🎉
+
+## Running tests
+
+Unit tests are under `IntegrationTester/IntegrationTesterTests` and acceptance tests are under `IntegrationTester/IntegrationTesterUITests`. 
