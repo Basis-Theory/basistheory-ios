@@ -11,23 +11,14 @@ jobs:
     runs-on: macOS-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          repository: Basis-Theory/basistheory-ios-example
-          ref: master
-          token: ${{ secrets.BT_IOS_EXAMPLE_PAT }} 
-
-      - name: Git Sumbodule Update
-        run: |
-          rm -r BasisTheoryiOS
-          git clone -b ${{ github.head_ref }} https://${{ secrets.BT_IOS_EXAMPLE_PAT }}@github.com/Basis-Theory/basistheory-ios.git BasisTheoryiOS
+        uses: actions/checkout@v3
 
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: '14.1.0'
 
       - name: Testing with IntegrationTester app
-        run: exec ./BasisTheoryiOS/.github/scripts/integration-test.sh
+        run: exec .github/scripts/integration-test.sh
         env:
           DEV_BT_API_KEY: ${{ secrets.DEV_BT_API_KEY }}
           DEV_PRIVATE_BT_API_KEY: ${{ secrets.DEV_PRIVATE_BT_API_KEY }}
