@@ -36,3 +36,11 @@ And add `BasisTheoryElements` as a dependency to your `target`:
         ...
     ],
 ```
+
+### CocoaPods
+
+Add the following line to your `Podfile` under your `target`:
+
+```ruby
+    pod 'BasisTheoryElements'
+```

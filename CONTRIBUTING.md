@@ -16,7 +16,7 @@ swift build
 
 ## Running Locally
 
-The `IntegrationTester` project is a small sample project that shows examples of integrating `BasisTheoryElements` modules. By following the instructions below, you're able to run all tests and examples:
+The `IntegrationTester` project is a small sample iOS app that shows examples of integrating `BasisTheoryElements` modules. By following the instructions below, you're able to run all tests and examples:
 
 1. Ensure `IntegrationTester` scheme is set
 2. Pick an iOS simulator to run
