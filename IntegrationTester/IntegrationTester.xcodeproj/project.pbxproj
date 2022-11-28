@@ -19,9 +19,9 @@
 		924576C829004C4D00A01E70 /* Env.plist.example in Resources */ = {isa = PBXBuildFile; fileRef = 924576C729004C4D00A01E70 /* Env.plist.example */; };
 		924576CC2900519900A01E70 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924576CB2900519900A01E70 /* Configuration.swift */; };
 		9253E8E2291EB66E00FDF1A9 /* ElementUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9253E8E1291EB66E00FDF1A9 /* ElementUITextFieldTests.swift */; };
+		92566EA6293578B30047BFF2 /* BasisTheoryElements in Frameworks */ = {isa = PBXBuildFile; productRef = 92566EA5293578B30047BFF2 /* BasisTheoryElements */; };
 		928869A229118DC4004E75E3 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924576CB2900519900A01E70 /* Configuration.swift */; };
 		928869A72911B564004E75E3 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924576CB2900519900A01E70 /* Configuration.swift */; };
-		92990FAF2931381E008927E5 /* BasisTheoryElements in Frameworks */ = {isa = PBXBuildFile; productRef = 92990FAE2931381E008927E5 /* BasisTheoryElements */; };
 		92A24DE7291DA1F0005DD4D2 /* SplitCardElementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A24DE6291DA1F0005DD4D2 /* SplitCardElementsViewController.swift */; };
 		92C3019629132287009F8D92 /* Env.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92C3019529132287009F8D92 /* Env.plist */; };
 		92C3019729132287009F8D92 /* Env.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92C3019529132287009F8D92 /* Env.plist */; };
@@ -62,7 +62,7 @@
 		924576C729004C4D00A01E70 /* Env.plist.example */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Env.plist.example; sourceTree = "<group>"; };
 		924576CB2900519900A01E70 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		9253E8E1291EB66E00FDF1A9 /* ElementUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementUITextFieldTests.swift; sourceTree = "<group>"; };
-		929AC745293137CE00457364 /* BasisTheoryElements */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BasisTheoryElements; path = ../BasisTheoryElements; sourceTree = "<group>"; };
+		92566EA4293578AB0047BFF2 /* BasisTheoryElements */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BasisTheoryElements; path = ../BasisTheoryElements; sourceTree = "<group>"; };
 		92A24DE6291DA1F0005DD4D2 /* SplitCardElementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitCardElementsViewController.swift; sourceTree = "<group>"; };
 		92C3019529132287009F8D92 /* Env.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Env.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,7 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92990FAF2931381E008927E5 /* BasisTheoryElements in Frameworks */,
+				92566EA6293578B30047BFF2 /* BasisTheoryElements in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,7 +96,7 @@
 		9245767C28FF46C100A01E70 = {
 			isa = PBXGroup;
 			children = (
-				929AC745293137CE00457364 /* BasisTheoryElements */,
+				92566EA4293578AB0047BFF2 /* BasisTheoryElements */,
 				92C3019529132287009F8D92 /* Env.plist */,
 				924576CB2900519900A01E70 /* Configuration.swift */,
 				924576C729004C4D00A01E70 /* Env.plist.example */,
@@ -175,7 +175,7 @@
 			);
 			name = IntegrationTester;
 			packageProductDependencies = (
-				92990FAE2931381E008927E5 /* BasisTheoryElements */,
+				92566EA5293578B30047BFF2 /* BasisTheoryElements */,
 			);
 			productName = IntegrationTester;
 			productReference = 9245768528FF46C100A01E70 /* IntegrationTester.app */;
@@ -666,7 +666,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		92990FAE2931381E008927E5 /* BasisTheoryElements */ = {
+		92566EA5293578B30047BFF2 /* BasisTheoryElements */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BasisTheoryElements;
 		};

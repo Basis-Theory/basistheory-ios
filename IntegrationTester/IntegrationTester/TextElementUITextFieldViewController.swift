@@ -59,6 +59,26 @@ class TextElementUITextFieldViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let regexDigit = try! NSRegularExpression(pattern: "\\d")
+        let phoneMask = [ //(123)456-7890
+            "(",
+            regexDigit,
+            regexDigit,
+            regexDigit,
+            ")",
+            regexDigit,
+            regexDigit,
+            regexDigit,
+            "-",
+            regexDigit,
+            regexDigit,
+            regexDigit,
+            regexDigit
+        ] as [Any]
+        let phoneOptions = TextElementOptions(mask: phoneMask)
+        
+        try! phoneNumberTextField.setConfig(options: phoneOptions)
 
         setStyles(textField: nameTextField, placeholder: "Name")
         setStyles(textField: phoneNumberTextField, placeholder: "Phone Number")

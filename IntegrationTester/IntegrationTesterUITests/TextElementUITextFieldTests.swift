@@ -27,6 +27,34 @@ final class IntegrationTesterUITests: XCTestCase {
         let phoneNumberTextField = app.textFields["Phone Number"]
         
         XCTAssertEqual(nameTextField.value as! String, "Tom Cruise")
-        XCTAssertEqual(phoneNumberTextField.value as! String, "555-123-4567")
+        XCTAssertEqual(phoneNumberTextField.value as! String, "(555)123-4567")
+    }
+    
+    func testFieldMask() throws {
+        let invalidValue = "abcdefg"
+        let validValue = "5551234567"
+        let partiallyValidValue = "ab55cdef5c"
+        
+        let phoneNumberTextField = app.textFields["Phone Number"]
+        phoneNumberTextField.tap()
+        
+        phoneNumberTextField.typeText(invalidValue)
+        XCTAssertEqual(phoneNumberTextField.value as! String, "(")
+        
+        phoneNumberTextField.doubleTap()
+        app.keys["delete"].tap()
+        
+        phoneNumberTextField.typeText(partiallyValidValue)
+        XCTAssertEqual(phoneNumberTextField.value as! String, "(555)")
+        
+        phoneNumberTextField.doubleTap()
+        app.keys["delete"].tap()
+        
+        phoneNumberTextField.typeText(validValue)
+        XCTAssertEqual(phoneNumberTextField.value as! String, "(555)123-4567")
+        
+        // test that cant add more digits to complete mask
+        phoneNumberTextField.typeText("1")
+        XCTAssertEqual(phoneNumberTextField.value as! String, "(555)123-4567")
     }
 }
