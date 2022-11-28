@@ -10,7 +10,7 @@ import UIKit
 import Combine
 
 public class TextElementUITextField: UITextField, InternalElementProtocol, ElementProtocol {
-    public var validation: ((String?) -> Bool)?
+    var validation: ((String?) -> Bool)?
     public var inputMask: [(Any)]?
     public var subject = PassthroughSubject<ElementEvent, Error>()
 
@@ -35,7 +35,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     public override var text: String? {
         set {
             if inputMask != nil {
-                super.text = conformToMask(text: newValue!)
+                super.text = conformToMask(text: newValue ?? "")
             } else {
                 super.text = newValue
             }
@@ -53,9 +53,9 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
             }
 
             let maskValue = inputMask![maskIndex]
-            let maskedChar = getMaskedChar(char: String(char), maskValue: maskValue)
-            
+
             if maskValue is NSRegularExpression {
+                let maskedChar = getMaskedChar(char: String(char), maskValue: maskValue)
                 maskedText = maskedText + maskedChar
                 
                 if (maskedChar !=  "") {
@@ -102,9 +102,9 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         if inputMask != nil {
             let previousValue = super.text
 
-            super.text = conformToMask(text: super.text!)
+            super.text = conformToMask(text: super.text ?? "")
             
-            if (super.text!.count != inputMask!.count ) {
+            if (super.text?.count != inputMask!.count ) {
                 maskComplete = false
             }
 
