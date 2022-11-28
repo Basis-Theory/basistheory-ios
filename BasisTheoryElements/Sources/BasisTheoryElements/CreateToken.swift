@@ -38,7 +38,7 @@ public struct CreateToken {
     }
     
     func toCreateTokenRequest () -> CreateTokenRequest {
-        return CreateTokenRequest(
+        CreateTokenRequest(
             id: self.id,
             type: self.type,
             data: AnyCodable(self.data),
