@@ -14,6 +14,11 @@ public protocol ElementProtocol {
 
 internal protocol InternalElementProtocol {
     var validation: ((_ text: String?) -> Bool)? { get set }
+    var inputMask: [Any]? { get set }
     
     func getValue() -> String?
+}
+
+public enum ElementConfigError: Error {
+    case invalidMask
 }
