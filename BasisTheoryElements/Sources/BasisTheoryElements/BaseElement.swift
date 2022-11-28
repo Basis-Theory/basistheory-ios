@@ -21,11 +21,3 @@ internal protocol InternalElementProtocol {
 public enum ElementConfigError: Error {
     case invalidMask
 }
-
-public struct ElementOptions {
-    let mask: [Any]?
-    
-    public init(mask: [Any]?) {
-        self.mask = mask
-    }
-}

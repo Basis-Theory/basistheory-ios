@@ -9,6 +9,14 @@ import Foundation
 import UIKit
 import Combine
 
+public struct TextElementOptions {
+    let mask: [Any]?
+    
+    public init(mask: [Any]?) {
+        self.mask = mask
+    }
+}
+
 public class TextElementUITextField: UITextField, InternalElementProtocol, ElementProtocol {
     var validation: ((String?) -> Bool)?
     var backspacePressed: Bool = false
@@ -51,7 +59,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         super.deleteBackward()
     }
     
-    public func setConfig(options: ElementOptions?) throws {
+    public func setConfig(options: TextElementOptions?) throws {
         if (options?.mask != nil) {
             guard validateMask(inputMask: (options?.mask)!) else {
                 throw ElementConfigError.invalidMask
