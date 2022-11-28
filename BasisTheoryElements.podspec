@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.license = 'Apache'
   s.homepage = 'https://github.com/Basis-Theory/basistheory-ios'
   s.summary = 'BasisTheory SDK for Elements'
-  s.source_files = 'BasisTheoryElements/Sources/**/*.swift'
+  s.source_files = 'BasisTheoryElements/Sources/BasisTheoryElements**/*.swift'
   s.dependency 'BasisTheory', '0.5.5'
   s.swift_version = '5.5'
 end
