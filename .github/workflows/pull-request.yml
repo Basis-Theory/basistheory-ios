@@ -40,4 +40,4 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Pod Linting
-        run: pod spec lint --allow-warnings
+        run: pod lib lint --allow-warnings
