@@ -20,10 +20,10 @@ public struct TextElementOptions {
 public class TextElementUITextField: UITextField, InternalElementProtocol, ElementProtocol {
     var validation: ((String?) -> Bool)?
     var backspacePressed: Bool = false
-    var inputMask: [(Any)]?
-
+    var inputMask: [Any]?
+    
     public var subject = PassthroughSubject<ElementEvent, Error>()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.smartDashesType = .no
@@ -45,7 +45,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     public override var text: String? {
         set {
             if inputMask != nil {
-                super.text = conformToMask(text: newValue ?? "")
+                super.text = conformToMask(text: newValue)
             } else {
                 super.text = newValue
             }
@@ -79,12 +79,12 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         return true
     }
     
-    private func conformToMask(text: String) -> String {
-        var userInput = text
+    private func conformToMask(text: String?) -> String {
+        var userInput = text ?? ""
         let placeholderChar = "_"
         var placeholderString = ""
         var maskedText = ""
-       
+        
         // create placeholder string
         for maskValue in inputMask! as [(Any)] {
             if maskValue is NSRegularExpression {
@@ -95,32 +95,37 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         }
         
         var maskIndex = 0
-
+        
         // run through placeholder string, replace gaps w/ user input
         for char in placeholderString {
             if (userInput.count > 0) {
-                // found a gap for user input
                 if String(char) == placeholderChar {
                     // start going through user input to fill array
                     var validChar = ""
-
+                    
                     while (userInput.count > 0) {
                         let firstChar = userInput.removeFirst()
                         
-                        // regex matches, is valid, we can add
-                        let regex = inputMask![maskIndex] as! NSRegularExpression
-                        if String(firstChar).range(of: regex.pattern, options: .regularExpression) != nil {
-                            validChar = String(firstChar)
-                            break // move to next placeholder position
-                        }
+                        // check for placeholder char in mask
+                        if (inputMask![maskIndex] is String) {
+                            maskedText.append(inputMask![maskIndex] as! String)
+                            break
+                        } else {
+                            
+                            // regex matches, is valid, we can add
+                            let regex = inputMask![maskIndex] as! NSRegularExpression
+                            if String(firstChar).range(of: regex.pattern, options: .regularExpression) != nil {
+                                validChar = String(firstChar)
+                                break // move to next placeholder position
+                            }}
                     }
+                    
                     maskedText.append(validChar)
                 } else {
                     // just add the char as its the string part of the mask
                     maskedText.append(String(char))
                 }
             }
-            
             maskIndex += 1
         }
         
@@ -129,13 +134,13 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     
     @objc private func textFieldDidChange() {
         var maskComplete = true
-
+        
         if inputMask != nil {
             let previousValue = super.text
             
-            // dont conform on backspace pressed - just remove the value
-            if (!backspacePressed) {
-                super.text = conformToMask(text: super.text ?? "")
+            // dont conform on backspace pressed - just remove the value + check for backspace on empty
+            if (!backspacePressed || super.text != nil) {
+                super.text = conformToMask(text: super.text)
             } else {
                 backspacePressed = false
             }
@@ -143,15 +148,15 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
             if (super.text?.count != inputMask!.count ) {
                 maskComplete = false
             }
-
+            
             guard previousValue == super.text else {
                 return
             }
         }
-
+        
         let currentTextValue = super.text
         var invalid = false
-
+        
         if let validation = validation {
             invalid = !validation(currentTextValue)
         }
