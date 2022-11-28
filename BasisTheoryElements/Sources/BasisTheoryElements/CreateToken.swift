@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  CereateToken.swift
 //  
 //
 //  Created by Amber Torres on 11/21/22.
@@ -20,9 +20,9 @@ public struct CreateToken {
     public var mask: String?
     public var deduplicateToken: Bool?
     public var expiresAt: String?
-    public var container: String?
+    public var containers: [String]?
     
-    public init(id: String? = nil, type: String? = nil, data: [String: Any], encryption: EncryptionMetadata? = nil, privacy: Privacy? = nil, metadata: [String: String]? = nil, searchIndexes: [String]? = nil, fingerprintExpression: String? = nil, mask: String? = nil, deduplicateToken: Bool? = nil, expiresAt: String? = nil, container: String? = nil) {
+    public init(id: String? = nil, type: String? = nil, data: [String: Any], encryption: EncryptionMetadata? = nil, privacy: Privacy? = nil, metadata: [String: String]? = nil, searchIndexes: [String]? = nil, fingerprintExpression: String? = nil, mask: String? = nil, deduplicateToken: Bool? = nil, expiresAt: String? = nil, containers: [String]? = nil) {
         self.id = id
         self.type = type
         self.data = data
@@ -34,7 +34,7 @@ public struct CreateToken {
         self.mask = mask
         self.deduplicateToken = deduplicateToken
         self.expiresAt = expiresAt
-        self.container = container
+        self.containers = containers
     }
     
     func toCreateTokenRequest () -> CreateTokenRequest {
@@ -50,7 +50,7 @@ public struct CreateToken {
             mask: AnyCodable(self.mask),
             deduplicateToken: self.deduplicateToken,
             expiresAt: self.expiresAt,
-            container: self.container
+            containers: self.containers
         )
     }
 }
