@@ -5,9 +5,9 @@ on:
     branches: [ master ]
 
 jobs:
-  tag:
-    name: Tag repo
-    runs-on: ubuntu-latest
+  tag-and-release:
+    name: Tag and Release
+    runs-on: macOS-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -29,10 +29,13 @@ jobs:
           git config --local user.email "platform@basistheory.com"
           git config --local user.name "github-actions[bot]"
 
+          sed -i "" "s/\(s.version = \)'[^']*'/\1'${{ steps.tag-version.outputs.new_tag }}'/g" BasisTheoryElements.podspec
+          sed -i "" "s/\(:tag => \)'[^']*'/\1'${{ steps.tag-version.outputs.new_tag }}'/g" BasisTheoryElements.podspec
+
           echo "${{ steps.tag-version.outputs.changelog }}" | cat - CHANGELOG.md > temp && mv temp CHANGELOG.md
 
-          git add CHANGELOG.md
-          git commit -m "chore(release): upating changelog ${{ steps.tag-version.outputs.new_tag }} [skip ci]" || echo "Nothing to update"
+          git add CHANGELOG.md BasisTheoryElements.podspec
+          git commit -m "chore(release): upating podspec and changelog ${{ steps.tag-version.outputs.new_tag }} [skip ci]" || echo "Nothing to update"
 
       - name: Push changes
         uses: ad-m/github-push-action@master
@@ -40,3 +43,9 @@ jobs:
         with:
           github_token: ${{ secrets.SEMANTIC_RELEASE_PAT }}
           branch: ${{ github.ref }}
+
+      - name: Push CocoaPods
+        if: ${{ steps.tag-version.outputs.release_type != '' }}
+        run: pod trunk push --allow-warnings
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
