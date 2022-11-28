@@ -11,7 +11,9 @@ import Combine
 
 public class TextElementUITextField: UITextField, InternalElementProtocol, ElementProtocol {
     var validation: ((String?) -> Bool)?
-    public var inputMask: [(Any)]?
+    var backspacePressed: Bool = false
+    var inputMask: [(Any)]?
+
     public var subject = PassthroughSubject<ElementEvent, Error>()
 
     override init(frame: CGRect) {
@@ -43,57 +45,78 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         get { nil }
     }
     
-    private func conformToMask(text: String) -> String {
-        var maskIndex = 0
-        var maskedText = ""
-
-        for char in text {
-            guard maskIndex < inputMask!.count else{
-                return maskedText
-            }
-
-            let maskValue = inputMask![maskIndex]
-
-            if maskValue is NSRegularExpression {
-                let maskedChar = getMaskedChar(char: String(char), maskValue: maskValue)
-                maskedText = maskedText + maskedChar
-                
-                if (maskedChar !=  "") {
-                    maskIndex += 1
-                }
-            } else if maskValue is String {
-                maskIndex += 1
-
-                if String(char) != (maskValue as! String) {
-                    let nextMaskedChar = getMaskedChar(char: String(char), maskValue: inputMask![maskIndex])
-                    maskedText =  maskedText + (maskValue as! String) + nextMaskedChar
-                    
-                    if (nextMaskedChar != "") {
-                        maskIndex += 1
-                    }
-                } else {
-                    maskedText = maskedText + String(char)
-                }
-            }
-        }
-
-        return maskedText
+    // detecting backspace, used for masking
+    override public func deleteBackward() {
+        self.backspacePressed = true
+        super.deleteBackward()
     }
     
-    private func getMaskedChar(char: String, maskValue: Any) -> String{
-        if maskValue is NSRegularExpression {
-            let regex = maskValue as! NSRegularExpression
-
-            if String(char).range(of: regex.pattern, options: .regularExpression) != nil {
-                return String(char)
+    public func setConfig(options: ElementOptions?) throws {
+        if (options?.mask != nil) {
+            guard validateMask(inputMask: (options?.mask)!) else {
+                throw ElementConfigError.invalidMask
             }
-        } else if maskValue is String {
-            if String(char) != (maskValue as! String) {
-                return String(char) + (maskValue as! String)
+            
+            self.inputMask = options?.mask
+        }
+    }
+    
+    private func validateMask(inputMask: [(Any)]) -> Bool {
+        for maskValue in inputMask {
+            guard (maskValue is String && (maskValue as! String).count == 1) || maskValue is NSRegularExpression else {
+                return false
             }
         }
         
-        return ""
+        return true
+    }
+    
+    private func conformToMask(text: String) -> String {
+        var userInput = text
+        let placeholderChar = "_"
+        var placeholderString = ""
+        var maskedText = ""
+       
+        // create placeholder string
+        for maskValue in inputMask! as [(Any)] {
+            if maskValue is NSRegularExpression {
+                placeholderString.append(placeholderChar)
+            } else if maskValue is String {
+                placeholderString.append(maskValue as! String)
+            }
+        }
+        
+        var maskIndex = 0
+
+        // run through placeholder string, replace gaps w/ user input
+        for char in placeholderString {
+            if (userInput.count > 0) {
+                // found a gap for user input
+                if String(char) == placeholderChar {
+                    // start going through user input to fill array
+                    var validChar = ""
+
+                    while (userInput.count > 0) {
+                        let firstChar = userInput.removeFirst()
+                        
+                        // regex matches, is valid, we can add
+                        let regex = inputMask![maskIndex] as! NSRegularExpression
+                        if String(firstChar).range(of: regex.pattern, options: .regularExpression) != nil {
+                            validChar = String(firstChar)
+                            break // move to next placeholder position
+                        }
+                    }
+                    maskedText.append(validChar)
+                } else {
+                    // just add the char as its the string part of the mask
+                    maskedText.append(String(char))
+                }
+            }
+            
+            maskIndex += 1
+        }
+        
+        return maskedText
     }
     
     @objc private func textFieldDidChange() {
@@ -101,8 +124,13 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
 
         if inputMask != nil {
             let previousValue = super.text
-
-            super.text = conformToMask(text: super.text ?? "")
+            
+            // dont conform on backspace pressed - just remove the value
+            if (!backspacePressed) {
+                super.text = conformToMask(text: super.text ?? "")
+            } else {
+                backspacePressed = false
+            }
             
             if (super.text?.count != inputMask!.count ) {
                 maskComplete = false
