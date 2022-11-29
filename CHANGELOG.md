@@ -1,3 +1,11 @@
+### [0.3.2](https://github.com/Basis-Theory/basistheory-ios/compare/0.3.1...0.3.2) (2022-11-29)
+
+
+### Bug Fixes
+
+* changes source files. releases to CocoaPods ([#12](https://github.com/Basis-Theory/basistheory-ios/issues/12)) ([397a17c](https://github.com/Basis-Theory/basistheory-ios/commit/397a17c34deb1e5436b426a1315cbc23992cf3f0))
+
+
 ### [0.3.1](https://github.com/Basis-Theory/basistheory-ios/compare/0.3.0...0.3.1) (2022-11-28)
 
 
