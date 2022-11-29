@@ -8,6 +8,10 @@
 
 `TextElementUITextField` - A simple wrapper for the native UIKit UITextField, this enables developers to take full advantage of existing native customization while also restricting their system access to the underlying data.
 
+## Examples
+
+The `IntegrationTester` app is an example of how to integrate modules from the `BasisTheoryElements` package.
+
 ## Installation
 
 ### Swift Package Manager
@@ -38,5 +42,5 @@ And add `BasisTheoryElements` as a dependency to your `target`:
 Add the following line to your `Podfile` under your `target`:
 
 ```ruby
-    pod 'BasisTheoryElements', :git => 'https://github.com/Basis-Theory/basistheory-ios.git'
+    pod 'BasisTheoryElements'
 ```
