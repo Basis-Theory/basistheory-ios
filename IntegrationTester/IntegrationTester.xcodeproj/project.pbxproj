@@ -55,9 +55,9 @@
 		9245769128FF46C200A01E70 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9245769428FF46C200A01E70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9245769628FF46C200A01E70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9245769B28FF46C200A01E70 /* IntegrationTesterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntegrationTesterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9245769B28FF46C200A01E70 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9245769F28FF46C200A01E70 /* TextElementUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextElementUITextFieldTests.swift; sourceTree = "<group>"; };
-		924576A528FF46C200A01E70 /* IntegrationTesterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntegrationTesterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		924576A528FF46C200A01E70 /* AcceptanceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AcceptanceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		924576A928FF46C200A01E70 /* TextElementUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextElementUITextFieldTests.swift; sourceTree = "<group>"; };
 		924576C729004C4D00A01E70 /* Env.plist.example */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Env.plist.example; sourceTree = "<group>"; };
 		924576CB2900519900A01E70 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
@@ -101,8 +101,8 @@
 				924576CB2900519900A01E70 /* Configuration.swift */,
 				924576C729004C4D00A01E70 /* Env.plist.example */,
 				9245768728FF46C100A01E70 /* IntegrationTester */,
-				9245769E28FF46C200A01E70 /* IntegrationTesterTests */,
-				924576A828FF46C200A01E70 /* IntegrationTesterUITests */,
+				9245769E28FF46C200A01E70 /* UnitTests */,
+				924576A828FF46C200A01E70 /* AcceptanceTests */,
 				9245768628FF46C100A01E70 /* Products */,
 				924576B928FF475100A01E70 /* Frameworks */,
 			);
@@ -112,8 +112,8 @@
 			isa = PBXGroup;
 			children = (
 				9245768528FF46C100A01E70 /* IntegrationTester.app */,
-				9245769B28FF46C200A01E70 /* IntegrationTesterTests.xctest */,
-				924576A528FF46C200A01E70 /* IntegrationTesterUITests.xctest */,
+				9245769B28FF46C200A01E70 /* UnitTests.xctest */,
+				924576A528FF46C200A01E70 /* AcceptanceTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -133,22 +133,22 @@
 			path = IntegrationTester;
 			sourceTree = "<group>";
 		};
-		9245769E28FF46C200A01E70 /* IntegrationTesterTests */ = {
+		9245769E28FF46C200A01E70 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
 				9245769F28FF46C200A01E70 /* TextElementUITextFieldTests.swift */,
 				9253E8E1291EB66E00FDF1A9 /* ElementUITextFieldTests.swift */,
 				9206601C2922813C00A92A81 /* CardVerificationCodeUITextField.swift */,
 			);
-			path = IntegrationTesterTests;
+			path = UnitTests;
 			sourceTree = "<group>";
 		};
-		924576A828FF46C200A01E70 /* IntegrationTesterUITests */ = {
+		924576A828FF46C200A01E70 /* AcceptanceTests */ = {
 			isa = PBXGroup;
 			children = (
 				924576A928FF46C200A01E70 /* TextElementUITextFieldTests.swift */,
 			);
-			path = IntegrationTesterUITests;
+			path = AcceptanceTests;
 			sourceTree = "<group>";
 		};
 		924576B928FF475100A01E70 /* Frameworks */ = {
@@ -181,9 +181,9 @@
 			productReference = 9245768528FF46C100A01E70 /* IntegrationTester.app */;
 			productType = "com.apple.product-type.application";
 		};
-		9245769A28FF46C200A01E70 /* IntegrationTesterTests */ = {
+		9245769A28FF46C200A01E70 /* UnitTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 924576B228FF46C200A01E70 /* Build configuration list for PBXNativeTarget "IntegrationTesterTests" */;
+			buildConfigurationList = 924576B228FF46C200A01E70 /* Build configuration list for PBXNativeTarget "UnitTests" */;
 			buildPhases = (
 				9245769728FF46C200A01E70 /* Sources */,
 				9245769828FF46C200A01E70 /* Frameworks */,
@@ -194,16 +194,16 @@
 			dependencies = (
 				9245769D28FF46C200A01E70 /* PBXTargetDependency */,
 			);
-			name = IntegrationTesterTests;
+			name = UnitTests;
 			packageProductDependencies = (
 			);
 			productName = IntegrationTesterTests;
-			productReference = 9245769B28FF46C200A01E70 /* IntegrationTesterTests.xctest */;
+			productReference = 9245769B28FF46C200A01E70 /* UnitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		924576A428FF46C200A01E70 /* IntegrationTesterUITests */ = {
+		924576A428FF46C200A01E70 /* AcceptanceTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 924576B528FF46C200A01E70 /* Build configuration list for PBXNativeTarget "IntegrationTesterUITests" */;
+			buildConfigurationList = 924576B528FF46C200A01E70 /* Build configuration list for PBXNativeTarget "AcceptanceTests" */;
 			buildPhases = (
 				924576A128FF46C200A01E70 /* Sources */,
 				924576A228FF46C200A01E70 /* Frameworks */,
@@ -214,11 +214,11 @@
 			dependencies = (
 				924576A728FF46C200A01E70 /* PBXTargetDependency */,
 			);
-			name = IntegrationTesterUITests;
+			name = AcceptanceTests;
 			packageProductDependencies = (
 			);
 			productName = IntegrationTesterUITests;
-			productReference = 924576A528FF46C200A01E70 /* IntegrationTesterUITests.xctest */;
+			productReference = 924576A528FF46C200A01E70 /* AcceptanceTests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -258,8 +258,8 @@
 			projectRoot = "";
 			targets = (
 				9245768428FF46C100A01E70 /* IntegrationTester */,
-				9245769A28FF46C200A01E70 /* IntegrationTesterTests */,
-				924576A428FF46C200A01E70 /* IntegrationTesterUITests */,
+				9245769A28FF46C200A01E70 /* UnitTests */,
+				924576A428FF46C200A01E70 /* AcceptanceTests */,
 			);
 		};
 /* End PBXProject section */
@@ -645,7 +645,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		924576B228FF46C200A01E70 /* Build configuration list for PBXNativeTarget "IntegrationTesterTests" */ = {
+		924576B228FF46C200A01E70 /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				924576B328FF46C200A01E70 /* Debug */,
@@ -654,7 +654,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		924576B528FF46C200A01E70 /* Build configuration list for PBXNativeTarget "IntegrationTesterUITests" */ = {
+		924576B528FF46C200A01E70 /* Build configuration list for PBXNativeTarget "AcceptanceTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				924576B628FF46C200A01E70 /* Debug */,

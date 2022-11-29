@@ -25,4 +25,4 @@ The `IntegrationTester` project is a small sample iOS app that shows examples of
 
 ## Running tests
 
-Unit tests are under `IntegrationTester/IntegrationTesterTests` and acceptance tests are under `IntegrationTester/IntegrationTesterUITests`. 
+Unit tests are under `IntegrationTester/UnitTests` and acceptance tests are under `IntegrationTester/AcceptanceTests`. 

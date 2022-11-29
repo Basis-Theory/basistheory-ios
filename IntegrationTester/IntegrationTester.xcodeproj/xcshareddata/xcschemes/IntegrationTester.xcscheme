@@ -33,8 +33,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9245769A28FF46C200A01E70"
-               BuildableName = "IntegrationTesterTests.xctest"
-               BlueprintName = "IntegrationTesterTests"
+               BuildableName = "UnitTests.xctest"
+               BlueprintName = "UnitTests"
                ReferencedContainer = "container:IntegrationTester.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -43,8 +43,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "924576A428FF46C200A01E70"
-               BuildableName = "IntegrationTesterUITests.xctest"
-               BlueprintName = "IntegrationTesterUITests"
+               BuildableName = "AcceptanceTests.xctest"
+               BlueprintName = "AcceptanceTests"
                ReferencedContainer = "container:IntegrationTester.xcodeproj">
             </BuildableReference>
          </TestableReference>
