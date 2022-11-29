@@ -16,7 +16,7 @@ internal protocol InternalElementProtocol {
     var validation: ((_ text: String?) -> Bool)? { get set }
     var inputMask: [Any]? { get set }
     
-    var getElementEvent: ((_ text: String?) -> ElementEvent)? { get set }
+    var getElementDetails: ((_ text: String?) -> [ElementEventDetails])? { get set }
     
     func getValue() -> String?
 }

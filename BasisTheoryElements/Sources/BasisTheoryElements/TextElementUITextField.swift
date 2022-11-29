@@ -18,11 +18,10 @@ public struct TextElementOptions {
 }
 
 public class TextElementUITextField: UITextField, InternalElementProtocol, ElementProtocol {
+    var getElementDetails: ((String?) -> [ElementEventDetails])?
     var validation: ((String?) -> Bool)?
     var backspacePressed: Bool = false
     var inputMask: [Any]?
-    
-    var getElementEvent: ((String?) -> ElementEvent)?
     
     public var subject = PassthroughSubject<ElementEvent, Error>()
     
@@ -167,8 +166,8 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         
         var elementEvent = ElementEvent(type: "textChange", complete: complete, empty: currentTextValue?.isEmpty ?? true, valid: valid, details: [])
         
-        if let getElementEvent = getElementEvent {
-            elementEvent = getElementEvent(currentTextValue)
+        if let getElementDetails = getElementDetails {
+            elementEvent.details = getElementDetails(currentTextValue)
         }
         
         subject.send(elementEvent)
