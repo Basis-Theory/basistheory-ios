@@ -77,7 +77,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     }
     
     func transform(text: String) -> String {
-        let transformedText = inputTransform?.matcher?.stringByReplacingMatches(in: text, options: .reportCompletion, range: NSRange(location: 0, length: text.count), withTemplate: (inputTransform?.stringReplacement)!)
+        guard let transformedText = inputTransform?.matcher?.stringByReplacingMatches(in: text, options: .reportCompletion, range: NSRange(location: 0, length: text.count), withTemplate: (inputTransform?.stringReplacement)!) else { return text }
         return transformedText
     }
     
