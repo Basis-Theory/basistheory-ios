@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "AnyCodable",
+        "repositoryURL": "https://github.com/Flight-School/AnyCodable",
+        "state": {
+          "branch": null,
+          "revision": "862808b2070cd908cb04f9aafe7de83d35f81b05",
+          "version": "0.6.7"
+        }
+      },
+      {
+        "package": "BasisTheory",
+        "repositoryURL": "https://github.com/Basis-Theory/basistheory-swift",
+        "state": {
+          "branch": null,
+          "revision": "d4d10d63fe9373ec667a95910fbc4504b6004fde",
+          "version": "0.5.5"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
