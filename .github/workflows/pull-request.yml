@@ -31,3 +31,13 @@ jobs:
         env:
           DEV_BT_API_KEY: ${{ secrets.DEV_BT_API_KEY }}
           DEV_PRIVATE_BT_API_KEY: ${{ secrets.DEV_PRIVATE_BT_API_KEY }}
+
+  pod-linting:
+    name: Pod Linting
+    runs-on: macOS-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Pod Linting
+        run: pod lib lint --allow-warnings
