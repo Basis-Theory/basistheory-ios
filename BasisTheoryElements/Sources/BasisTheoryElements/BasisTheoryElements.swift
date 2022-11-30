@@ -57,7 +57,6 @@ final public class BasisTheoryElements {
     }
     
     public static func createToken(body: CreateToken, apiKey: String, completion: @escaping ((_ data: CreateTokenResponse?, _ error: Error?) -> Void)) -> Void {
-        
         var mutableBody = body
         var mutableData = body.data
         replaceElementRefs(body: &mutableData)

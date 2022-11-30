@@ -134,6 +134,8 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     }
     
     @objc private func textFieldDidChange() {
+        // TODO: remove. and consider computational costs vs memoizing on text
+        let cardBrandResults = CardBrand.getCardBrand(text: super.text)
         var maskComplete = true
         
         if inputMask != nil {
