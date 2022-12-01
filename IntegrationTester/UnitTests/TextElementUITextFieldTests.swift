@@ -98,4 +98,65 @@ final class TextElementUITextFieldTests: XCTestCase {
             XCTAssertEqual(error as! ElementConfigError, ElementConfigError.invalidMask)
         }
     }
+    
+    func testTransformTextField() throws {
+        let textField = TextElementUITextField()
+        let phoneNumber = "(123)456-7890"
+        let transformedPhoneNumber = "1234567890"
+        let transformPattern = "[()-]"
+        let maskPattern = "\\d"
+        let stringReplacement = ""
+        textField.insertText(phoneNumber)
+
+        let charactersToRemove = try! NSRegularExpression(pattern: transformPattern)
+        let regexDigit = try! NSRegularExpression(pattern: maskPattern)
+        let mask = [regexDigit, regexDigit, regexDigit]
+
+        let options = TextElementOptions(mask: mask, transform: ElementTransform(matcher: charactersToRemove, stringReplacement: stringReplacement))
+
+        try! textField.setConfig(options: options)
+
+        let body: CreateToken = CreateToken(type: "token", data: [
+                "textFieldRef": textField,
+                "myProp": "myValue",
+                "object": [
+                    "nestedProp": "nestedValue",
+                    "textFieldRef": textField,
+                ]
+        ])
+
+        let apiKey = Configuration.getConfiguration().btApiKey!
+        let transformExpectation = self.expectation(description: "Transform textfield")
+
+        var createdToken: CreateTokenResponse? = nil
+        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
+        BasisTheoryElements.createToken(body: body, apiKey: apiKey) { data, error in
+            createdToken = data
+
+            XCTAssertNotNil(createdToken!.id)
+            XCTAssertEqual(createdToken!.type!, "token")
+            transformExpectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 3, handler: nil)
+        
+        let transformQueryExpectation = self.expectation(description: "Query Token By ID to Test Transformed Textfield")
+        let privateApiKey = Configuration.getConfiguration().privateBtApiKey!
+        TokensAPI.getByIdWithRequestBuilder(id: createdToken!.id!).addHeader(name: "BT-API-KEY", value: privateApiKey).execute { result in
+            do {
+                let token = try result.get().body.data!.value as! [String: Any]
+
+                XCTAssertEqual(token["textFieldRef"] as! String, transformedPhoneNumber)
+                XCTAssertEqual(token["myProp"] as! String, "myValue")
+                XCTAssertEqual((token["object"] as! [String: String])["nestedProp"], "nestedValue")
+                XCTAssertEqual((token["object"] as! [String: String])["textFieldRef"], transformedPhoneNumber)
+
+                transformQueryExpectation.fulfill()
+            } catch {
+                print(error)
+            }
+        }
+
+        waitForExpectations(timeout: 3, handler: nil)
+    }
 }

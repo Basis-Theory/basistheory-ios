@@ -11,9 +11,11 @@ import Combine
 
 public struct TextElementOptions {
     let mask: [Any]?
+    let transform: ElementTransform?
     
-    public init(mask: [Any]?) {
+    public init(mask: [Any]? = nil, transform: ElementTransform? = nil) {
         self.mask = mask
+        self.transform = transform
     }
 }
 
@@ -21,6 +23,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     var validation: ((String?) -> Bool)?
     var backspacePressed: Bool = false
     var inputMask: [Any]?
+    var inputTransform: ElementTransform?
     
     public var subject = PassthroughSubject<ElementEvent, Error>()
     
@@ -67,6 +70,15 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
             
             self.inputMask = options?.mask
         }
+        
+        if (options?.transform != nil) {
+            self.inputTransform = options?.transform
+        }
+    }
+    
+    private func transform(text: String?) -> String {
+        guard let transformedText = inputTransform?.matcher.stringByReplacingMatches(in: text ?? "", options: .reportCompletion, range: NSRange(location: 0, length: text?.count ?? 0), withTemplate: (inputTransform?.stringReplacement)!) else { return text ?? "" }
+        return transformedText
     }
     
     private func validateMask(inputMask: [(Any)]) -> Bool {
@@ -167,6 +179,6 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     }
     
     func getValue() -> String? {
-        super.text
+        return transform(text: super.text)
     }
 }
