@@ -25,9 +25,11 @@ final public class CardVerificationCodeElementUITextField: TextElementUITextFiel
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.keyboardType = .asciiCapableNumberPad
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        self.keyboardType = .asciiCapableNumberPad
     }
 }
