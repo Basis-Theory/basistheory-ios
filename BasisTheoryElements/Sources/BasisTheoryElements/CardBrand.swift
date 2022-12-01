@@ -53,8 +53,14 @@ public struct CardBrandDetails {
 let threeDigitCvc = [regexDigit, regexDigit, regexDigit]
 let fourDigitCvc = [regexDigit, regexDigit, regexDigit]
 
-struct CardBrand {
-    public static let CardBrands: [CardBrandDetails] = [
+public struct CardBrandResults {
+    public var matchingCardBrands: [CardBrandDetails]
+    public var bestMatchCardBrand: CardBrandDetails?
+    public var complete: Bool
+}
+
+public struct CardBrand {
+    private static let CardBrands: [CardBrandDetails] = [
         CardBrandDetails(cardBrandName: .visa, cardIdentifiers: [4], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], orderedArrayOfLengths: [16, 18, 19]),
         CardBrandDetails(cardBrandName: .mastercard, cardIdentifiers: [[51, 55], [2221, 2229], [223, 229], [23, 26], [270, 271], 2720], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], orderedArrayOfLengths: [16]),
         CardBrandDetails(cardBrandName: .americanExpress, cardIdentifiers: [34, 37], cvcMaskInput: fourDigitCvc, gaps: [4, 10], orderedArrayOfLengths: [15]),
@@ -121,61 +127,57 @@ struct CardBrand {
         CardBrandDetails(cardBrandName: .hipercard, cardIdentifiers: [606282], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], orderedArrayOfLengths: [16]),
     ]
     
-    public static func getCardBrand(text: String?) -> (cardBrand: CardBrandDetails?, complete: Bool) {
+    public static func getCardBrand(text: String?) -> CardBrandResults {
         guard text != nil && !text!.isEmpty else {
-            return (cardBrand: nil, complete: false)
+            return CardBrandResults(matchingCardBrands: [], complete: false)
         }
         
-        let foundCardBrands = findMatchingCardBrands(text: text)
-        
-        return (cardBrand: foundCardBrands.bestMatch, complete: foundCardBrands.complete)
+        return findMatchingCardBrands(text: text!)
     }
     
-    private static func findMatchingCardBrands(text: String?) -> (matchingCardBrands: [CardBrandDetails], bestMatch: CardBrandDetails?, complete: Bool) {
-        var matchingCardBrands: [CardBrandDetails] = []
+    private static func findMatchingCardBrands(text: String) -> CardBrandResults {
+        var cardBrandResults = CardBrandResults(matchingCardBrands: [], complete: false)
         var highestMatchingLength = 0
-        var bestMatch: CardBrandDetails? = nil
-        var complete = false
         
         for cardBrand in CardBrands {
             for cardBrandIdentifier in cardBrand.cardIdentifiers {
                 if let cardBrandIdentifier = cardBrandIdentifier as? Int {
                     let lengthOfCardBrandIdentifier = String(cardBrandIdentifier).count
-                    let possibleMatch = Int(text!.prefix(lengthOfCardBrandIdentifier))
+                    let possibleMatch = Int(text.prefix(lengthOfCardBrandIdentifier))
                     
                     if possibleMatch == cardBrandIdentifier {
-                        matchingCardBrands.append(cardBrand)
+                        cardBrandResults.matchingCardBrands.append(cardBrand)
                         
-                        setCompleteAndBestMatchIfNecessary(text: text, lengthOfCardBrandIdentifier: lengthOfCardBrandIdentifier, cardBrand: cardBrand, highestMatchingLength: &highestMatchingLength, bestMatch: &bestMatch, complete: &complete)
+                        setCompleteAndBestMatchIfNecessary(text: text, lengthOfCardBrandIdentifier: lengthOfCardBrandIdentifier, cardBrand: cardBrand, highestMatchingLength: &highestMatchingLength, cardBrandResults: &cardBrandResults)
                     }
                 } else if let cardBrandIdentifierRange = cardBrandIdentifier as? NSArray {
                     let lowerLimit = cardBrandIdentifierRange[0] as! Int
                     let higherLimit = cardBrandIdentifierRange[1] as! Int
                     let lengthOfCardBrandIdentifier = String(lowerLimit).count
-                    let possibleMatch = Int(text!.prefix(lengthOfCardBrandIdentifier))!
+                    let possibleMatch = Int(text.prefix(lengthOfCardBrandIdentifier))!
                     
                     if lowerLimit <= possibleMatch && possibleMatch <= higherLimit {
-                        matchingCardBrands.append(cardBrand)
+                        cardBrandResults.matchingCardBrands.append(cardBrand)
                         
-                        setCompleteAndBestMatchIfNecessary(text: text, lengthOfCardBrandIdentifier: lengthOfCardBrandIdentifier, cardBrand: cardBrand, highestMatchingLength: &highestMatchingLength, bestMatch: &bestMatch, complete: &complete)
+                        setCompleteAndBestMatchIfNecessary(text: text, lengthOfCardBrandIdentifier: lengthOfCardBrandIdentifier, cardBrand: cardBrand, highestMatchingLength: &highestMatchingLength, cardBrandResults: &cardBrandResults)
                     }
                 }
             }
         }
         
-        return (matchingCardBrands: matchingCardBrands, bestMatch: bestMatch, complete: complete)
+        return cardBrandResults
     }
     
-    private static func setCompleteAndBestMatchIfNecessary(text: String?, lengthOfCardBrandIdentifier: Int, cardBrand: CardBrandDetails, highestMatchingLength: inout Int, bestMatch: inout CardBrandDetails?, complete: inout Bool) {
+    private static func setCompleteAndBestMatchIfNecessary(text: String?, lengthOfCardBrandIdentifier: Int, cardBrand: CardBrandDetails, highestMatchingLength: inout Int, cardBrandResults: inout CardBrandResults) {
         if highestMatchingLength < lengthOfCardBrandIdentifier {
-            bestMatch = cardBrand
+            cardBrandResults.bestMatchCardBrand = cardBrand
             highestMatchingLength = lengthOfCardBrandIdentifier
         }
         
         if cardBrand.validLengths.contains(text!.count) {
-            complete = true
+            cardBrandResults.complete = true
         } else {
-            complete = false
+            cardBrandResults.complete = false
         }
     }
 }

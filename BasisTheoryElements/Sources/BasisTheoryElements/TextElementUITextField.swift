@@ -17,8 +17,8 @@ public struct TextElementOptions {
     }
 }
 
-public class TextElementUITextField: UITextField, InternalElementProtocol, ElementProtocol {
-    var getElementEvent: ((String?) -> ElementEvent)?
+public class TextElementUITextField: UITextField, InternalElementProtocol, ElementProtocol, ElementReferenceProtocol {
+    var getElementEvent: ((String?, ElementEvent) -> ElementEvent)?
     var validation: ((String?) -> Bool)?
     var backspacePressed: Bool = false
     var inputMask: [Any]?
@@ -133,9 +133,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         return maskedText
     }
     
-    @objc private func textFieldDidChange() {
-        // TODO: remove. and consider computational costs vs memoizing on text
-        let cardBrandResults = CardBrand.getCardBrand(text: super.text)
+    @objc func textFieldDidChange() {
         var maskComplete = true
         
         if inputMask != nil {
@@ -169,7 +167,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         var elementEvent = ElementEvent(type: "textChange", complete: complete, empty: currentTextValue?.isEmpty ?? true, valid: valid, details: [])
         
         if let getElementEvent = getElementEvent {
-            elementEvent = getElementEvent(currentTextValue)
+            elementEvent = getElementEvent(currentTextValue, elementEvent)
         }
         
         subject.send(elementEvent)

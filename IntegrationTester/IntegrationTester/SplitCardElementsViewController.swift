@@ -15,11 +15,42 @@ class SplitCardElementsViewController: UIViewController {
     private let darkBackgroundColor : UIColor = UIColor( red: 200/255, green: 200/255, blue: 200/255, alpha: 1.0 )
     private var cancellables = Set<AnyCancellable>()
     
+    @IBOutlet weak var expirationDateTextField: CardExpirationDateUITextField!
     @IBOutlet weak var cvcTextField: CardVerificationCodeElementUITextField!
+    @IBOutlet weak var output: UITextView!
+    
+    @IBAction func tokenize(_ sender: Any) {
+        let body: [String: Any] = [
+            "data": [
+                "number": "4242424242424242",
+                "expiration_month": self.expirationDateTextField.month(),
+                "expiration_year": self.expirationDateTextField.year(),
+                "cvc": self.cvcTextField
+            ],
+            "type": "card"
+        ]
+        
+        let config = Configuration.getConfiguration()
+        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
+        BasisTheoryElements.tokenize(body: body, apiKey: config.btApiKey!) { data, error in
+            guard error == nil else {
+                self.output.text = "There was an error!"
+                print(error)
+                return
+            }
+            
+            let stringifiedData = String(data: try! JSONSerialization.data(withJSONObject: data!.value as! [String: Any], options: .prettyPrinted), encoding: .utf8)!
+            
+            self.output.text = stringifiedData
+            print(stringifiedData)
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setStyles(textField: expirationDateTextField, placeholder: "MM/YY")
         setStyles(textField: cvcTextField, placeholder: "CVC")
         
         cvcTextField.subject.sink { completion in
