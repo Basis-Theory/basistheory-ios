@@ -12,7 +12,6 @@ import Combine
 
 public enum TokenizingError: Error {
     case applicationNotPublic
-    case invalidValue
 }
 
 final public class BasisTheoryElements {
