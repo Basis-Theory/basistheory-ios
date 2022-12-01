@@ -74,7 +74,7 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
     }
     
     private func getMonthValue() -> String {
-        if (super.text != nil) {
+        if (super.getValue() != nil){
             let dateArray = super.getValue()?.components(separatedBy: "/")
             return String(dateArray![0])
         }

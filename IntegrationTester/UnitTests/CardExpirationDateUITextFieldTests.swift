@@ -126,12 +126,12 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
     }
     
     func testWithAndWithoutExpirationDateInputEvents() throws {
-        let cvcTextField = CardVerificationCodeElementUITextField()
+        let expirationDateTextField = CardExpirationDateUITextField()
         
-        let cvcInputExpectation = self.expectation(description: "CVC input")
-        let cvcDeleteExpectation = self.expectation(description: "CVC delete")
+        let expDateInputExpectation = self.expectation(description: "Expiration date input")
+        let expDateDeleteExpectation = self.expectation(description: "Expiration date delete")
         var cancellables = Set<AnyCancellable>()
-        cvcTextField.subject.sink { completion in
+        expirationDateTextField.subject.sink { completion in
             print(completion)
         } receiveValue: { message in
             XCTAssertEqual(message.type, "textChange")
@@ -139,20 +139,66 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
             if (!message.empty) {
                 XCTAssertEqual(message.invalid, false)
                 XCTAssertEqual(message.complete, true)
-                cvcInputExpectation.fulfill()
+                expDateInputExpectation.fulfill()
             } else {
                 XCTAssertEqual(message.invalid, true)
                 XCTAssertEqual(message.complete, false)
-                cvcDeleteExpectation.fulfill()
+                expDateDeleteExpectation.fulfill()
             }
         }.store(in: &cancellables)
         
-        cvcTextField.insertText("123")
-        cvcTextField.text = ""
-        cvcTextField.insertText("")
+        let futureYear = getCurrentYear() + 1
+        
+        expirationDateTextField.insertText(String(getCurrentMonth()) + "/" + String(futureYear))
+        expirationDateTextField.text = ""
+        expirationDateTextField.insertText("")
         
         waitForExpectations(timeout: 1, handler: nil)
     }
     
-    // TODO: test month() and year() methods
+    func testExpirationDateSpecialtyMethods() throws {
+        let expirationDateTextField = CardExpirationDateUITextField()
+        let futureYear = getCurrentYear() + 1
+        let formattedYear = "20" + String(futureYear)
+        expirationDateTextField.text = String(getCurrentMonth()) + "/" + String(futureYear)
+
+        let body: [String: Any] = [
+            "data": [
+                "monthRef": expirationDateTextField.month(),
+                "yearRef": expirationDateTextField.year(),
+            ],
+            "type": "token"
+        ]
+
+        let publicApiKey = Configuration.getConfiguration().btApiKey!
+        let tokenizeExpectation = self.expectation(description: "Tokenize")
+        var createdToken: [String: Any] = [:]
+        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
+        BasisTheoryElements.tokenize(body: body, apiKey: publicApiKey) { data, error in
+            createdToken = data!.value as! [String: Any]
+
+            XCTAssertNotNil(createdToken["id"])
+            XCTAssertEqual(createdToken["type"] as! String, "token")
+
+            tokenizeExpectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 30, handler: nil)
+
+        let privateApiKey = Configuration.getConfiguration().privateBtApiKey!
+        let idQueryExpectation = self.expectation(description: "Token ID Query")
+        TokensAPI.getByIdWithRequestBuilder(id: createdToken["id"] as! String).addHeader(name: "BT-API-KEY", value: privateApiKey).execute { result in
+            do {
+                let token = try result.get().body.data!.value as! [String: Any]
+                XCTAssertEqual(token["monthRef"] as! String, String(self.getCurrentMonth()))
+                XCTAssertEqual(token["yearRef"] as! String, formattedYear)
+
+                idQueryExpectation.fulfill()
+            } catch {
+                print(error)
+            }
+        }
+
+        waitForExpectations(timeout: 3, handler: nil)
+    }
 }
