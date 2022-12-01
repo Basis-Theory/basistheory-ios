@@ -12,6 +12,7 @@ import Combine
 
 public enum TokenizingError: Error {
     case applicationNotPublic
+    case invalidValue
 }
 
 final public class BasisTheoryElements {
@@ -84,7 +85,7 @@ final public class BasisTheoryElements {
             if var v = val as? [String: Any] {
                 replaceElementRefs(body: &v)
                 body[key] = v
-            } else if let v = val as? TextElementUITextField {
+            } else if let v = val as? ElementReferenceProtocol {
                 body[key] = v.getValue()
             }
         }

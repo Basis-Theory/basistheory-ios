@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		428CB1062937C53000C8220E /* CardExpirationDateUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428CB1052937C53000C8220E /* CardExpirationDateUITextField.swift */; };
 		9206601D2922813C00A92A81 /* CardVerificationCodeUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9206601C2922813C00A92A81 /* CardVerificationCodeUITextField.swift */; };
 		9245768928FF46C100A01E70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9245768828FF46C100A01E70 /* AppDelegate.swift */; };
 		9245768B28FF46C100A01E70 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9245768A28FF46C100A01E70 /* SceneDelegate.swift */; };
@@ -46,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		428CB1052937C53000C8220E /* CardExpirationDateUITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardExpirationDateUITextField.swift; sourceTree = "<group>"; };
 		9206601C2922813C00A92A81 /* CardVerificationCodeUITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardVerificationCodeUITextField.swift; sourceTree = "<group>"; };
 		9245768528FF46C100A01E70 /* IntegrationTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IntegrationTester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9245768828FF46C100A01E70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				9245769F28FF46C200A01E70 /* TextElementUITextFieldTests.swift */,
 				9253E8E1291EB66E00FDF1A9 /* ElementUITextFieldTests.swift */,
 				9206601C2922813C00A92A81 /* CardVerificationCodeUITextField.swift */,
+				428CB1052937C53000C8220E /* CardExpirationDateUITextField.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				928869A72911B564004E75E3 /* Configuration.swift in Sources */,
+				428CB1062937C53000C8220E /* CardExpirationDateUITextField.swift in Sources */,
 				924576A028FF46C200A01E70 /* TextElementUITextFieldTests.swift in Sources */,
 				9253E8E2291EB66E00FDF1A9 /* ElementUITextFieldTests.swift in Sources */,
 				9206601D2922813C00A92A81 /* CardVerificationCodeUITextField.swift in Sources */,
