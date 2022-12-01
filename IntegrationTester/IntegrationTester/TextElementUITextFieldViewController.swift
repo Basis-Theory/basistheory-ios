@@ -76,10 +76,12 @@ class TextElementUITextFieldViewController: UIViewController {
             regexDigit,
             regexDigit
         ] as [Any]
-        let phoneOptions = TextElementOptions(mask: phoneMask)
+       
+        let transformMatcher = try! NSRegularExpression(pattern: "[()-]") //Regex to remove parentheses & dashes
+        let phoneOptions = TextElementOptions(mask: phoneMask, transform: ElementTransform(matcher: transformMatcher, stringReplacement: ""))
         
         try! phoneNumberTextField.setConfig(options: phoneOptions)
-
+        
         setStyles(textField: nameTextField, placeholder: "Name")
         setStyles(textField: phoneNumberTextField, placeholder: "Phone Number")
 

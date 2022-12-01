@@ -1,3 +1,11 @@
+## [0.5.0](https://github.com/Basis-Theory/basistheory-ios/compare/0.4.0...0.5.0) (2022-12-01)
+
+
+### Features
+
+* Add transform function for phone numbers ([#8](https://github.com/Basis-Theory/basistheory-ios/issues/8)) ([1e7bf30](https://github.com/Basis-Theory/basistheory-ios/commit/1e7bf3095062561f4c91c34cd251123fdfefa461))
+
+
 ## [0.4.0](https://github.com/Basis-Theory/basistheory-ios/compare/0.3.2...0.4.0) (2022-12-01)
 
 
