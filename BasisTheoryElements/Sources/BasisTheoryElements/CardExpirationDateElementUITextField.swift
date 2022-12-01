@@ -45,11 +45,7 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
             dateFormatter.dateFormat = "MM"
             let currentMonth = Int(dateFormatter.string(from: now))!
             
-            guard inputMonth >= currentMonth else {
-                return false
-            }
-            
-            return true
+            return inputMonth >= currentMonth
         } else {
             return false
         }
