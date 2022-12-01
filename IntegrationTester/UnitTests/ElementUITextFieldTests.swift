@@ -21,7 +21,9 @@ class ElementUITextFieldTests: XCTestCase {
         let testSuite = XCTestSuite(name: NSStringFromClass(self))
 
         addTestsWithElement(element: TextElementUITextField(), elementInput: "Drewsue Webuino", toTestSuite: testSuite)
+        addTestsWithElement(element: CardExpirationDateUITextField(), elementInput: "12/99", toTestSuite: testSuite)
         addTestsWithElement(element: CardVerificationCodeElementUITextField(), elementInput: "123", toTestSuite: testSuite)
+        
 
         return testSuite
     }

@@ -19,7 +19,7 @@ public struct TextElementOptions {
     }
 }
 
-public class TextElementUITextField: UITextField, InternalElementProtocol, ElementProtocol {
+public class TextElementUITextField: UITextField, InternalElementProtocol, ElementProtocol, ElementReferenceProtocol {
     var validation: ((String?) -> Bool)?
     var backspacePressed: Bool = false
     var inputMask: [Any]?
@@ -144,7 +144,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         return maskedText
     }
     
-    @objc private func textFieldDidChange() {
+    @objc func textFieldDidChange() {
         var maskComplete = true
         
         if inputMask != nil {

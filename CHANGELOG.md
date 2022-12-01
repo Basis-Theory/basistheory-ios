@@ -1,3 +1,11 @@
+## [0.4.0](https://github.com/Basis-Theory/basistheory-ios/compare/0.3.2...0.4.0) (2022-12-01)
+
+
+### Features
+
+* add card expiration date element ([#13](https://github.com/Basis-Theory/basistheory-ios/issues/13)) ([f746c1c](https://github.com/Basis-Theory/basistheory-ios/commit/f746c1cff0c63d4e6c49d59953f7c38667d7d330))
+
+
 ### [0.3.2](https://github.com/Basis-Theory/basistheory-ios/compare/0.3.1...0.3.2) (2022-11-29)
 
 
