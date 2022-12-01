@@ -17,7 +17,6 @@ internal protocol InternalElementProtocol {
     var inputMask: [Any]? { get set }
     var inputTransform: ElementTransform? { get set }
     func getValue() -> String?
-    func transform(text: String) -> String
 }
 
 public enum ElementConfigError: Error {

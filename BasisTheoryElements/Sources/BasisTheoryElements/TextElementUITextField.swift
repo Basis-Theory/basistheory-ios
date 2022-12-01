@@ -76,8 +76,8 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         }
     }
     
-    func transform(text: String) -> String {
-        guard let transformedText = inputTransform?.matcher?.stringByReplacingMatches(in: text, options: .reportCompletion, range: NSRange(location: 0, length: text.count), withTemplate: (inputTransform?.stringReplacement)!) else { return text }
+    private func transform(text: String?) -> String {
+        guard let transformedText = inputTransform?.matcher.stringByReplacingMatches(in: text ?? "", options: .reportCompletion, range: NSRange(location: 0, length: text?.count ?? 0), withTemplate: (inputTransform?.stringReplacement)!) else { return text ?? "" }
         return transformedText
     }
     
@@ -179,10 +179,6 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     }
     
     func getValue() -> String? {
-        if (inputTransform) != nil {
-            return transform(text: super.text ?? "")
-        } else {
-            return super.text
-        }
+        return transform(text: super.text)
     }
 }
