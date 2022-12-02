@@ -7,39 +7,22 @@
 
 import Foundation
 
-public enum CardBrandName {
-    case visa
-    case mastercard
-    case americanExpress
-    case dinersClub
-    case discover
-    case jcb
-    case unionPay
-    case maestro
-    case elo
-    case mir
-    case hiper
-    case hipercard
-}
-
-let regexDigit = try! NSRegularExpression(pattern: "\\d")
-
 public struct CardBrandDetails {
-    var cardBrandName: CardBrandName
-    var cardIdentifiers: [Any]
-    var cvcMaskInput: [NSRegularExpression]
-    var cardNumberMaskInput: [Any] = []
-    var validLengths: [Int]
+    public var cardBrandName: CardBrand.CardBrandName
+    public var cardIdentifiers: [Any]
+    public var cvcMaskInput: [NSRegularExpression]
+    public var cardNumberMaskInput: [Any] = []
+    public var validLengths: [Int]
     
-    init(cardBrandName: CardBrandName, cardIdentifiers: [Any], cvcMaskInput: [NSRegularExpression], gaps: [Int], orderedArrayOfLengths: [Int]) {
+    init(cardBrandName: CardBrand.CardBrandName, cardIdentifiers: [Any], cvcMaskInput: [NSRegularExpression], gaps: [Int], orderedArrayOfLengths: [Int]) {
         var gapIndex = 0
         for i in 1...orderedArrayOfLengths.last! {
             if gaps.count-1 >= gapIndex && gaps[gapIndex] == i-1 {
                 cardNumberMaskInput.append(" ")
-                cardNumberMaskInput.append(regexDigit)
+                cardNumberMaskInput.append(CardBrand.regexDigit)
                 gapIndex += 1
             } else {
-                cardNumberMaskInput.append(regexDigit)
+                cardNumberMaskInput.append(CardBrand.regexDigit)
             }
         }
         
@@ -50,16 +33,32 @@ public struct CardBrandDetails {
     }
 }
 
-let threeDigitCvc = [regexDigit, regexDigit, regexDigit]
-let fourDigitCvc = [regexDigit, regexDigit, regexDigit]
-
 public struct CardBrandResults {
-    public var matchingCardBrands: [CardBrandDetails]
+    public var matchingCardBrands: [CardBrandDetails] = []
     public var bestMatchCardBrand: CardBrandDetails?
-    public var complete: Bool
+    public var complete: Bool = false
 }
 
 public struct CardBrand {
+    internal static let regexDigit = try! NSRegularExpression(pattern: "\\d")
+    private static let threeDigitCvc = [regexDigit, regexDigit, regexDigit]
+    private static let fourDigitCvc = [regexDigit, regexDigit, regexDigit, regexDigit]
+    
+    public enum CardBrandName {
+        case visa
+        case mastercard
+        case americanExpress
+        case dinersClub
+        case discover
+        case jcb
+        case unionPay
+        case maestro
+        case elo
+        case mir
+        case hiper
+        case hipercard
+    }
+    
     private static let CardBrands: [CardBrandDetails] = [
         CardBrandDetails(cardBrandName: .visa, cardIdentifiers: [4], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], orderedArrayOfLengths: [16, 18, 19]),
         CardBrandDetails(cardBrandName: .mastercard, cardIdentifiers: [[51, 55], [2221, 2229], [223, 229], [23, 26], [270, 271], 2720], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], orderedArrayOfLengths: [16]),
@@ -148,7 +147,7 @@ public struct CardBrand {
                     if possibleMatch == cardBrandIdentifier {
                         cardBrandResults.matchingCardBrands.append(cardBrand)
                         
-                        setCompleteAndBestMatchIfNecessary(text: text, lengthOfCardBrandIdentifier: lengthOfCardBrandIdentifier, cardBrand: cardBrand, highestMatchingLength: &highestMatchingLength, cardBrandResults: &cardBrandResults)
+                        findBestMatchAndSetCompleteFlag(text: text, lengthOfCardBrandIdentifier: lengthOfCardBrandIdentifier, cardBrand: cardBrand, highestMatchingLength: &highestMatchingLength, cardBrandResults: &cardBrandResults)
                     }
                 } else if let cardBrandIdentifierRange = cardBrandIdentifier as? NSArray {
                     let lowerLimit = cardBrandIdentifierRange[0] as! Int
@@ -159,7 +158,7 @@ public struct CardBrand {
                     if lowerLimit <= possibleMatch && possibleMatch <= higherLimit {
                         cardBrandResults.matchingCardBrands.append(cardBrand)
                         
-                        setCompleteAndBestMatchIfNecessary(text: text, lengthOfCardBrandIdentifier: lengthOfCardBrandIdentifier, cardBrand: cardBrand, highestMatchingLength: &highestMatchingLength, cardBrandResults: &cardBrandResults)
+                        findBestMatchAndSetCompleteFlag(text: text, lengthOfCardBrandIdentifier: lengthOfCardBrandIdentifier, cardBrand: cardBrand, highestMatchingLength: &highestMatchingLength, cardBrandResults: &cardBrandResults)
                     }
                 }
             }
@@ -168,16 +167,16 @@ public struct CardBrand {
         return cardBrandResults
     }
     
-    private static func setCompleteAndBestMatchIfNecessary(text: String?, lengthOfCardBrandIdentifier: Int, cardBrand: CardBrandDetails, highestMatchingLength: inout Int, cardBrandResults: inout CardBrandResults) {
+    private static func findBestMatchAndSetCompleteFlag(text: String?, lengthOfCardBrandIdentifier: Int, cardBrand: CardBrandDetails, highestMatchingLength: inout Int, cardBrandResults: inout CardBrandResults) {
         if highestMatchingLength < lengthOfCardBrandIdentifier {
             cardBrandResults.bestMatchCardBrand = cardBrand
             highestMatchingLength = lengthOfCardBrandIdentifier
-        }
-        
-        if cardBrand.validLengths.contains(text!.count) {
-            cardBrandResults.complete = true
-        } else {
-            cardBrandResults.complete = false
+            
+            if cardBrand.validLengths.contains(text!.count) {
+                cardBrandResults.complete = true
+            } else {
+                cardBrandResults.complete = false
+            }
         }
     }
 }
