@@ -14,9 +14,9 @@ public struct CardBrandDetails {
     public var cardNumberMaskInput: [Any] = []
     public var validLengths: [Int]
     
-    init(cardBrandName: CardBrand.CardBrandName, cardIdentifiers: [Any], cvcMaskInput: [NSRegularExpression], gaps: [Int], orderedArrayOfLengths: [Int]) {
+    init(cardBrandName: CardBrand.CardBrandName, cardIdentifiers: [Any], cvcMaskInput: [NSRegularExpression], gaps: [Int], validLengths: [Int]) {
         var gapIndex = 0
-        for i in 1...orderedArrayOfLengths.last! {
+        for i in 1...validLengths.last! {
             if gaps.count-1 >= gapIndex && gaps[gapIndex] == i-1 {
                 cardNumberMaskInput.append(" ")
                 cardNumberMaskInput.append(CardBrand.regexDigit)
@@ -29,7 +29,7 @@ public struct CardBrandDetails {
         self.cardBrandName = cardBrandName
         self.cardIdentifiers = cardIdentifiers
         self.cvcMaskInput = cvcMaskInput
-        self.validLengths = orderedArrayOfLengths
+        self.validLengths = validLengths
     }
 }
 
@@ -60,12 +60,12 @@ public struct CardBrand {
     }
     
     private static let CardBrands: [CardBrandDetails] = [
-        CardBrandDetails(cardBrandName: .visa, cardIdentifiers: [4], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], orderedArrayOfLengths: [16, 18, 19]),
-        CardBrandDetails(cardBrandName: .mastercard, cardIdentifiers: [[51, 55], [2221, 2229], [223, 229], [23, 26], [270, 271], 2720], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], orderedArrayOfLengths: [16]),
-        CardBrandDetails(cardBrandName: .americanExpress, cardIdentifiers: [34, 37], cvcMaskInput: fourDigitCvc, gaps: [4, 10], orderedArrayOfLengths: [15]),
-        CardBrandDetails(cardBrandName: .dinersClub, cardIdentifiers: [[300, 305], 36, 38, 39], cvcMaskInput: threeDigitCvc, gaps: [4, 10], orderedArrayOfLengths: [14, 16, 19]),
-        CardBrandDetails(cardBrandName: .discover, cardIdentifiers: [6011, [644, 649], 65], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], orderedArrayOfLengths: [16, 19]),
-        CardBrandDetails(cardBrandName: .jcb, cardIdentifiers: [2131, 1800, [3528, 3589]], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], orderedArrayOfLengths: [16, 17, 18, 19]),
+        CardBrandDetails(cardBrandName: .visa, cardIdentifiers: [4], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], validLengths: [16, 18, 19]),
+        CardBrandDetails(cardBrandName: .mastercard, cardIdentifiers: [[51, 55], [2221, 2229], [223, 229], [23, 26], [270, 271], 2720], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], validLengths: [16]),
+        CardBrandDetails(cardBrandName: .americanExpress, cardIdentifiers: [34, 37], cvcMaskInput: fourDigitCvc, gaps: [4, 10], validLengths: [15]),
+        CardBrandDetails(cardBrandName: .dinersClub, cardIdentifiers: [[300, 305], 36, 38, 39], cvcMaskInput: threeDigitCvc, gaps: [4, 10], validLengths: [14, 16, 19]),
+        CardBrandDetails(cardBrandName: .discover, cardIdentifiers: [6011, [644, 649], 65], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], validLengths: [16, 19]),
+        CardBrandDetails(cardBrandName: .jcb, cardIdentifiers: [2131, 1800, [3528, 3589]], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], validLengths: [16, 17, 18, 19]),
         CardBrandDetails(cardBrandName: .unionPay, cardIdentifiers: [
             620,
             [62100, 62197],
@@ -83,7 +83,7 @@ public struct CardBrand {
             6292,
             810,
             [8110, 8171],
-        ], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], orderedArrayOfLengths: [14, 15, 16, 17, 18, 19]),
+        ], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], validLengths: [14, 15, 16, 17, 18, 19]),
         CardBrandDetails(cardBrandName: .maestro, cardIdentifiers: [
             493698,
             [500000, 504174],
@@ -93,7 +93,7 @@ public struct CardBrand {
             63,
             67,
             6,
-        ], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], orderedArrayOfLengths: [12, 13, 14, 15, 16, 17, 18, 19]),
+        ], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], validLengths: [12, 13, 14, 15, 16, 17, 18, 19]),
         CardBrandDetails(cardBrandName: .elo, cardIdentifiers: [
             401178,
             401179,
@@ -120,10 +120,10 @@ public struct CardBrand {
             [651652, 651679],
             [655000, 655019],
             [655021, 655058],
-        ], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], orderedArrayOfLengths: [16]),
-        CardBrandDetails(cardBrandName: .mir, cardIdentifiers: [[2200, 2204]], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], orderedArrayOfLengths: [16, 17, 18, 19]),
-        CardBrandDetails(cardBrandName: .hiper, cardIdentifiers: [637095, 63737423, 63743358, 637568, 637599, 637609, 637612], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], orderedArrayOfLengths: [16]),
-        CardBrandDetails(cardBrandName: .hipercard, cardIdentifiers: [606282], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], orderedArrayOfLengths: [16]),
+        ], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], validLengths: [16]),
+        CardBrandDetails(cardBrandName: .mir, cardIdentifiers: [[2200, 2204]], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], validLengths: [16, 17, 18, 19]),
+        CardBrandDetails(cardBrandName: .hiper, cardIdentifiers: [637095, 63737423, 63743358, 637568, 637599, 637609, 637612], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], validLengths: [16]),
+        CardBrandDetails(cardBrandName: .hipercard, cardIdentifiers: [606282], cvcMaskInput: threeDigitCvc, gaps: [4, 8, 12], validLengths: [16]),
     ]
     
     public static func getCardBrand(text: String?) -> CardBrandResults {
@@ -136,7 +136,7 @@ public struct CardBrand {
     
     private static func findMatchingCardBrands(text: String) -> CardBrandResults {
         var cardBrandResults = CardBrandResults(matchingCardBrands: [], complete: false)
-        var highestMatchingLength = 0
+        var longestMatchingLength = 0
         
         for cardBrand in CardBrands {
             for cardBrandIdentifier in cardBrand.cardIdentifiers {
@@ -147,7 +147,7 @@ public struct CardBrand {
                     if possibleMatch == cardBrandIdentifier {
                         cardBrandResults.matchingCardBrands.append(cardBrand)
                         
-                        findBestMatchAndSetCompleteFlag(text: text, lengthOfCardBrandIdentifier: lengthOfCardBrandIdentifier, cardBrand: cardBrand, highestMatchingLength: &highestMatchingLength, cardBrandResults: &cardBrandResults)
+                        findBestMatchAndSetCompleteFlag(text: text, lengthOfCardBrandIdentifier: lengthOfCardBrandIdentifier, cardBrand: cardBrand, longestMatchingLength: &longestMatchingLength, cardBrandResults: &cardBrandResults)
                     }
                 } else if let cardBrandIdentifierRange = cardBrandIdentifier as? NSArray {
                     let lowerLimit = cardBrandIdentifierRange[0] as! Int
@@ -158,7 +158,7 @@ public struct CardBrand {
                     if lowerLimit <= possibleMatch && possibleMatch <= higherLimit {
                         cardBrandResults.matchingCardBrands.append(cardBrand)
                         
-                        findBestMatchAndSetCompleteFlag(text: text, lengthOfCardBrandIdentifier: lengthOfCardBrandIdentifier, cardBrand: cardBrand, highestMatchingLength: &highestMatchingLength, cardBrandResults: &cardBrandResults)
+                        findBestMatchAndSetCompleteFlag(text: text, lengthOfCardBrandIdentifier: lengthOfCardBrandIdentifier, cardBrand: cardBrand, longestMatchingLength: &longestMatchingLength, cardBrandResults: &cardBrandResults)
                     }
                 }
             }
@@ -167,10 +167,10 @@ public struct CardBrand {
         return cardBrandResults
     }
     
-    private static func findBestMatchAndSetCompleteFlag(text: String?, lengthOfCardBrandIdentifier: Int, cardBrand: CardBrandDetails, highestMatchingLength: inout Int, cardBrandResults: inout CardBrandResults) {
-        if highestMatchingLength < lengthOfCardBrandIdentifier {
+    private static func findBestMatchAndSetCompleteFlag(text: String?, lengthOfCardBrandIdentifier: Int, cardBrand: CardBrandDetails, longestMatchingLength: inout Int, cardBrandResults: inout CardBrandResults) {
+        if longestMatchingLength < lengthOfCardBrandIdentifier {
             cardBrandResults.bestMatchCardBrand = cardBrand
-            highestMatchingLength = lengthOfCardBrandIdentifier
+            longestMatchingLength = lengthOfCardBrandIdentifier
             
             cardBrandResults.complete = cardBrand.validLengths.contains(text!.count)
         }
