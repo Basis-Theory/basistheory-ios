@@ -31,7 +31,7 @@ final class CardVerificationCodeUITextFieldTests: XCTestCase {
         } receiveValue: { message in
             XCTAssertEqual(message.type, "textChange")
             XCTAssertEqual(message.empty, false)
-            XCTAssertEqual(message.invalid, true)
+            XCTAssertEqual(message.valid, false)
             
             if (!invalidCvcWithLettersExpectationHasBeenFulfilled) {
                 XCTAssertEqual(message.complete, false)
@@ -69,7 +69,7 @@ final class CardVerificationCodeUITextFieldTests: XCTestCase {
         } receiveValue: { message in
             XCTAssertEqual(message.type, "textChange")
             XCTAssertEqual(message.empty, false)
-            XCTAssertEqual(message.invalid, false)
+            XCTAssertEqual(message.valid, true)
             
             if (!threeDigitExpectationHasBeenFulfilled) {
                 XCTAssertEqual(message.complete, true)
@@ -99,11 +99,11 @@ final class CardVerificationCodeUITextFieldTests: XCTestCase {
             XCTAssertEqual(message.type, "textChange")
             
             if (!message.empty) {
-                XCTAssertEqual(message.invalid, false)
+                XCTAssertEqual(message.valid, true)
                 XCTAssertEqual(message.complete, true)
                 cvcInputExpectation.fulfill()
             } else {
-                XCTAssertEqual(message.invalid, true)
+                XCTAssertEqual(message.valid, false)
                 XCTAssertEqual(message.complete, false)
                 cvcDeleteExpectation.fulfill()
             }

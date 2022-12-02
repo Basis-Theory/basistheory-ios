@@ -26,7 +26,7 @@ final class TextElementUITextFieldTests: XCTestCase {
         } receiveValue: { message in
             XCTAssertEqual(message.type, "textChange")
             XCTAssertEqual(message.complete, true)
-            XCTAssertEqual(message.invalid, false)
+            XCTAssertEqual(message.valid, true)
 
             if (!message.empty) {
                 nameInputExpectation.fulfill()
@@ -61,7 +61,7 @@ final class TextElementUITextFieldTests: XCTestCase {
         } receiveValue: { message in
             XCTAssertEqual(message.type, "textChange")
             XCTAssertEqual(message.complete, true)
-            XCTAssertEqual(message.invalid, false)
+            XCTAssertEqual(message.valid, true)
             
             completeFieldExpectation.fulfill()
         }.store(in: &cancellables)
@@ -71,7 +71,7 @@ final class TextElementUITextFieldTests: XCTestCase {
         } receiveValue: { message in
             XCTAssertEqual(message.type, "textChange")
             XCTAssertEqual(message.complete, false)
-            XCTAssertEqual(message.invalid, false)
+            XCTAssertEqual(message.valid, true)
             
             incompleteFieldExpectation.fulfill()
         }.store(in: &cancellables)

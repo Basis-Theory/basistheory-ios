@@ -53,7 +53,7 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         } receiveValue: { message in
             XCTAssertEqual(message.type, "textChange")
             XCTAssertEqual(message.empty, false)
-            XCTAssertEqual(message.invalid, true)
+            XCTAssertEqual(message.valid, false)
             
             if (!incompleteDateExpectationHasBeenFulfilled) {
                 XCTAssertEqual(message.complete, false)
@@ -97,7 +97,7 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         } receiveValue: { message in
             XCTAssertEqual(message.type, "textChange")
             XCTAssertEqual(message.empty, false)
-            XCTAssertEqual(message.invalid, false)
+            XCTAssertEqual(message.valid, true)
             
             if (!futureYearExpectationHasBeenFulfilled) {
                 XCTAssertEqual(message.complete, true)
@@ -137,11 +137,11 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
             XCTAssertEqual(message.type, "textChange")
             
             if (!message.empty) {
-                XCTAssertEqual(message.invalid, false)
+                XCTAssertEqual(message.valid, true)
                 XCTAssertEqual(message.complete, true)
                 expDateInputExpectation.fulfill()
             } else {
-                XCTAssertEqual(message.invalid, true)
+                XCTAssertEqual(message.valid, false)
                 XCTAssertEqual(message.complete, false)
                 expDateDeleteExpectation.fulfill()
             }

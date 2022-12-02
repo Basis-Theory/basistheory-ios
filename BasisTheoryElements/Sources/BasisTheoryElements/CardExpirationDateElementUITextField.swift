@@ -29,7 +29,6 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
     }
     
     private func validateFutureDate(text: String) -> Bool {
-        
         let inputDateArray = super.getValue()?.components(separatedBy: "/")
         let inputMonth = Int(String(inputDateArray![0]))!
         let inputYear = Int(String("20" + inputDateArray![1]))!
@@ -97,14 +96,12 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
             }
         }
         
-        
         super.textFieldDidChange()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.keyboardType = .asciiCapableNumberPad
-        
     }
     
     required init?(coder: NSCoder) {

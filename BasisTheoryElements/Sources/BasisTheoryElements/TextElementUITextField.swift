@@ -20,6 +20,7 @@ public struct TextElementOptions {
 }
 
 public class TextElementUITextField: UITextField, InternalElementProtocol, ElementProtocol, ElementReferenceProtocol {
+    var getElementEvent: ((String?, ElementEvent) -> ElementEvent)?
     var validation: ((String?) -> Bool)?
     var backspacePressed: Bool = false
     var inputMask: [Any]?
@@ -31,14 +32,14 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         super.init(frame: frame)
         self.smartDashesType = .no
         self.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        subject.send(ElementEvent(type: "ready", complete: true, empty: true, invalid: false))
+        subject.send(ElementEvent(type: "ready", complete: true, empty: true, valid: true, details: []))
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.smartDashesType = .no
         self.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        subject.send(ElementEvent(type: "ready", complete: true, empty: true, invalid: false))
+        subject.send(ElementEvent(type: "ready", complete: true, empty: true, valid: true, details: []))
     }
     
     deinit {
@@ -167,15 +168,21 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         }
         
         let currentTextValue = super.text
-        var invalid = false
-        
+        var valid = true
+
         if let validation = validation {
-            invalid = !validation(currentTextValue)
+            valid = validation(currentTextValue)
         }
         
-        let complete = !invalid && maskComplete
+        let complete = valid && maskComplete
         
-        subject.send(ElementEvent(type: "textChange", complete: complete, empty: currentTextValue?.isEmpty ?? true, invalid: invalid))
+        var elementEvent = ElementEvent(type: "textChange", complete: complete, empty: currentTextValue?.isEmpty ?? true, valid: valid, details: [])
+        
+        if let getElementEvent = getElementEvent {
+            elementEvent = getElementEvent(currentTextValue, elementEvent)
+        }
+        
+        subject.send(elementEvent)
     }
     
     func getValue() -> String? {

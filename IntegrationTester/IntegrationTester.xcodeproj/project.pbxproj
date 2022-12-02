@@ -24,6 +24,7 @@
 		928869A229118DC4004E75E3 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924576CB2900519900A01E70 /* Configuration.swift */; };
 		928869A72911B564004E75E3 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924576CB2900519900A01E70 /* Configuration.swift */; };
 		92A24DE7291DA1F0005DD4D2 /* SplitCardElementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A24DE6291DA1F0005DD4D2 /* SplitCardElementsViewController.swift */; };
+		92B7DCAF2939523C000DBB8A /* CardBrandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B7DCAE2939523C000DBB8A /* CardBrandTests.swift */; };
 		92C3019629132287009F8D92 /* Env.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92C3019529132287009F8D92 /* Env.plist */; };
 		92C3019729132287009F8D92 /* Env.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92C3019529132287009F8D92 /* Env.plist */; };
 		92C3019829132287009F8D92 /* Env.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92C3019529132287009F8D92 /* Env.plist */; };
@@ -66,6 +67,7 @@
 		9253E8E1291EB66E00FDF1A9 /* ElementUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementUITextFieldTests.swift; sourceTree = "<group>"; };
 		92566EA4293578AB0047BFF2 /* BasisTheoryElements */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BasisTheoryElements; path = ../BasisTheoryElements; sourceTree = "<group>"; };
 		92A24DE6291DA1F0005DD4D2 /* SplitCardElementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitCardElementsViewController.swift; sourceTree = "<group>"; };
+		92B7DCAE2939523C000DBB8A /* CardBrandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBrandTests.swift; sourceTree = "<group>"; };
 		92C3019529132287009F8D92 /* Env.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Env.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -142,6 +144,7 @@
 				9206601C2922813C00A92A81 /* CardVerificationCodeUITextFieldTests.swift */,
 				9245769F28FF46C200A01E70 /* TextElementUITextFieldTests.swift */,
 				428CB1052937C53000C8220E /* CardExpirationDateUITextFieldTests.swift */,
+				92B7DCAE2939523C000DBB8A /* CardBrandTests.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				928869A72911B564004E75E3 /* Configuration.swift in Sources */,
+				92B7DCAF2939523C000DBB8A /* CardBrandTests.swift in Sources */,
 				428CB1062937C53000C8220E /* CardExpirationDateUITextFieldTests.swift in Sources */,
 				924576A028FF46C200A01E70 /* TextElementUITextFieldTests.swift in Sources */,
 				9253E8E2291EB66E00FDF1A9 /* ElementUITextFieldTests.swift in Sources */,
