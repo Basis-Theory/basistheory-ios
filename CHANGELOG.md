@@ -1,3 +1,11 @@
+## [0.6.0](https://github.com/Basis-Theory/basistheory-ios/compare/0.5.0...0.6.0) (2022-12-02)
+
+
+### Features
+
+* adds card brand detecting module ([#14](https://github.com/Basis-Theory/basistheory-ios/issues/14)) ([98c5bff](https://github.com/Basis-Theory/basistheory-ios/commit/98c5bff0508e0ce501a8546f7bc7c01eaad22c66))
+
+
 ## [0.5.0](https://github.com/Basis-Theory/basistheory-ios/compare/0.4.0...0.5.0) (2022-12-01)
 
 
