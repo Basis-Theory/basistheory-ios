@@ -172,11 +172,7 @@ public struct CardBrand {
             cardBrandResults.bestMatchCardBrand = cardBrand
             highestMatchingLength = lengthOfCardBrandIdentifier
             
-            if cardBrand.validLengths.contains(text!.count) {
-                cardBrandResults.complete = true
-            } else {
-                cardBrandResults.complete = false
-            }
+            cardBrandResults.complete = cardBrand.validLengths.contains(text!.count)
         }
     }
 }
