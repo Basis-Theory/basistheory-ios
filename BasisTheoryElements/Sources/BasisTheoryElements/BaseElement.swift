@@ -18,7 +18,7 @@ internal protocol InternalElementProtocol {
     var getElementEvent: ((_ text: String?, _ currentElementEvent: ElementEvent) -> ElementEvent)? { get set }
     var inputTransform: ElementTransform? { get set }
 }
-    
+
 internal protocol ElementReferenceProtocol {
     func getValue() -> String?
 }
