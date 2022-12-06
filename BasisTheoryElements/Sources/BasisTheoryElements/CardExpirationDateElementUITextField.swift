@@ -28,6 +28,16 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
         return validateFutureDate(text: text!)
     }
     
+    public override func setConfig(options: TextElementOptions?) throws {
+        if (options?.mask != nil) {
+            throw ElementConfigError.configNotAllowed
+        } else if (options?.transform != nil) {
+            throw ElementConfigError.configNotAllowed
+        }
+        
+        try super.setConfig(options: options)
+    }
+    
     private func validateFutureDate(text: String) -> Bool {
         let inputDateArray = super.getValue()?.components(separatedBy: "/")
         let inputMonth = Int(String(inputDateArray![0]))!

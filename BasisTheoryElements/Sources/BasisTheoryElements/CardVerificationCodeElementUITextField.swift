@@ -23,6 +23,16 @@ final public class CardVerificationCodeElementUITextField: TextElementUITextFiel
         return text!.range(of: "^[0-9]{3,4}$", options: .regularExpression) != nil
     }
     
+    public override func setConfig(options: TextElementOptions?) throws {
+        if (options?.mask != nil) {
+            throw ElementConfigError.configNotAllowed
+        } else if (options?.transform != nil) {
+            throw ElementConfigError.configNotAllowed
+        }
+        
+        try super.setConfig(options: options)
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.keyboardType = .asciiCapableNumberPad
