@@ -16,7 +16,7 @@ class SplitCardElementsViewController: UIViewController {
     private var cancellables = Set<AnyCancellable>()
     
     @IBOutlet weak var expirationDateTextField: CardExpirationDateUITextField!
-    @IBOutlet weak var cvcTextField: CardVerificationCodeElementUITextField!
+    @IBOutlet weak var cvcTextField: CardVerificationCodeUITextField!
     @IBOutlet weak var output: UITextView!
     
     @IBAction func tokenize(_ sender: Any) {
