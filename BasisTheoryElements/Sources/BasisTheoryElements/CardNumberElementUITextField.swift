@@ -88,7 +88,7 @@ final public class CardNumberUITextField: TextElementUITextField {
         guard text != nil else {
             return true
         }
-
+        
         return validateLuhn(cardNumber: text)
     }
     
@@ -96,7 +96,7 @@ final public class CardNumberUITextField: TextElementUITextField {
         guard cardNumber != "" else {
             return false
         }
-
+        
         var sum = 0
         let digitStrings = cardNumber?.reversed().map { String($0) }
         
