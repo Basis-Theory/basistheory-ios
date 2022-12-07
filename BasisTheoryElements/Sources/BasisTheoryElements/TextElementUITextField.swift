@@ -25,7 +25,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     var backspacePressed: Bool = false
     var inputMask: [Any]?
     var inputTransform: ElementTransform?
-    var previousValue: String = "abc"
+    var previousValue: String = ""
     
     public var subject = PassthroughSubject<ElementEvent, Error>()
     
@@ -177,6 +177,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
             elementEvent = getElementEvent(transformedTextValue, elementEvent)
         }
         
+        // prevents sending an additional event if input didn't change
         if (previousValue == super.text) {
             return
         } else {

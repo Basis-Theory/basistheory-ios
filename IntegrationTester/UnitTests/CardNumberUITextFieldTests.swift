@@ -97,8 +97,8 @@ final class CardNumberUITextFieldTests: XCTestCase {
     func testWithAndWithoutCardNumberInputEvents() throws {
         let cardNumberTextField = CardNumberUITextField()
         
-        let numberInputExpectation = self.expectation(description: "Expiration date input")
-        let numberDeleteExpectation = self.expectation(description: "Expiration date delete")
+        let numberInputExpectation = self.expectation(description: "Card number input")
+        let numberDeleteExpectation = self.expectation(description: "Card number delete")
         var cancellables = Set<AnyCancellable>()
         cardNumberTextField.subject.sink { completion in
             print(completion)

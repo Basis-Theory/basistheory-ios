@@ -39,13 +39,7 @@ final public class CardNumberUITextField: TextElementUITextField {
     }
     
     public override func setConfig(options: TextElementOptions?) throws {
-        if (options?.mask != nil) {
-            throw ElementConfigError.configNotAllowed
-        } else if (options?.transform != nil) {
-            throw ElementConfigError.configNotAllowed
-        }
-        
-        try super.setConfig(options: options)
+        throw ElementConfigError.configNotAllowed
     }
     
     private func getDefaultCardMask() -> [Any] {
@@ -86,7 +80,7 @@ final public class CardNumberUITextField: TextElementUITextField {
     
     private func validateCardNumber(text: String?) -> Bool {
         guard text != nil else {
-            return true
+            return false
         }
         
         return validateLuhn(cardNumber: text)
