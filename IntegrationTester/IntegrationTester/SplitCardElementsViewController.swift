@@ -17,7 +17,7 @@ class SplitCardElementsViewController: UIViewController {
     
     @IBOutlet weak var cardNumberTextField: CardNumberUITextField!
     @IBOutlet weak var expirationDateTextField: CardExpirationDateUITextField!
-    @IBOutlet weak var cvcTextField: CardVerificationCodeElementUITextField!
+    @IBOutlet weak var cvcTextField: CardVerificationCodeUITextField!
     @IBOutlet weak var output: UITextView!
     @IBOutlet weak var cardBrand: UITextView!
     
@@ -63,7 +63,7 @@ class SplitCardElementsViewController: UIViewController {
             print(message)
             
             if (!message.details.isEmpty) {
-                var brandDetails = message.details[0]
+                let brandDetails = message.details[0]
                 
                 self.cardBrand.text = brandDetails.type + ": " + brandDetails.message
             }

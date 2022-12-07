@@ -1,5 +1,5 @@
 //
-//  CardVerificationCodeElementUITextField.swift
+//  CardVerificationCodeUITextField.swift
 //  
 //
 //  Created by Brian Gonzalez on 11/10/22.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final public class CardVerificationCodeElementUITextField: TextElementUITextField {
+final public class CardVerificationCodeUITextField: TextElementUITextField {
     override var validation: ((String?) -> Bool)? {
         get {
             validateCvc
