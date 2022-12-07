@@ -223,7 +223,7 @@ Associating a `CardNumberUITextField` with a `CardVerificationCodeUITextField` w
 
 ```swift
 cvcTextField.setConfig(
-	options: CardVerificationCodeElementOptions(
+	options: CardVerificationCodeOptions(
 		cardNumberUITextField: cardNumberTextField
 	)
 )
