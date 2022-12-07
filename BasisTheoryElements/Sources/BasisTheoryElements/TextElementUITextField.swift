@@ -25,6 +25,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     var backspacePressed: Bool = false
     var inputMask: [Any]?
     var inputTransform: ElementTransform?
+    var previousValue: String = ""
     
     public var subject = PassthroughSubject<ElementEvent, Error>()
     
@@ -149,37 +150,38 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         var maskComplete = true
         
         if inputMask != nil {
-            let previousValue = super.text
-            
             // dont conform on backspace pressed - just remove the value + check for backspace on empty
             if (!backspacePressed || super.text != nil) {
                 super.text = conformToMask(text: super.text)
             } else {
                 backspacePressed = false
             }
-            
+
             if (super.text?.count != inputMask!.count ) {
                 maskComplete = false
             }
-            
-            guard previousValue == super.text else {
-                return
-            }
         }
         
-        let currentTextValue = super.text
+        let transformedTextValue = self.transform(text: super.text)
         var valid = true
 
         if let validation = validation {
-            valid = validation(currentTextValue)
+            valid = validation(transformedTextValue)
         }
         
         let complete = valid && maskComplete
         
-        var elementEvent = ElementEvent(type: "textChange", complete: complete, empty: currentTextValue?.isEmpty ?? true, valid: valid, details: [])
+        var elementEvent = ElementEvent(type: "textChange", complete: complete, empty: transformedTextValue.isEmpty , valid: valid, details: [])
         
         if let getElementEvent = getElementEvent {
-            elementEvent = getElementEvent(currentTextValue, elementEvent)
+            elementEvent = getElementEvent(transformedTextValue, elementEvent)
+        }
+        
+        // prevents sending an additional event if input didn't change
+        if (previousValue == super.text) {
+            return
+        } else {
+            previousValue = super.text!
         }
         
         subject.send(elementEvent)

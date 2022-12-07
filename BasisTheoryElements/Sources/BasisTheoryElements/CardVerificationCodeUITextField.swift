@@ -17,10 +17,14 @@ final public class CardVerificationCodeUITextField: TextElementUITextField {
     
     private func validateCvc(text: String?) -> Bool {
         guard text != nil else {
-            return true
+            return false
         }
         
         return text!.range(of: "^[0-9]{3,4}$", options: .regularExpression) != nil
+    }
+    
+    public override func setConfig(options: TextElementOptions?) throws {
+        throw ElementConfigError.configNotAllowed
     }
     
     override init(frame: CGRect) {

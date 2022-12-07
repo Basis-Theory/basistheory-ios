@@ -1,3 +1,11 @@
+## [0.7.0](https://github.com/Basis-Theory/basistheory-ios/compare/0.6.0...0.7.0) (2022-12-07)
+
+
+### Features
+
+* add CardNumber element and card brand events ([#15](https://github.com/Basis-Theory/basistheory-ios/issues/15)) ([b614f0d](https://github.com/Basis-Theory/basistheory-ios/commit/b614f0d5da96550fbd2f677092a9e3ca285e9fa9))
+
+
 ## [0.6.0](https://github.com/Basis-Theory/basistheory-ios/compare/0.5.0...0.6.0) (2022-12-02)
 
 

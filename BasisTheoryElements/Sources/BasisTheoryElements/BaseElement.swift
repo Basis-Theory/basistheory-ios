@@ -25,6 +25,7 @@ internal protocol ElementReferenceProtocol {
 
 public enum ElementConfigError: Error {
     case invalidMask
+    case configNotAllowed
 }
 
 public class ElementValueReference: ElementReferenceProtocol {

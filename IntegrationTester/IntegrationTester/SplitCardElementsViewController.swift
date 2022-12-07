@@ -15,14 +15,16 @@ class SplitCardElementsViewController: UIViewController {
     private let darkBackgroundColor : UIColor = UIColor( red: 200/255, green: 200/255, blue: 200/255, alpha: 1.0 )
     private var cancellables = Set<AnyCancellable>()
     
+    @IBOutlet weak var cardNumberTextField: CardNumberUITextField!
     @IBOutlet weak var expirationDateTextField: CardExpirationDateUITextField!
     @IBOutlet weak var cvcTextField: CardVerificationCodeUITextField!
     @IBOutlet weak var output: UITextView!
+    @IBOutlet weak var cardBrand: UITextView!
     
     @IBAction func tokenize(_ sender: Any) {
         let body: [String: Any] = [
             "data": [
-                "number": "4242424242424242",
+                "number": self.cardNumberTextField,
                 "expiration_month": self.expirationDateTextField.month(),
                 "expiration_year": self.expirationDateTextField.year(),
                 "cvc": self.cvcTextField
@@ -50,12 +52,34 @@ class SplitCardElementsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setStyles(textField: cardNumberTextField, placeholder: "Card Number")
         setStyles(textField: expirationDateTextField, placeholder: "MM/YY")
         setStyles(textField: cvcTextField, placeholder: "CVC")
+        
+        cardNumberTextField.subject.sink { completion in
+            print(completion)
+        } receiveValue: { message in
+            print("cardNumber:")
+            print(message)
+            
+            if (!message.details.isEmpty) {
+                let brandDetails = message.details[0]
+                
+                self.cardBrand.text = brandDetails.type + ": " + brandDetails.message
+            }
+        }.store(in: &cancellables)
+        
+        expirationDateTextField.subject.sink { completion in
+            print(completion)
+        } receiveValue: { message in
+            print("expirationDate:")
+            print(message)
+        }.store(in: &cancellables)
         
         cvcTextField.subject.sink { completion in
             print(completion)
         } receiveValue: { message in
+            print("CVC:")
             print(message)
         }.store(in: &cancellables)
     }
