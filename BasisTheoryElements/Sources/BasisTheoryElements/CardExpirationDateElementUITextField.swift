@@ -17,7 +17,7 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
     
     private func validateExpirationDate(text: String?) -> Bool {
         guard text != nil else {
-            return true
+            return false
         }
         
         // check date is MM/YY -> 5 chars.
@@ -26,6 +26,10 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
         }
         
         return validateFutureDate(text: text!)
+    }
+    
+    public override func setConfig(options: TextElementOptions?) throws {
+        throw ElementConfigError.configNotAllowed
     }
     
     private func validateFutureDate(text: String) -> Bool {
