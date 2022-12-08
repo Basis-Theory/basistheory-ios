@@ -1,3 +1,11 @@
+## [0.8.0](https://github.com/Basis-Theory/basistheory-ios/compare/0.7.0...0.8.0) (2022-12-08)
+
+
+### Features
+
+* add masking to cvc element, conform to mask on insert text, add user-agent header ([#17](https://github.com/Basis-Theory/basistheory-ios/issues/17)) ([ad78d1c](https://github.com/Basis-Theory/basistheory-ios/commit/ad78d1c98cda8c972ec5e6f7e7a6c7994ec71a28))
+
+
 ## [0.7.0](https://github.com/Basis-Theory/basistheory-ios/compare/0.6.0...0.7.0) (2022-12-07)
 
 
