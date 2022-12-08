@@ -18,13 +18,10 @@ final class CardVerificationCodeUITextFieldTests: XCTestCase {
     func testInvalidCVCEvents() throws {
         let cvcTextField = CardVerificationCodeUITextField()
         
-        let invalidCvcWithLettersExpectation = self.expectation(description: "Invalid CVC with letters")
+        // change to only this assertion as it has a default mask now
         let invalidCvcWith2DigitsExpectation = self.expectation(description: "Invalid CVC with 2 digits")
-        let invalidCvcWith5DigitsExpectation = self.expectation(description: "Invalid CVC with 5 digits")
-        
-        var invalidCvcWithLettersExpectationHasBeenFulfilled = false
-        var invalidCvcWith2DigitsExpectationHasBeenFulfilled = false
 
+        
         var cancellables = Set<AnyCancellable>()
         cvcTextField.subject.sink { completion in
             print(completion)
@@ -32,25 +29,11 @@ final class CardVerificationCodeUITextFieldTests: XCTestCase {
             XCTAssertEqual(message.type, "textChange")
             XCTAssertEqual(message.empty, false)
             XCTAssertEqual(message.valid, false)
-            
-            if (!invalidCvcWithLettersExpectationHasBeenFulfilled) {
-                XCTAssertEqual(message.complete, false)
-                invalidCvcWithLettersExpectation.fulfill()
-                invalidCvcWithLettersExpectationHasBeenFulfilled = true
-            } else if (!invalidCvcWith2DigitsExpectationHasBeenFulfilled) {
-                XCTAssertEqual(message.complete, false)
-                invalidCvcWith2DigitsExpectation.fulfill()
-                invalidCvcWith2DigitsExpectationHasBeenFulfilled = true
-            } else {
-                XCTAssertEqual(message.complete, false)
-                invalidCvcWith5DigitsExpectation.fulfill()
-            }
+            XCTAssertEqual(message.complete, false)
+            invalidCvcWith2DigitsExpectation.fulfill()
         }.store(in: &cancellables)
 
-        cvcTextField.insertText("badcvc")
-        cvcTextField.text = ""
         cvcTextField.insertText("12")
-        cvcTextField.insertText("345")
         
         waitForExpectations(timeout: 1, handler: nil)
     }
@@ -109,7 +92,7 @@ final class CardVerificationCodeUITextFieldTests: XCTestCase {
             }
         }.store(in: &cancellables)
 
-        cvcTextField.insertText("123")
+        cvcTextField.insertText("1234")
         cvcTextField.text = ""
         cvcTextField.insertText("")
         
