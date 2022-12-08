@@ -1,5 +1,5 @@
 //
-//  CardVerificationCodeElementUITextField.swift
+//  CardVerificationCodeUITextField.swift
 //  
 //
 //  Created by Brian Gonzalez on 11/10/22.
@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-public struct CardVerificationCodeElementOptions {
+public struct CardVerificationCodeOptions {
     let cardNumberUITextField: CardNumberUITextField?
     
     public init(cardNumberUITextField: CardNumberUITextField? = nil) {
@@ -16,7 +16,7 @@ public struct CardVerificationCodeElementOptions {
     }
 }
 
-final public class CardVerificationCodeElementUITextField: TextElementUITextField {
+final public class CardVerificationCodeUITextField: TextElementUITextField {
     private var cardNumberUITextField: CardNumberUITextField?
     private var cancellables = Set<AnyCancellable>()
     private var cvcMask: [Any]?
@@ -59,7 +59,7 @@ final public class CardVerificationCodeElementUITextField: TextElementUITextFiel
         ]
     }
     
-    public func setConfig(options: CardVerificationCodeElementOptions) {
+    public func setConfig(options: CardVerificationCodeOptions) {
         if (options.cardNumberUITextField != nil) {
             self.cardNumberUITextField = options.cardNumberUITextField
             

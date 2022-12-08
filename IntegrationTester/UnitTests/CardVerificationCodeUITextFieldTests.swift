@@ -16,7 +16,7 @@ final class CardVerificationCodeUITextFieldTests: XCTestCase {
     override func tearDownWithError() throws { }
     
     func testInvalidCVCEvents() throws {
-        let cvcTextField = CardVerificationCodeElementUITextField()
+        let cvcTextField = CardVerificationCodeUITextField()
         
         let invalidCvcWithLettersExpectation = self.expectation(description: "Invalid CVC with letters")
         let invalidCvcWith2DigitsExpectation = self.expectation(description: "Invalid CVC with 2 digits")
@@ -56,7 +56,7 @@ final class CardVerificationCodeUITextFieldTests: XCTestCase {
     }
     
     func testValidCVCEvents() throws {
-        let cvcTextField = CardVerificationCodeElementUITextField()
+        let cvcTextField = CardVerificationCodeUITextField()
 
         let valid3DigitCvcExpectation = self.expectation(description: "Valid 3-digit CVC")
         let valid4DigitCvcExpectation = self.expectation(description: "Valid 4-digit CVC")
@@ -88,7 +88,7 @@ final class CardVerificationCodeUITextFieldTests: XCTestCase {
     }
     
     func testWithAndWithoutCVCInputEvents() throws {
-        let cvcTextField = CardVerificationCodeElementUITextField()
+        let cvcTextField = CardVerificationCodeUITextField()
         
         let cvcInputExpectation = self.expectation(description: "CVC input")
         let cvcDeleteExpectation = self.expectation(description: "CVC delete")

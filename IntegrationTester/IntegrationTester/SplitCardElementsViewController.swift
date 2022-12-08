@@ -17,7 +17,7 @@ class SplitCardElementsViewController: UIViewController {
     
     @IBOutlet weak var cardNumberTextField: CardNumberUITextField!
     @IBOutlet weak var expirationDateTextField: CardExpirationDateUITextField!
-    @IBOutlet weak var cvcTextField: CardVerificationCodeElementUITextField!
+    @IBOutlet weak var cvcTextField: CardVerificationCodeUITextField!
     @IBOutlet weak var output: UITextView!
     @IBOutlet weak var cardBrand: UITextView!
     
@@ -56,7 +56,7 @@ class SplitCardElementsViewController: UIViewController {
         setStyles(textField: expirationDateTextField, placeholder: "MM/YY")
         setStyles(textField: cvcTextField, placeholder: "CVC")
         
-        let cvcOptions = CardVerificationCodeElementOptions(cardNumberUITextField: cardNumberTextField)
+        let cvcOptions = CardVerificationCodeOptions(cardNumberUITextField: cardNumberTextField)
         cvcTextField.setConfig(options: cvcOptions)
         
         cardNumberTextField.subject.sink { completion in
