@@ -21,6 +21,13 @@ final public class CardVerificationCodeUITextField: TextElementUITextField {
     private var cancellables = Set<AnyCancellable>()
     private var cvcMask: [Any]?
     
+    override var getElementEvent: ((String?, ElementEvent) -> ElementEvent)? {
+        get {
+            getCvcElementEvent
+        }
+        set { }
+    }
+    
     override var validation: ((String?) -> Bool)? {
         get {
             validateCvc
@@ -47,6 +54,22 @@ final public class CardVerificationCodeUITextField: TextElementUITextField {
         set {
             
         }
+    }
+    
+    private func getCvcElementEvent(text: String?, event: ElementEvent) -> ElementEvent {
+        var complete = false
+        
+        if (cardNumberUITextField != nil) {
+            complete = text?.count == inputMask?.count
+        } else {
+            complete = text?.count == 3 || text?.count == 4
+        }
+        
+        let valid = self.validation?(text) ?? false
+        
+        let elementEvent = ElementEvent(type: "textChange", complete: complete, empty: text?.isEmpty ?? true, valid: valid, details: [
+        ])
+        return elementEvent
     }
     
     private func getDefaultCvcMask() -> [Any] {
@@ -78,7 +101,7 @@ final public class CardVerificationCodeUITextField: TextElementUITextField {
             return
         }
         
-        var brand = cardNumberUITextField?.cardBrand?.bestMatchCardBrand
+        let brand = cardNumberUITextField?.cardBrand?.bestMatchCardBrand
         
         if brand != nil {
             self.cvcMask = brand?.cvcMaskInput

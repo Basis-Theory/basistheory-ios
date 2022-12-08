@@ -55,7 +55,7 @@ final class CardVerificationCodeUITextFieldTests: XCTestCase {
             XCTAssertEqual(message.valid, true)
             
             if (!threeDigitExpectationHasBeenFulfilled) {
-                XCTAssertEqual(message.complete, false) // false as default mask is 4
+                XCTAssertEqual(message.complete, true)
                 valid3DigitCvcExpectation.fulfill()
                 threeDigitExpectationHasBeenFulfilled = true
             } else {
