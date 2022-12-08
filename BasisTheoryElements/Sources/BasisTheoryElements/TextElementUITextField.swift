@@ -157,6 +157,10 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         } else {
             super.insertText(text)
         }
+        
+        if let validation = validation {
+            self.isValid = validation(transform(text: text))
+        }
     }
     
     @objc func textFieldDidChange() {
