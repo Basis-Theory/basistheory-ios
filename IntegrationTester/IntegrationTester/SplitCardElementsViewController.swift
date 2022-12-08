@@ -56,6 +56,9 @@ class SplitCardElementsViewController: UIViewController {
         setStyles(textField: expirationDateTextField, placeholder: "MM/YY")
         setStyles(textField: cvcTextField, placeholder: "CVC")
         
+        let cvcOptions = CardVerificationCodeElementOptions(cardNumberUITextField: cardNumberTextField)
+        cvcTextField.setConfig(options: cvcOptions)
+        
         cardNumberTextField.subject.sink { completion in
             print(completion)
         } receiveValue: { message in
@@ -63,7 +66,7 @@ class SplitCardElementsViewController: UIViewController {
             print(message)
             
             if (!message.details.isEmpty) {
-                var brandDetails = message.details[0]
+                let brandDetails = message.details[0]
                 
                 self.cardBrand.text = brandDetails.type + ": " + brandDetails.message
             }

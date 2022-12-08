@@ -146,6 +146,12 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         return maskedText
     }
     
+    public override func insertText(_ text: String) {
+        if inputMask != nil {
+            super.insertText(conformToMask(text: text))
+        }
+    }
+    
     @objc func textFieldDidChange() {
         var maskComplete = true
         

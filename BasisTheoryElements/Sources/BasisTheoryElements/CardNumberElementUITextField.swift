@@ -8,7 +8,7 @@
 import UIKit
 
 final public class CardNumberUITextField: TextElementUITextField {
-    private var cardBrand: CardBrandResults?
+    internal var cardBrand: CardBrandResults?
     private var cardMask: [Any]?
     
     override var getElementEvent: ((String?, ElementEvent) -> ElementEvent)? {
