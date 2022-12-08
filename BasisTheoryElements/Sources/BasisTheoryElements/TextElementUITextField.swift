@@ -20,6 +20,7 @@ public struct TextElementOptions {
 }
 
 public class TextElementUITextField: UITextField, InternalElementProtocol, ElementProtocol, ElementReferenceProtocol {
+    var isValid: Bool = false
     var getElementEvent: ((String?, ElementEvent) -> ElementEvent)?
     var validation: ((String?) -> Bool)?
     var backspacePressed: Bool = false
@@ -167,6 +168,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
 
         if let validation = validation {
             valid = validation(transformedTextValue)
+            self.isValid = valid
         }
         
         let complete = valid && maskComplete

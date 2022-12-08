@@ -17,12 +17,14 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
     
     private func validateExpirationDate(text: String?) -> Bool {
         guard text != nil else {
-            return false
+            self.isValid = false
+            return self.isValid
         }
         
         // check date is MM/YY -> 5 chars.
         guard text?.count == 5 else {
-            return false
+            self.isValid = false
+            return self.isValid
         }
         
         return validateFutureDate(text: text!)
@@ -43,14 +45,17 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
         dateFormatter.dateFormat = "YYYY"
         let currentYear = Int(dateFormatter.string(from: now))!
         if inputYear > currentYear {
-            return true
+            self.isValid = true
+            return self.isValid
         } else if inputYear == currentYear {
             dateFormatter.dateFormat = "MM"
             let currentMonth = Int(dateFormatter.string(from: now))!
             
-            return inputMonth >= currentMonth
+            self.isValid = inputMonth >= currentMonth
+            return self.isValid
         } else {
-            return false
+            self.isValid = false
+            return self.isValid
         }
     }
     
@@ -63,12 +68,12 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
     }
     
     public func month() -> ElementValueReference {
-        let monthReference = ElementValueReference(valueMethod: getMonthValue)
+        let monthReference = ElementValueReference(valueMethod: getMonthValue, isValid: self.isValid)
         return monthReference
     }
     
     public func year() -> ElementValueReference {
-        let yearReference = ElementValueReference(valueMethod: getYearValue)
+        let yearReference = ElementValueReference(valueMethod: getYearValue, isValid: self.isValid)
         return yearReference
     }
     

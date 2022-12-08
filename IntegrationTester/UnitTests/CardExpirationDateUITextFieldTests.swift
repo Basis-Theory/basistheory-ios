@@ -161,7 +161,7 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         let futureYear = getCurrentYear() + 1
         let formattedYear = "20" + String(futureYear)
         expirationDateTextField.text = String(getCurrentMonth()) + "/" + String(futureYear)
-
+        
         let body: [String: Any] = [
             "data": [
                 "monthRef": expirationDateTextField.month(),
@@ -169,22 +169,22 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
             ],
             "type": "token"
         ]
-
+        
         let publicApiKey = Configuration.getConfiguration().btApiKey!
         let tokenizeExpectation = self.expectation(description: "Tokenize")
         var createdToken: [String: Any] = [:]
         BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
         BasisTheoryElements.tokenize(body: body, apiKey: publicApiKey) { data, error in
             createdToken = data!.value as! [String: Any]
-
+            
             XCTAssertNotNil(createdToken["id"])
             XCTAssertEqual(createdToken["type"] as! String, "token")
-
+            
             tokenizeExpectation.fulfill()
         }
-
+        
         waitForExpectations(timeout: 30, handler: nil)
-
+        
         let privateApiKey = Configuration.getConfiguration().privateBtApiKey!
         let idQueryExpectation = self.expectation(description: "Token ID Query")
         TokensAPI.getByIdWithRequestBuilder(id: createdToken["id"] as! String).addHeader(name: "BT-API-KEY", value: privateApiKey).execute { result in
@@ -192,13 +192,40 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
                 let token = try result.get().body.data!.value as! [String: Any]
                 XCTAssertEqual(token["monthRef"] as! String, String(self.getCurrentMonth()))
                 XCTAssertEqual(token["yearRef"] as! String, formattedYear)
-
+                
                 idQueryExpectation.fulfill()
             } catch {
                 print(error)
             }
         }
-
+        
         waitForExpectations(timeout: 3, handler: nil)
+    }
+    
+    func testThrowsWithInvalidCardExpirationDateInput() {
+        let expirationDateTextField = CardExpirationDateUITextField()
+        let pastYear = getCurrentYear() - 2
+        let invalidExpirationDate = String(getCurrentMonth()) + "/" + String(pastYear)
+        expirationDateTextField.text = invalidExpirationDate
+        
+        let body: [String: Any] = [
+            "data": [
+                "monthRef": expirationDateTextField.month(),
+                "yearRef": expirationDateTextField.year(),
+            ],
+            "type": "token"
+        ]
+        
+        let publicApiKey = Configuration.getConfiguration().btApiKey!
+        let tokenizeExpectation = self.expectation(description: "Throws before tokenize")
+        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
+        BasisTheoryElements.tokenize(body: body, apiKey: publicApiKey) { data, error in
+            XCTAssertNil(data)
+            XCTAssertEqual(error as? TokenizingError, TokenizingError.invalidInput)
+            
+            tokenizeExpectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 30, handler: nil)
     }
 }
