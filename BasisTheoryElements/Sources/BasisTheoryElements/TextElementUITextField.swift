@@ -149,6 +149,8 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     public override func insertText(_ text: String) {
         if inputMask != nil {
             super.insertText(conformToMask(text: text))
+        } else {
+            super.insertText(text)
         }
     }
     
