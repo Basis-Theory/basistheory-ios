@@ -20,7 +20,7 @@ public struct TextElementOptions {
 }
 
 public class TextElementUITextField: UITextField, InternalElementProtocol, ElementProtocol, ElementReferenceProtocol {
-    var isValid: Bool = false
+    var isValid: Bool? = true
     var getElementEvent: ((String?, ElementEvent) -> ElementEvent)?
     var validation: ((String?) -> Bool)?
     var backspacePressed: Bool = false
@@ -55,7 +55,10 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
             } else {
                 super.text = newValue
             }
-            self.sendActions(for: .editingChanged)
+            
+            if let validation = validation {
+                self.isValid = validation(transform(text: newValue))
+            }
         }
         get { nil }
     }
