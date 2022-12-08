@@ -55,6 +55,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
             } else {
                 super.text = newValue
             }
+            self.sendActions(for: .editingChanged)
         }
         get { nil }
     }
@@ -168,8 +169,9 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
 
         if let validation = validation {
             valid = validation(transformedTextValue)
-            self.isValid = valid
         }
+        
+        self.isValid = valid
         
         let complete = valid && maskComplete
         
