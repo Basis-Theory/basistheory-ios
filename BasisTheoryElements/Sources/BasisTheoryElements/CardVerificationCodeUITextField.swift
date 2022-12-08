@@ -65,9 +65,7 @@ final public class CardVerificationCodeUITextField: TextElementUITextField {
             complete = text?.count == 3 || text?.count == 4
         }
         
-        let valid = self.validation?(text) ?? false
-        
-        let elementEvent = ElementEvent(type: "textChange", complete: complete, empty: text?.isEmpty ?? true, valid: valid, details: [
+        let elementEvent = ElementEvent(type: "textChange", complete: complete, empty: text?.isEmpty ?? true, valid: event.valid, details: [
         ])
         return elementEvent
     }
@@ -86,9 +84,7 @@ final public class CardVerificationCodeUITextField: TextElementUITextField {
         if (options.cardNumberUITextField != nil) {
             self.cardNumberUITextField = options.cardNumberUITextField
             
-            self.cardNumberUITextField!.subject.sink { completion in
-                //
-            } receiveValue: { message in
+            self.cardNumberUITextField!.subject.sink { completion in } receiveValue: { message in
                 if (message.type == "textChange") {
                     self.updateCvcMask()
                 }

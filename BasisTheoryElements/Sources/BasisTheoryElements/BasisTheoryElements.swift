@@ -34,7 +34,7 @@ final public class BasisTheoryElements {
     
     private static func getApplicationKey(apiKey: String, completion: @escaping ((_ data: Application?, _ error: Error?) -> Void)) {
         BasisTheoryAPI.basePath = basePath
-        ApplicationsAPI.getByKeyWithRequestBuilder().addHeader(name: "BT-API-KEY", value: getApiKey(apiKey)).execute { result in
+        ApplicationsAPI.getByKeyWithRequestBuilder().addHeader(name: "User-Agent", value: "BasisTheory iOS Elements").addHeader(name: "BT-API-KEY", value: getApiKey(apiKey)).execute { result in
             completeApiRequest(result: result, completion: completion)
         }
     }
