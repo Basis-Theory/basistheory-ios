@@ -72,7 +72,7 @@ final public class BasisTheoryElements {
             
             let createTokenRequest = mutableBody.toCreateTokenRequest()
             
-            TokensAPI.createWithRequestBuilder(createTokenRequest: createTokenRequest).addHeader(name: "BT-API-KEY", value: getApiKey(apiKey)).execute { result in
+            TokensAPI.createWithRequestBuilder(createTokenRequest: createTokenRequest).addHeader(name: "User-Agent", value: "BasisTheory iOS Elements").addHeader(name: "BT-API-KEY", value: getApiKey(apiKey)).execute { result in
                 completeApiRequest(result: result, completion: completion)
              }
         }
