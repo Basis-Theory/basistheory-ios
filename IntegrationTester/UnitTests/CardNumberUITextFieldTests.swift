@@ -122,4 +122,30 @@ final class CardNumberUITextFieldTests: XCTestCase {
         
         waitForExpectations(timeout: 1, handler: nil)
     }
+    
+    func testThrowsWithInvalidCardNumberInput() throws {
+        let cardNumberTextField = CardNumberUITextField()
+        let invalidCardNumber = "4129939187355598" //Luhn invalid
+        cardNumberTextField.text = invalidCardNumber
+        
+        let body: [String: Any] = [
+            "data": [
+                "cardNumberRef": cardNumberTextField,
+            ],
+            "type": "card_number"
+        ]
+        
+        let publicApiKey = Configuration.getConfiguration().btApiKey!
+        let tokenizeExpectation = self.expectation(description: "Throws before tokenize")
+        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
+        BasisTheoryElements.tokenize(body: body, apiKey: publicApiKey) { data, error in
+            XCTAssertNil(data)
+            XCTAssertEqual(error as? TokenizingError, TokenizingError.invalidInput)
+            
+            tokenizeExpectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 30, handler: nil)
+        
+    }
 }

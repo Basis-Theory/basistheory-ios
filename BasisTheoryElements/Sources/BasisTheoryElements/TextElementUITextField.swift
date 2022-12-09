@@ -20,6 +20,7 @@ public struct TextElementOptions {
 }
 
 public class TextElementUITextField: UITextField, InternalElementProtocol, ElementProtocol, ElementReferenceProtocol {
+    var isValid: Bool? = true
     var getElementEvent: ((String?, ElementEvent) -> ElementEvent)?
     var validation: ((String?) -> Bool)?
     var backspacePressed: Bool = false
@@ -53,6 +54,10 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
                 super.text = conformToMask(text: newValue)
             } else {
                 super.text = newValue
+            }
+            
+            if let validation = validation {
+                self.isValid = validation(transform(text: newValue))
             }
         }
         get { nil }
@@ -152,6 +157,10 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         } else {
             super.insertText(text)
         }
+        
+        if let validation = validation {
+            self.isValid = validation(transform(text: text))
+        }
     }
     
     @objc func textFieldDidChange() {
@@ -176,6 +185,8 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         if let validation = validation {
             valid = validation(transformedTextValue)
         }
+        
+        self.isValid = valid
         
         let complete = valid && maskComplete
         

@@ -63,12 +63,12 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
     }
     
     public func month() -> ElementValueReference {
-        let monthReference = ElementValueReference(valueMethod: getMonthValue)
+        let monthReference = ElementValueReference(valueMethod: getMonthValue, isValid: self.isValid)
         return monthReference
     }
     
     public func year() -> ElementValueReference {
-        let yearReference = ElementValueReference(valueMethod: getYearValue)
+        let yearReference = ElementValueReference(valueMethod: getYearValue, isValid: self.isValid)
         return yearReference
     }
     

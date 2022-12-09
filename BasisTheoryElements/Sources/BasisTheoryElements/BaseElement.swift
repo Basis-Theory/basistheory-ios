@@ -21,6 +21,7 @@ internal protocol InternalElementProtocol {
 
 internal protocol ElementReferenceProtocol {
     func getValue() -> String?
+    var isValid: Bool? { get set }
 }
 
 public enum ElementConfigError: Error {
@@ -30,9 +31,11 @@ public enum ElementConfigError: Error {
 
 public class ElementValueReference: ElementReferenceProtocol {
     var valueMethod: (() -> String)?
+    var isValid: Bool? = true
     
-    init(valueMethod: (() -> String)?) {
+    init(valueMethod: (() -> String)?, isValid: Bool?) {
         self.valueMethod = valueMethod
+        self.isValid = isValid
     }
 
     func getValue() -> String? {

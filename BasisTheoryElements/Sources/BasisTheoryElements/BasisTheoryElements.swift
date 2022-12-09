@@ -12,6 +12,7 @@ import Combine
 
 public enum TokenizingError: Error {
     case applicationNotPublic
+    case invalidInput
 }
 
 final public class BasisTheoryElements {
@@ -25,7 +26,7 @@ final public class BasisTheoryElements {
     private static func completeApiRequest<T>(result: Result<Response<T>, ErrorResponse>, completion: @escaping ((_ data: T?, _ error: Error?) -> Void)) {
         do {
             let app = try result.get()
-
+            
             completion(app.body, nil)
         } catch {
             completion(nil, error)
@@ -38,11 +39,16 @@ final public class BasisTheoryElements {
             completeApiRequest(result: result, completion: completion)
         }
     }
-
+    
     public static func tokenize(body: [String: Any], apiKey: String, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> Void {
         var mutableBody = body
-        replaceElementRefs(body: &mutableBody)
-
+        do {
+            try replaceElementRefs(body: &mutableBody)
+        } catch {
+            completion(nil, TokenizingError.invalidInput)
+            return
+        }
+        
         BasisTheoryAPI.basePath = basePath
         getApplicationKey(apiKey: getApiKey(apiKey)) { data, error in
             guard data?.type == "public" else {
@@ -59,32 +65,42 @@ final public class BasisTheoryElements {
     public static func createToken(body: CreateToken, apiKey: String, completion: @escaping ((_ data: CreateTokenResponse?, _ error: Error?) -> Void)) -> Void {
         var mutableBody = body
         var mutableData = body.data
-        replaceElementRefs(body: &mutableData)
-    
+        do {
+            try replaceElementRefs(body: &mutableData)
+        } catch {
+            completion(nil, TokenizingError.invalidInput)
+            return
+        }
+        
         mutableBody.data = mutableData
         
         BasisTheoryAPI.basePath = basePath
         getApplicationKey(apiKey: getApiKey(apiKey)) {data, error in
-             guard data?.type == "public" else {
+            guard data?.type == "public" else {
                 completion(nil, TokenizingError.applicationNotPublic)
                 return
-             }
+            }
             
             let createTokenRequest = mutableBody.toCreateTokenRequest()
             
             TokensAPI.createWithRequestBuilder(createTokenRequest: createTokenRequest).addHeader(name: "User-Agent", value: "BasisTheory iOS Elements").addHeader(name: "BT-API-KEY", value: getApiKey(apiKey)).execute { result in
                 completeApiRequest(result: result, completion: completion)
-             }
+            }
         }
     }
-
-    private static func replaceElementRefs(body: inout [String: Any]) -> Void {
+    
+    private static func replaceElementRefs(body: inout [String: Any]) throws -> Void {
         for (key, val) in body {
             if var v = val as? [String: Any] {
-                replaceElementRefs(body: &v)
+                try replaceElementRefs(body: &v)
                 body[key] = v
             } else if let v = val as? ElementReferenceProtocol {
-                body[key] = v.getValue()
+                var textValue = v.getValue()
+                
+                if !(v.isValid!) {
+                    throw TokenizingError.invalidInput
+                }
+                body[key] = textValue
             }
         }
     }
