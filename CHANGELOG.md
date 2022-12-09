@@ -1,3 +1,17 @@
+## [1.0.0](https://github.com/Basis-Theory/basistheory-ios/compare/0.8.0...1.0.0) (2022-12-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* throw if input is invalid when tokenizing (#18)
+* bump version to 1.0.0 (not actually a breaking change)
+
+### Features
+
+* bump to 1.0 ([#19](https://github.com/Basis-Theory/basistheory-ios/issues/19)) ([499a2d6](https://github.com/Basis-Theory/basistheory-ios/commit/499a2d6f82205ddede21d4bd62b20aa9a65396ee))
+* throw if input is invalid when tokenizing ([#18](https://github.com/Basis-Theory/basistheory-ios/issues/18)) ([ac5279b](https://github.com/Basis-Theory/basistheory-ios/commit/ac5279b62592d0516bef07d8c489be4e2b48e64e))
+
+
 ## [0.8.0](https://github.com/Basis-Theory/basistheory-ios/compare/0.7.0...0.8.0) (2022-12-08)
 
 
