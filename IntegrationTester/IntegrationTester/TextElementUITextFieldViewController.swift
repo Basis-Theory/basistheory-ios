@@ -41,7 +41,9 @@ class TextElementUITextFieldViewController: UIViewController {
             "type": "token"
         ]
         
+        // this next line is used for our own testing purposes. you can simply pass in your public API key into the tokenize request below
         let config = Configuration.getConfiguration()
+        // you don't need the following line either. we use this application to test in our dev environment
         BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
         BasisTheoryElements.tokenize(body: body, apiKey: config.btApiKey!) { data, error in
             guard error == nil else {
