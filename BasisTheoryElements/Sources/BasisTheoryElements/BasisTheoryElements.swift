@@ -51,6 +51,11 @@ final public class BasisTheoryElements {
         
         BasisTheoryAPI.basePath = basePath
         getApplicationKey(apiKey: getApiKey(apiKey)) { data, error in
+            guard error == nil else {
+                completion(nil, error)
+                return
+            }
+            
             guard data?.type == "public" else {
                 completion(nil, TokenizingError.applicationNotPublic)
                 return
@@ -76,6 +81,11 @@ final public class BasisTheoryElements {
         
         BasisTheoryAPI.basePath = basePath
         getApplicationKey(apiKey: getApiKey(apiKey)) {data, error in
+            guard error == nil else {
+                completion(nil, error)
+                return
+            }
+            
             guard data?.type == "public" else {
                 completion(nil, TokenizingError.applicationNotPublic)
                 return
@@ -97,7 +107,7 @@ final public class BasisTheoryElements {
             } else if let v = val as? ElementReferenceProtocol {
                 var textValue = v.getValue()
                 
-                if !(v.isValid!) {
+                if !v.isValid! {
                     throw TokenizingError.invalidInput
                 }
                 body[key] = textValue

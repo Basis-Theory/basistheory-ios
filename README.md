@@ -127,10 +127,7 @@ let phoneMask = [ //(123)456-7890
 textElementUITextField.setConfig(options: TextElementOptions(mask: phoneMask, transform: ElementTransform(matcher: transformMatcher))
 ```
 
-<aside>
 🚨 If no `transform` is set, the value is sent to be tokenized as is, including the `mask` if set.
-
-</aside>
 
 ## Element Modified and Additional Fields
 
@@ -235,6 +232,8 @@ cvcTextField.setConfig(
 
 This is a static class containing services available to be used with elements exported from the `BasisTheoryElements` package.
 
+🚨 Before we make any tokenization requests, we check to ensure all of the elements being passed in are valid. If any one of them is not valid, we will return an `invalidInput` error.
+
 #### `tokenize`
 
 Elements' values can be securely tokenized utilizing our [tokenize](https://docs.basistheory.com/#tokenize) services. To accomplish this, simply pass the Element instance in the payload.
@@ -315,7 +314,9 @@ class TextElementUITextFieldViewController: UIViewController {
             "type": "token"
         ]
         
+        // this next line is used for our own testing purposes. you can simply pass in your public API key into the tokenize request below
         let config = Configuration.getConfiguration()
+        // you don't need the following line either. we use this application to test in our dev environment
         BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
         BasisTheoryElements.tokenize(body: body, apiKey: config.btApiKey!) { data, error in
             guard error == nil else {
@@ -423,7 +424,9 @@ class SplitCardElementsViewController: UIViewController {
             "type": "card"
         ]
         
+        // this next line is used for our own testing purposes. you can simply pass in your public API key into the tokenize request below
         let config = Configuration.getConfiguration()
+        // you don't need the following line either. we use this application to test in our dev environment
         BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
         BasisTheoryElements.tokenize(body: body, apiKey: config.btApiKey!) { data, error in
             guard error == nil else {
