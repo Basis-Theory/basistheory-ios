@@ -1,3 +1,11 @@
+### [1.0.1](https://github.com/Basis-Theory/basistheory-ios/compare/1.0.0...1.0.1) (2022-12-13)
+
+
+### Bug Fixes
+
+* fixes issue where we fail to retrieve an app by api key ([#20](https://github.com/Basis-Theory/basistheory-ios/issues/20)) ([0dfdff2](https://github.com/Basis-Theory/basistheory-ios/commit/0dfdff2825945803997e721aa3f55c1fb8e73fce))
+
+
 ## [1.0.0](https://github.com/Basis-Theory/basistheory-ios/compare/0.8.0...1.0.0) (2022-12-09)
 
 
