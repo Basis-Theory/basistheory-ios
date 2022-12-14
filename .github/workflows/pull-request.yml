@@ -32,3 +32,22 @@ jobs:
       
       - name: Pod Linting
         run: pod lib lint --allow-warnings
+
+  dependency-check-test:
+    name: Dependency Check Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Dependency Check
+        run: |
+          docker run -v "/home/runner/work/basistheory-ios/basistheory-ios":"/github/workspace" --workdir "/github/workspace" owasp/dependency-check-action:latest --enableExperimental --project "BasisTheoryElements" --failOnCVSS 1 --scan "Package.swift" --out "/github/workspace/reports"
+
+      - name: Upload Test results
+        if: success() || failure()
+        uses: actions/upload-artifact@master
+        with:
+           name: Dependency check report
+           path: ${{github.workspace}}/reports
