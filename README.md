@@ -226,11 +226,23 @@ cvcTextField.setConfig(
 )
 ```
 
-## Services
-
-### BasisTheoryElements
+## BasisTheoryElements
 
 This is a static class containing services available to be used with elements exported from the `BasisTheoryElements` package.
+
+### Static Fields
+
+#### `apiKey`
+
+You can set your API key globally for `BasisTheoryElements` through the `apiKey` field.
+
+```swift
+BasisTheoryElements.apiKey = "MY API KEY"
+```
+
+All [service](#services) calls take in an optional `apiKey` should you need to override the globally set `apiKey`.
+
+### Services
 
 🚨 Before we make any tokenization requests, we check to ensure all of the elements being passed in are valid. If any one of them is not valid, we will return an `invalidInput` error.
 

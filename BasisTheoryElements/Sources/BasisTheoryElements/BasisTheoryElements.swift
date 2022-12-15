@@ -9,6 +9,7 @@ import Foundation
 import BasisTheory
 import AnyCodable
 import Combine
+import Alamofire
 
 public enum TokenizingError: Error {
     case applicationNotPublic
@@ -20,7 +21,7 @@ final public class BasisTheoryElements {
     public static var basePath: String = "https://api.basistheory.com"
     
     private static func getApiKey(_ apiKey: String?) -> String {
-        !BasisTheoryElements.apiKey.isEmpty ? BasisTheoryElements.apiKey : apiKey!
+        apiKey != nil ? apiKey! : BasisTheoryElements.apiKey
     }
     
     private static func completeApiRequest<T>(result: Result<Response<T>, ErrorResponse>, completion: @escaping ((_ data: T?, _ error: Error?) -> Void)) {
@@ -40,7 +41,7 @@ final public class BasisTheoryElements {
         }
     }
     
-    public static func tokenize(body: [String: Any], apiKey: String, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> Void {
+    public static func tokenize(body: [String: Any], apiKey: String? = nil, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> Void {
         var mutableBody = body
         do {
             try replaceElementRefs(body: &mutableBody)
@@ -67,7 +68,7 @@ final public class BasisTheoryElements {
         }
     }
     
-    public static func createToken(body: CreateToken, apiKey: String, completion: @escaping ((_ data: CreateTokenResponse?, _ error: Error?) -> Void)) -> Void {
+    public static func createToken(body: CreateToken, apiKey: String? = nil, completion: @escaping ((_ data: CreateTokenResponse?, _ error: Error?) -> Void)) -> Void {
         var mutableBody = body
         var mutableData = body.data
         do {
@@ -95,6 +96,26 @@ final public class BasisTheoryElements {
             
             TokensAPI.createWithRequestBuilder(createTokenRequest: createTokenRequest).addHeader(name: "User-Agent", value: "BasisTheory iOS Elements").addHeader(name: "BT-API-KEY", value: getApiKey(apiKey)).execute { result in
                 completeApiRequest(result: result, completion: completion)
+            }
+        }
+    }
+    
+    public static func proxy(url: String, body: Parameters? = nil, method: Alamofire.HTTPMethod = .get, headers: HTTPHeaders? = nil, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> Void {
+        BasisTheoryAPI.basePath = basePath
+        getApplicationKey(apiKey: getApiKey(apiKey)) { data, error in
+            guard error == nil else {
+                completion(nil, error)
+                return
+            }
+            
+            guard data?.type == "public" else {
+                completion(nil, TokenizingError.applicationNotPublic)
+                return
+            }
+            
+            AF.request(url, method: method, parameters: body, encoding: JSONParameterEncoder.default as! Alamofire.ParameterEncoding, headers: headers).response { response in
+                // TODO: return ElementValueReference instance here
+                debugPrint(response)
             }
         }
     }
