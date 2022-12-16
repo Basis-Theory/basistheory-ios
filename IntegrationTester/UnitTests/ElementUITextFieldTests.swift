@@ -129,7 +129,7 @@ class ElementUITextFieldTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 3)
     }
 
     func testPostTokens() throws {
@@ -166,7 +166,7 @@ class ElementUITextFieldTests: XCTestCase {
             tokenizeExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 3)
 
         let idQueryExpectation = self.expectation(description: "Token ID Query")
         let privateApiKey = Configuration.getConfiguration().privateBtApiKey!
@@ -185,6 +185,6 @@ class ElementUITextFieldTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 3)
     }
 }

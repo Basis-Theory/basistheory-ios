@@ -138,7 +138,7 @@ final class TextElementUITextFieldTests: XCTestCase {
             transformExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 3)
         
         let transformQueryExpectation = self.expectation(description: "Query Token By ID to Test Transformed Textfield")
         let privateApiKey = Configuration.getConfiguration().privateBtApiKey!
@@ -157,6 +157,6 @@ final class TextElementUITextFieldTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 3)
     }
 }

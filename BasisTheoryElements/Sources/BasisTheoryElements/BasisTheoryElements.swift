@@ -12,7 +12,8 @@ import Combine
 import Alamofire
 
 public enum TokenizingError: Error {
-    case applicationNotPublic
+    case applicationTypeNotPublic
+    case applicationTypeNotExpiring
     case invalidInput
 }
 
@@ -58,7 +59,7 @@ final public class BasisTheoryElements {
             }
             
             guard data?.type == "public" else {
-                completion(nil, TokenizingError.applicationNotPublic)
+                completion(nil, TokenizingError.applicationTypeNotPublic)
                 return
             }
             
@@ -88,7 +89,7 @@ final public class BasisTheoryElements {
             }
             
             guard data?.type == "public" else {
-                completion(nil, TokenizingError.applicationNotPublic)
+                completion(nil, TokenizingError.applicationTypeNotPublic)
                 return
             }
             
@@ -100,23 +101,48 @@ final public class BasisTheoryElements {
         }
     }
     
-    public static func proxy(url: String, body: Parameters? = nil, method: Alamofire.HTTPMethod = .get, headers: HTTPHeaders? = nil, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> Void {
+    public static func proxy(apiKey: String, proxyKey: String, method: Alamofire.HTTPMethod = .get, query: [String:String]? = nil, body: [String:Any]? = nil, headers: HTTPHeaders? = nil, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> Void {
         BasisTheoryAPI.basePath = basePath
-        getApplicationKey(apiKey: getApiKey(apiKey)) { data, error in
+        var url = "\(BasisTheoryAPI.basePath)/proxy"
+        
+        var modifiedQuery = query ?? [:]
+        modifiedQuery.removeValue(forKey: "bt-proxy-key")
+        
+        let urlQueryParams = modifiedQuery.compactMap({(key, value) -> String in
+            return "\(key)=\(value)"
+        }).joined(separator: "&")
+        
+        if !urlQueryParams.isEmpty {
+            url += "?\(urlQueryParams)"
+        }
+        
+        getApplicationKey(apiKey: getApiKey(apiKey)) {data, error in
             guard error == nil else {
                 completion(nil, error)
                 return
             }
             
-            guard data?.type == "public" else {
-                completion(nil, TokenizingError.applicationNotPublic)
+            guard data?.type == "expiring" else {
+                completion(nil, TokenizingError.applicationTypeNotExpiring)
                 return
             }
+        }
+        
+        var modifiedHeaders = headers ?? [:]
+        modifiedHeaders["BT-API-KEY"] = apiKey
+        modifiedHeaders["BT-PROXY-KEY"] = apiKey
+        
+        AF.request(url, method: method, parameters: body, encoding: JSONEncoding.default, headers: headers).responseData { response in
+            // TODO: return ElementValueReference instance here
             
-            AF.request(url, method: method, parameters: body, encoding: JSONParameterEncoder.default as! Alamofire.ParameterEncoding, headers: headers).response { response in
-                // TODO: return ElementValueReference instance here
-                debugPrint(response)
-            }
+            let stringifiedData = try! JSONSerialization.jsonObject(with: response.data!, options: []) as? [String : Any]
+            
+            debugPrint("Response error: \(response.error)")
+            debugPrint("Response data: \(response.data)")
+            debugPrint("Response stringifiedData: \(stringifiedData)")
+            debugPrint("Response response: \(response.response)")
+            
+//            completion(response.data, nil)
         }
     }
     

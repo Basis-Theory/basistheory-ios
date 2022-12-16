@@ -24,12 +24,12 @@ final class ElementServiceTests: XCTestCase {
         BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
         BasisTheoryElements.tokenize(body: body, apiKey: privateApiKey) { data, error in
             XCTAssertNil(data)
-            XCTAssertEqual(error as! TokenizingError, TokenizingError.applicationNotPublic)
+            XCTAssertEqual(error as! TokenizingError, TokenizingError.applicationTypeNotPublic)
             
             tokenizeExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 3)
     }
     
     func testTokenizeReturnsErrorFromApplicationCheck() throws {
@@ -46,7 +46,7 @@ final class ElementServiceTests: XCTestCase {
             tokenizeExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 3)
     }
     
     func testCreateTokenChecksForApplicationTypeOfPublic() throws {
@@ -59,12 +59,12 @@ final class ElementServiceTests: XCTestCase {
         BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
         BasisTheoryElements.createToken(body: body, apiKey: privateApiKey) { data, error in
             XCTAssertNil(data)
-            XCTAssertEqual(error as! TokenizingError, TokenizingError.applicationNotPublic)
+            XCTAssertEqual(error as! TokenizingError, TokenizingError.applicationTypeNotPublic)
             
             tokenizeExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 3)
     }
     
     func testCreateReturnsErrorFromApplicationCheck() throws {
@@ -81,6 +81,29 @@ final class ElementServiceTests: XCTestCase {
             tokenizeExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 3)
     }
+    
+    func testProxyRequest() throws {
+        let proxyExpectation = self.expectation(description: "Proxy")
+        
+        // TODO: need to create a new expiring app for testing this...
+        let privateApiKey = Configuration.getConfiguration().privateBtApiKey!
+        BasisTheoryElements.proxy(
+            apiKey: privateApiKey,
+            proxyKey: "Y9CGfBNG6rAVnxN7fTiZMb",
+            method: .post,
+            body: ["testProp": "testValue"])
+        { data, error in
+            print(data)
+            print(error)
+            
+            proxyExpectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 3)
+    }
+    
+    // TODO: need test for calling proxy without expiring key
+    // TODO: need test for calling proxy with different options
 }

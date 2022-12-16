@@ -242,6 +242,8 @@ BasisTheoryElements.apiKey = "MY API KEY"
 
 All [service](#services) calls take in an optional `apiKey` should you need to override the globally set `apiKey`.
 
+🚨 The `proxy` service call does not use this globally set `apiKey` since it's use case is different from the other services and likely requires a different Applicaiton type for requests.
+
 ### Services
 
 🚨 Before we make any tokenization requests, we check to ensure all of the elements being passed in are valid. If any one of them is not valid, we will return an `invalidInput` error.
@@ -277,6 +279,10 @@ let body: CreateToken = CreateToken(type: "token", data: [
 BasisTheoryElements.createToken(body: body, apiKey: "<YOUR PUBLIC API KEY>") 
 	{ data, error in print(data) }
 ```
+
+#### `proxy`
+
+TODO: fill out
 
 ## Full TextElementUITextField Example
 

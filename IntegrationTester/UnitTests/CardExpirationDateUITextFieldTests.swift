@@ -199,7 +199,7 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
             }
         }
         
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 3)
     }
     
     func testThrowsWithInvalidCardExpirationDateInput() {
