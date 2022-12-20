@@ -9,7 +9,82 @@ import Foundation
 import BasisTheory
 import AnyCodable
 import Combine
-import Alamofire
+
+@dynamicMemberLookup
+struct Person {
+    subscript(dynamicMember member: String) -> String {
+        let properties = ["name": "Taylor Swift", "city": "Nashville"]
+        return properties[member, default: ""]
+    }
+}
+
+@dynamicMemberLookup
+enum JSON {
+    case elementValueReference(ElementValueReference)
+//    case intValue(Int)
+//    case stringValue(String)
+    case arrayValue(Array<JSON>)
+    case dictionaryValue(Dictionary<String, JSON>)
+    
+    var elementValueReference: ElementValueReference? {
+      if case .elementValueReference(let elementValueRef) = self {
+         return elementValueRef
+      }
+      return nil
+   }
+    
+    subscript(index: Int) -> JSON? {
+        if case .arrayValue(let arr) = self {
+            return index < arr.count ? arr[index] : nil
+        }
+        return nil
+    }
+    
+    subscript(key: String) -> JSON? {
+        if case .dictionaryValue(let dict) = self {
+            return dict[key]
+        }
+        return nil
+    }
+    
+    subscript(dynamicMember member: String) -> JSON? {
+        if case .dictionaryValue(let dict) = self {
+            return dict[member]
+        }
+        return nil
+    }
+}
+
+public enum HttpMethod: String {
+    case get = "GET"
+    case post = "POST"
+    case put = "PUT"
+    case delete = "DELETE"
+    case patch = "PATCH"
+    case head = "HEAD"
+    case options = "OPTIONS"
+    case connect = "CONNECT"
+    case query = "QUERY"
+    case trace = "TRACE"
+}
+
+public struct ProxyHttpRequest {
+    public var method: HttpMethod = .get
+    public var path: String? = nil
+    public var query: [String:String]? = nil
+    public var body: [String:Any]? = nil
+    public var headers: [String:String]? = nil
+    public var url: String? = nil
+    
+    public init(url: String? = nil, method: HttpMethod, path: String? = nil, query: [String : String]? = nil, body: [String : Any]? = nil, headers: [String : String]? = nil) {
+        self.url = url
+        self.method = method
+        self.path = path
+        self.query = query
+        self.body = body
+        self.headers = headers
+    }
+}
 
 public enum TokenizingError: Error {
     case applicationTypeNotPublic
@@ -101,11 +176,26 @@ final public class BasisTheoryElements {
         }
     }
     
-    public static func proxy(apiKey: String, proxyKey: String, method: Alamofire.HTTPMethod = .get, query: [String:String]? = nil, body: [String:Any]? = nil, headers: HTTPHeaders? = nil, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> Void {
+    private func walkJson(dictionary: [String: Any], body: inout JSON?) {
+        for (key, value) in dictionary {
+            print("\(key): \(value)")
+            if let value = value as? [String: Any] {
+                var nilThing: JSON? = nil
+                walkJson(dictionary: value, body: &nilThing)
+            }
+        }
+    }
+    
+    // TODO: consider moving into a different module
+    public static func proxy(apiKey: String, proxyKey: String? = nil, proxyUrl: String? = nil, proxyHttpRequest: ProxyHttpRequest? = nil, completion: @escaping ((_ request: URLResponse?, _ data: ElementValueReference?, _ error: Error?) -> Void)) -> Void {
         BasisTheoryAPI.basePath = basePath
-        var url = "\(BasisTheoryAPI.basePath)/proxy"
+        var url = proxyHttpRequest?.url ?? "\(BasisTheoryAPI.basePath)/proxy"
         
-        var modifiedQuery = query ?? [:]
+        if proxyHttpRequest?.path != nil {
+            url += proxyHttpRequest!.path!
+        }
+        
+        var modifiedQuery = proxyHttpRequest?.query ?? [:]
         modifiedQuery.removeValue(forKey: "bt-proxy-key")
         
         let urlQueryParams = modifiedQuery.compactMap({(key, value) -> String in
@@ -118,32 +208,90 @@ final public class BasisTheoryElements {
         
         getApplicationKey(apiKey: getApiKey(apiKey)) {data, error in
             guard error == nil else {
-                completion(nil, error)
+                completion(nil, nil, error)
                 return
             }
-            
+
             guard data?.type == "expiring" else {
-                completion(nil, TokenizingError.applicationTypeNotExpiring)
+                completion(nil, nil, TokenizingError.applicationTypeNotExpiring)
                 return
             }
         }
         
-        var modifiedHeaders = headers ?? [:]
-        modifiedHeaders["BT-API-KEY"] = apiKey
-        modifiedHeaders["BT-PROXY-KEY"] = apiKey
+        let Url = String(format: url)
         
-        AF.request(url, method: method, parameters: body, encoding: JSONEncoding.default, headers: headers).responseData { response in
-            // TODO: return ElementValueReference instance here
-            
-            let stringifiedData = try! JSONSerialization.jsonObject(with: response.data!, options: []) as? [String : Any]
-            
-            debugPrint("Response error: \(response.error)")
-            debugPrint("Response data: \(response.data)")
-            debugPrint("Response stringifiedData: \(stringifiedData)")
-            debugPrint("Response response: \(response.response)")
-            
-//            completion(response.data, nil)
+        guard let serviceUrl = URL(string: Url) else {
+            // TODO: throw here
+            return
         }
+        
+        var request = URLRequest(url: serviceUrl)
+        request.httpMethod = proxyHttpRequest?.method.rawValue ?? HttpMethod.get.rawValue
+        
+        var modifiedHeaders = proxyHttpRequest?.headers ?? [:]
+        modifiedHeaders["BT-API-KEY"] = apiKey
+        modifiedHeaders["Content-Type"] = "Application/json"
+        
+        if proxyKey != nil {
+            modifiedHeaders["BT-PROXY-KEY"] = proxyKey
+            modifiedHeaders.removeValue(forKey: "BT-PROXY-URL")
+        } else if proxyUrl != nil {
+            modifiedHeaders["BT-PROXY-URL"] = proxyUrl
+            modifiedHeaders.removeValue(forKey: "BT-PROXY-KEY")
+        }
+        
+        for header in modifiedHeaders {
+            request.setValue(header.value, forHTTPHeaderField: header.key)
+        }
+        
+        // TODO: test empty body request. don't throw if one is not provided
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: proxyHttpRequest?.body, options: []) else {
+            return
+        }
+        request.httpBody = httpBody
+        
+        let session = URLSession.shared
+        session.dataTask(with: request) { (data, response, error) in
+            if let data = data {
+                do {
+                    // TODO: return data in an irratrievable struct var but allow way to traverse JSON object
+                    print("data: \(data)")
+                    
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+//                    let json = try! JSONDecoder().decode(JSON.self, from: data)
+                    
+                    let j = JSON.dictionaryValue([
+//                        "comment": .stringValue("Not being able to tell the difference at call site is confusing"),
+//                        "count": .intValue(42),
+//                        "count2": .intValue(1337)
+                        "comment": .elementValueReference(ElementValueReference(valueMethod: {
+                            "hiddenValue"
+                        }, isValid: true))
+                    ])
+                    
+                    let test = ElementValueReference(valueMethod: {
+                        "hiddenValue"
+                    }, isValid: true)
+                    
+                    print(test.getValue())
+                    
+                    print(j.comment?.elementValueReference?.getValue())
+//                    print(j.comment!.getValue())
+                    
+                    let dynamic = JSON.dictionaryValue(json as! Dictionary<String, JSON>)
+                    print("dynamic: \(dynamic)")
+                    print("json: \(json)")
+                    let elementValueReference = ElementValueReference(valueMethod: {
+                        String(describing: json)
+                    }, isValid: true)
+                    
+                    print("valueMethodResponse: \(elementValueReference.getValue())")
+                    completion(response, elementValueReference, nil)
+                } catch {
+                    completion(response, nil, error)
+                }
+            }
+        }.resume()
     }
     
     private static func replaceElementRefs(body: inout [String: Any]) throws -> Void {
@@ -152,7 +300,7 @@ final public class BasisTheoryElements {
                 try replaceElementRefs(body: &v)
                 body[key] = v
             } else if let v = val as? ElementReferenceProtocol {
-                var textValue = v.getValue()
+                let textValue = v.getValue()
                 
                 if !v.isValid! {
                     throw TokenizingError.invalidInput

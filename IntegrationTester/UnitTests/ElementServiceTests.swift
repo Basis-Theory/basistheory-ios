@@ -84,26 +84,45 @@ final class ElementServiceTests: XCTestCase {
         waitForExpectations(timeout: 3)
     }
     
+    // TODO: rename test and focus
     func testProxyRequest() throws {
         let proxyExpectation = self.expectation(description: "Proxy")
         
-        // TODO: need to create a new expiring app for testing this...
-        let privateApiKey = Configuration.getConfiguration().privateBtApiKey!
-        BasisTheoryElements.proxy(
-            apiKey: privateApiKey,
-            proxyKey: "Y9CGfBNG6rAVnxN7fTiZMb",
-            method: .post,
-            body: ["testProp": "testValue"])
-        { data, error in
-            print(data)
-            print(error)
+        let privateBtApiKey = Configuration.getConfiguration().privateBtApiKey!
+        
+        let createApplicationRequest = CreateApplicationRequest(name: "Expiring API key", type: "expiring", permissions: ["token:use"])
+        BasisTheoryAPI.basePath = "https://api-dev.basistheory.com"
+        ApplicationsAPI.createWithRequestBuilder(createApplicationRequest: createApplicationRequest).addHeader(name: "BT-API-KEY", value: privateBtApiKey).execute { result in
+            switch result {
+            case .failure(let ErrorResponse.error(e)):
+                print(try! JSONSerialization.jsonObject(with: e.1!, options: []))
+            case .success(_):
+                print("success")
+            }
             
-            proxyExpectation.fulfill()
+            let expiringApiKey = try! result.get().body.key!
+            let proxyHttpRequest = ProxyHttpRequest(method: .post, body: ["testProp": "testValue"])
+            
+            BasisTheoryElements.proxy(
+                apiKey: expiringApiKey,
+                proxyKey: "Y9CGfBNG6rAVnxN7fTiZMb",
+                proxyHttpRequest: proxyHttpRequest)
+            { response, data, error in
+                print(response)
+                print(data)
+                print(error)
+                
+                proxyExpectation.fulfill()
+            }
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: 30)
     }
     
     // TODO: need test for calling proxy without expiring key
-    // TODO: need test for calling proxy with different options
+    // TODO: need test for calling proxy without a body
+    // TODO: need test for calling proxy without a proxy key/with a proxy url
+    // TODO: need test for calling proxy with valid url
+    // TODO: need test for calling proxy with invalid url
+    // TODO: need test for calling proxy with headers
 }

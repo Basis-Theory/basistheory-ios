@@ -20,6 +20,8 @@ The `IntegrationTester` project is a small sample iOS app that shows examples of
 
 1. Ensure `IntegrationTester` scheme is set
 2. Pick an iOS simulator to run
+
+// TODO: need to add instructions to enable revealing element data
 3. Copy the contents `Env.plist.example` to a `Env.plist` file in the same directory and replace all necessary secrets. All API keys should be keys for dev. The `privateBtApiKey` should have read permissions with a reveal transform, and the `btApiKey` should be a public key with create permissions
 4. Run the app! 🎉
 
