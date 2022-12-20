@@ -11,18 +11,8 @@ import AnyCodable
 import Combine
 
 @dynamicMemberLookup
-struct Person {
-    subscript(dynamicMember member: String) -> String {
-        let properties = ["name": "Taylor Swift", "city": "Nashville"]
-        return properties[member, default: ""]
-    }
-}
-
-@dynamicMemberLookup
-enum JSON {
+public enum JSON {
     case elementValueReference(ElementValueReference)
-//    case intValue(Int)
-//    case stringValue(String)
     case arrayValue(Array<JSON>)
     case dictionaryValue(Dictionary<String, JSON>)
     
@@ -41,10 +31,19 @@ enum JSON {
     }
     
     subscript(key: String) -> JSON? {
-        if case .dictionaryValue(let dict) = self {
-            return dict[key]
+        get {
+            if case .dictionaryValue(let dict) = self {
+                return dict[key]
+            }
+            return nil
         }
-        return nil
+        
+        mutating set {
+            if case .dictionaryValue(var dict) = self {
+                dict[key] = newValue
+                self = JSON.dictionaryValue(dict)
+            }
+        }
     }
     
     subscript(dynamicMember member: String) -> JSON? {
@@ -176,18 +175,23 @@ final public class BasisTheoryElements {
         }
     }
     
-    private func walkJson(dictionary: [String: Any], body: inout JSON?) {
+    private static func traverseJson(dictionary: [String: Any], json: inout JSON) {
         for (key, value) in dictionary {
-            print("\(key): \(value)")
+            print("key: \(key), value: \(value)")
             if let value = value as? [String: Any] {
-                var nilThing: JSON? = nil
-                walkJson(dictionary: value, body: &nilThing)
+                json[key] = JSON.dictionaryValue([:])
+                
+                traverseJson(dictionary: value, json: &json[key]!)
+            } else {
+                json[key] = JSON.elementValueReference(ElementValueReference(valueMethod: {
+                    String(describing: value)
+                }, isValid: true))
             }
         }
     }
     
     // TODO: consider moving into a different module
-    public static func proxy(apiKey: String, proxyKey: String? = nil, proxyUrl: String? = nil, proxyHttpRequest: ProxyHttpRequest? = nil, completion: @escaping ((_ request: URLResponse?, _ data: ElementValueReference?, _ error: Error?) -> Void)) -> Void {
+    public static func proxy(apiKey: String, proxyKey: String? = nil, proxyUrl: String? = nil, proxyHttpRequest: ProxyHttpRequest? = nil, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) -> Void {
         BasisTheoryAPI.basePath = basePath
         var url = proxyHttpRequest?.url ?? "\(BasisTheoryAPI.basePath)/proxy"
         
@@ -254,39 +258,12 @@ final public class BasisTheoryElements {
         session.dataTask(with: request) { (data, response, error) in
             if let data = data {
                 do {
-                    // TODO: return data in an irratrievable struct var but allow way to traverse JSON object
-                    print("data: \(data)")
+                    let serializedJson = try JSONSerialization.jsonObject(with: data, options: [])
                     
-                    let json = try JSONSerialization.jsonObject(with: data, options: [])
-//                    let json = try! JSONDecoder().decode(JSON.self, from: data)
+                    var json = JSON.dictionaryValue([:])
+                    traverseJson(dictionary: serializedJson as! [String:Any], json: &json)
                     
-                    let j = JSON.dictionaryValue([
-//                        "comment": .stringValue("Not being able to tell the difference at call site is confusing"),
-//                        "count": .intValue(42),
-//                        "count2": .intValue(1337)
-                        "comment": .elementValueReference(ElementValueReference(valueMethod: {
-                            "hiddenValue"
-                        }, isValid: true))
-                    ])
-                    
-                    let test = ElementValueReference(valueMethod: {
-                        "hiddenValue"
-                    }, isValid: true)
-                    
-                    print(test.getValue())
-                    
-                    print(j.comment?.elementValueReference?.getValue())
-//                    print(j.comment!.getValue())
-                    
-                    let dynamic = JSON.dictionaryValue(json as! Dictionary<String, JSON>)
-                    print("dynamic: \(dynamic)")
-                    print("json: \(json)")
-                    let elementValueReference = ElementValueReference(valueMethod: {
-                        String(describing: json)
-                    }, isValid: true)
-                    
-                    print("valueMethodResponse: \(elementValueReference.getValue())")
-                    completion(response, elementValueReference, nil)
+                    completion(response, json, nil)
                 } catch {
                     completion(response, nil, error)
                 }
