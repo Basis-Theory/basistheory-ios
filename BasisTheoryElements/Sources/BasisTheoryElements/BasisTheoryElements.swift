@@ -30,7 +30,7 @@ public enum JSON {
         return nil
     }
     
-    subscript(key: String) -> JSON? {
+    public subscript(key: String) -> JSON? {
         get {
             if case .dictionaryValue(let dict) = self {
                 return dict[key]
@@ -46,7 +46,7 @@ public enum JSON {
         }
     }
     
-    subscript(dynamicMember member: String) -> JSON? {
+    public subscript(dynamicMember member: String) -> JSON? {
         if case .dictionaryValue(let dict) = self {
             return dict[member]
         }

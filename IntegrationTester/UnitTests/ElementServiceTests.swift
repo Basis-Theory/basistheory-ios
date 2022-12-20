@@ -109,7 +109,8 @@ final class ElementServiceTests: XCTestCase {
                 proxyHttpRequest: proxyHttpRequest)
             { response, data, error in
                 print(response)
-                print(data)
+                print(data?.json?["User-Agent"]?.elementValueReference)
+                print(data?.headers?.testProp?.elementValueReference)
                 print(error)
                 
                 proxyExpectation.fulfill()
