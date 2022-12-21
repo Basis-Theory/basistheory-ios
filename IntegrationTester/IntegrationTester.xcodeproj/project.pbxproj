@@ -10,6 +10,7 @@
 		428CB1062937C53000C8220E /* CardExpirationDateUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428CB1052937C53000C8220E /* CardExpirationDateUITextFieldTests.swift */; };
 		428CB10A293E398B00C8220E /* CardNumberUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428CB109293E398B00C8220E /* CardNumberUITextFieldTests.swift */; };
 		6286CEC129523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6286CEC029523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift */; };
+		62BEB1442953A1C600E5A0CE /* BasisTheoryElements in Frameworks */ = {isa = PBXBuildFile; productRef = 62BEB1432953A1C600E5A0CE /* BasisTheoryElements */; };
 		9206601D2922813C00A92A81 /* CardVerificationCodeUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9206601C2922813C00A92A81 /* CardVerificationCodeUITextFieldTests.swift */; };
 		9245768928FF46C100A01E70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9245768828FF46C100A01E70 /* AppDelegate.swift */; };
 		9245768B28FF46C100A01E70 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9245768A28FF46C100A01E70 /* SceneDelegate.swift */; };
@@ -97,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62BEB1442953A1C600E5A0CE /* BasisTheoryElements in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,6 +233,7 @@
 			);
 			name = AcceptanceTests;
 			packageProductDependencies = (
+				62BEB1432953A1C600E5A0CE /* BasisTheoryElements */,
 			);
 			productName = IntegrationTesterUITests;
 			productReference = 924576A528FF46C200A01E70 /* AcceptanceTests.xctest */;
@@ -686,6 +689,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		62BEB1432953A1C600E5A0CE /* BasisTheoryElements */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BasisTheoryElements;
+		};
 		92566EA5293578B30047BFF2 /* BasisTheoryElements */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BasisTheoryElements;

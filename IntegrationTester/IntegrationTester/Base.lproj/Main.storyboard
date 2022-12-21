@@ -163,6 +163,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Set Text"/>
+                                <connections>
+                                    <action selector="printToConsoleLog:" destination="1yo-MQ-bQK" eventType="touchUpInside" id="83M-Z9-nEk"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="627-3o-X4v"/>
