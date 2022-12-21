@@ -10,7 +10,9 @@ import BasisTheoryElements
 import BasisTheory
 
 final class ElementServiceTests: XCTestCase {
-    override func setUpWithError() throws { }
+    override func setUpWithError() throws {
+        BasisTheoryAPI.basePath = "https://api-dev.basistheory.com"
+    }
     
     override func tearDownWithError() throws { }
     
@@ -21,7 +23,6 @@ final class ElementServiceTests: XCTestCase {
         
         let privateApiKey = Configuration.getConfiguration().privateBtApiKey!
         let tokenizeExpectation = self.expectation(description: "Tokenize")
-        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
         BasisTheoryElements.tokenize(body: body, apiKey: privateApiKey) { data, error in
             XCTAssertNil(data)
             XCTAssertEqual(error as! TokenizingError, TokenizingError.applicationTypeNotPublic)
@@ -38,7 +39,6 @@ final class ElementServiceTests: XCTestCase {
         ]
         
         let tokenizeExpectation = self.expectation(description: "Tokenize")
-        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
         BasisTheoryElements.tokenize(body: body, apiKey: "bad api key") { data, error in
             XCTAssertNil(data)
             XCTAssertNotNil(error)
@@ -56,7 +56,6 @@ final class ElementServiceTests: XCTestCase {
         
         let privateApiKey = Configuration.getConfiguration().privateBtApiKey!
         let tokenizeExpectation = self.expectation(description: "Tokenize")
-        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
         BasisTheoryElements.createToken(body: body, apiKey: privateApiKey) { data, error in
             XCTAssertNil(data)
             XCTAssertEqual(error as! TokenizingError, TokenizingError.applicationTypeNotPublic)
@@ -73,7 +72,6 @@ final class ElementServiceTests: XCTestCase {
         ])
         
         let tokenizeExpectation = self.expectation(description: "Tokenize")
-        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
         BasisTheoryElements.createToken(body: body, apiKey: "bad api key") { data, error in
             XCTAssertNil(data)
             XCTAssertNotNil(error)
@@ -84,14 +82,12 @@ final class ElementServiceTests: XCTestCase {
         waitForExpectations(timeout: 3)
     }
     
-    // TODO: rename test and focus
+    // TODO: rename test and re-focus
     func testProxyRequest() throws {
         let proxyExpectation = self.expectation(description: "Proxy")
         
         let privateBtApiKey = Configuration.getConfiguration().privateBtApiKey!
-        
         let createApplicationRequest = CreateApplicationRequest(name: "Expiring API key", type: "expiring", permissions: ["token:use"])
-        BasisTheoryAPI.basePath = "https://api-dev.basistheory.com"
         ApplicationsAPI.createWithRequestBuilder(createApplicationRequest: createApplicationRequest).addHeader(name: "BT-API-KEY", value: privateBtApiKey).execute { result in
             switch result {
             case .failure(let ErrorResponse.error(e)):
@@ -121,9 +117,11 @@ final class ElementServiceTests: XCTestCase {
     }
     
     // TODO: need test for calling proxy without expiring key
+    // TODO: need test for calling proxy with array in the body
     // TODO: need test for calling proxy without a body
     // TODO: need test for calling proxy without a proxy key/with a proxy url
     // TODO: need test for calling proxy with valid url
     // TODO: need test for calling proxy with invalid url
     // TODO: need test for calling proxy with headers
+    // TODO: need test for using proxy responses in a tokenize request
 }
