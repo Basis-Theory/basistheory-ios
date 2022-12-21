@@ -100,18 +100,20 @@ final public class BasisTheoryElements {
         }
     }
     
-    public static func proxy(apiKey: String, proxyKey: String? = nil, proxyUrl: String? = nil, proxyHttpRequest: ProxyHttpRequest? = nil, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) -> Void {
+    public static func proxy(apiKey: String? = nil, proxyKey: String? = nil, proxyUrl: String? = nil, proxyHttpRequest: ProxyHttpRequest? = nil, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) -> Void {
         BasisTheoryAPI.basePath = basePath
         
-        getApplicationKey(apiKey: getApiKey(apiKey)) {data, error in
-            guard error == nil else {
-                completion(nil, nil, error)
-                return
-            }
-            
-            guard data?.type == "expiring" else {
-                completion(nil, nil, TokenizingError.applicationTypeNotExpiring)
-                return
+        if apiKey != nil {
+            getApplicationKey(apiKey: getApiKey(apiKey)) {data, error in
+                guard error == nil else {
+                    completion(nil, nil, error)
+                    return
+                }
+                
+                guard data?.type == "expiring" else {
+                    completion(nil, nil, TokenizingError.applicationTypeNotExpiring)
+                    return
+                }
             }
         }
         

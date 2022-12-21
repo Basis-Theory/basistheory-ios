@@ -41,10 +41,15 @@ struct ProxyHelpers {
         request.httpMethod = proxyHttpRequest?.method.rawValue ?? HttpMethod.get.rawValue
     }
     
-    static func setHeadersOnRequest(apiKey: String, proxyKey: String?, proxyUrl: String?, proxyHttpRequest: ProxyHttpRequest?, request: inout URLRequest) {
+    static func setHeadersOnRequest(apiKey: String?, proxyKey: String?, proxyUrl: String?, proxyHttpRequest: ProxyHttpRequest?, request: inout URLRequest) {
         var modifiedHeaders = proxyHttpRequest?.headers ?? [:]
-        modifiedHeaders["BT-API-KEY"] = apiKey
         modifiedHeaders["Content-Type"] = "Application/json"
+        
+        if apiKey != nil {
+            modifiedHeaders["BT-API-KEY"] = apiKey
+        } else {
+            modifiedHeaders.removeValue(forKey: "BT-API-KEY")
+        }
         
         if proxyKey != nil {
             modifiedHeaders["BT-PROXY-KEY"] = proxyKey

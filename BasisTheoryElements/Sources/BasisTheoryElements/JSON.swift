@@ -13,7 +13,7 @@ public enum JSON {
     case arrayValue(Array<JSON>)
     case dictionaryValue(Dictionary<String, JSON>)
     
-    var elementValueReference: ElementValueReference? {
+    public var elementValueReference: ElementValueReference? {
       if case .elementValueReference(let elementValueRef) = self {
          return elementValueRef
       }
