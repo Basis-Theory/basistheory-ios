@@ -21,6 +21,16 @@ class SplitCardElementsViewController: UIViewController {
     @IBOutlet weak var output: UITextView!
     @IBOutlet weak var cardBrand: UITextView!
     
+    @IBAction func printToConsoleLog(_ sender: Any) {
+        cardNumberTextField.text = "4242424242424242"
+        expirationDateTextField.text = "10/26"
+        cvcTextField.text = "909"
+        
+        print("cardNumberTextField.text: \(cardNumberTextField.text)")
+        print("expirationDateTextField.text: \(expirationDateTextField.text)")
+        print("cvcTextField.text: \(cvcTextField.text)")
+    }
+    
     @IBAction func tokenize(_ sender: Any) {
         let body: [String: Any] = [
             "data": [
