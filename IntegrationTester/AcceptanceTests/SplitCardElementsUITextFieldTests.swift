@@ -13,7 +13,7 @@ import Combine
 
 final class SplitCardElementsIntegrationTesterUITests: XCTestCase {
     private var app: XCUIApplication = XCUIApplication()
-
+    
     override func setUpWithError() throws {
         app.launch()
         
@@ -34,18 +34,22 @@ final class SplitCardElementsIntegrationTesterUITests: XCTestCase {
         XCTAssertEqual(cardNumberTextField.value as! String, "4242 4242 4242 4242")
         XCTAssertEqual(expirationDateTextField.value as! String, "10/26")
         XCTAssertEqual(cvcTextField.value as! String, "909")
+        // To-do: how to get the card brand to be detected here?
     }
     
     
-    func testCardNumberMaskForVisaAndMastercard() throws {
+    func testCardNumberMaskForVisaToAmericanExpress() throws {
         let validVisaCardNumber = "4242424242424242"
-        let invalidVisaCardNumber = "42424242424242aa"
+        let invalidVisaCardNumber = "42424242424242xx"
         
-        let validMastercardCardNumber = "5151515151515151"
-        let invalidMastercardCardNumber = "51515151515151aa"
+        let validAmericanExpressCardNumber = "348570250878868"
+        let invalidAmericanExpressCardNumber = "34xx70250878868"
         
-        let validCVC = "123"
-        let invalidCVC = "1234"
+        let visaValidCVC = "432"
+        let visaInvalidCVC = "4321"
+        
+        let americanExpressValidCVC = "1234"
+        let americanExpressInvalidCVC = "12345"
         
         let cardNumberTextField = app.textFields["Card Number"]
         cardNumberTextField.tap()
@@ -64,55 +68,12 @@ final class SplitCardElementsIntegrationTesterUITests: XCTestCase {
         let invalidVisaCardBrandResults = CardBrand.getCardBrand(text: invalidVisaCardNumber)
         XCTAssertEqual(invalidVisaCardBrandResults.bestMatchCardBrand!.cardBrandName, CardBrand.CardBrandName.visa)
         
-        try testCVC()
+        try testVisaCVC()
         
-        // Change the card brand from visa mastercard to ensure brand change is detected and the mask updates
-        
-        cardNumberTextField.doubleTap()
-
-        cardNumberTextField.typeText(validMastercardCardNumber)
-        XCTAssertEqual(cardNumberTextField.value as! String, "5151 5151 5151 5151")
-
-        let mastercardCardBrandResults = CardBrand.getCardBrand(text: validMastercardCardNumber)
-        XCTAssertEqual(mastercardCardBrandResults.bestMatchCardBrand!.cardBrandName, CardBrand.CardBrandName.mastercard)
+        // Change the card from visa to amex to ensure brand change is detected and the mask updates accordingly
         
         cardNumberTextField.doubleTap()
         
-        cardNumberTextField.typeText(invalidMastercardCardNumber)
-        XCTAssertEqual(cardNumberTextField.value as! String, "5151 5151 5151 51")
-        
-        let invalidMasterCardBrandResults = CardBrand.getCardBrand(text: invalidMastercardCardNumber)
-        XCTAssertEqual(invalidMasterCardBrandResults.bestMatchCardBrand!.cardBrandName, CardBrand.CardBrandName.mastercard)
-        
-        try testCVC()
-        
-        func testCVC() throws {
-            
-            let cvcTextField = app.textFields["CVC"]
-            cvcTextField.tap()
-            
-            cvcTextField.typeText(validCVC)
-            XCTAssertEqual(cvcTextField.value as! String, "123")
-            
-            cvcTextField.doubleTap()
-            
-            cvcTextField.typeText(invalidCVC)
-            XCTAssertEqual(cvcTextField.value as! String, "123")
-        }
-        
-        // To-do: Investigate how to make more concise
-        
-    }
-    
-    func testCardNumberAndCVCMaskForAmericanExpress() throws {
-        let validAmericanExpressCardNumber = "348570250878868"
-        let invalidAmericanExpressCardNumber = "34aa70250878868"
-        let validCVC = "1234"
-        let invalidCVC = "123"
-
-        let cardNumberTextField = app.textFields["Card Number"]
-        cardNumberTextField.tap()
-
         cardNumberTextField.typeText(validAmericanExpressCardNumber)
         XCTAssertEqual(cardNumberTextField.value as! String, "3485 702508 78868")
         
@@ -120,24 +81,38 @@ final class SplitCardElementsIntegrationTesterUITests: XCTestCase {
         XCTAssertEqual(cardBrandResults.bestMatchCardBrand!.cardBrandName, CardBrand.CardBrandName.americanExpress)
         
         cardNumberTextField.doubleTap()
-
+        
         cardNumberTextField.typeText(invalidAmericanExpressCardNumber)
         XCTAssertEqual(cardNumberTextField.value as! String, "3470 250878 868")
         
-        let cvcTextField = app.textFields["CVC"]
-        cvcTextField.tap()
+        try testAmericanExpressCVC()
         
-        cvcTextField.typeText(validCVC)
-        XCTAssertEqual(cvcTextField.value as! String, "1234")
+        func testVisaCVC() throws {
+            
+            let cvcTextField = app.textFields["CVC"]
+            cvcTextField.tap()
+            
+            cvcTextField.typeText(visaValidCVC)
+            XCTAssertEqual(cvcTextField.value as! String, "432")
+            
+            cvcTextField.doubleTap()
+            
+            cvcTextField.typeText(visaInvalidCVC)
+            XCTAssertEqual(cvcTextField.value as! String, "432")
+        }
         
-        cvcTextField.doubleTap()
-        
-        cvcTextField.typeText(invalidCVC)
-        XCTAssertEqual(cvcTextField.value as! String, "123")
-        
+        func testAmericanExpressCVC() throws {
+            
+            let cvcTextField = app.textFields["CVC"]
+            cvcTextField.doubleTap()
+            
+            cvcTextField.typeText(americanExpressValidCVC)
+            XCTAssertEqual(cvcTextField.value as! String, "1234")
+            
+            cvcTextField.doubleTap()
+            
+            cvcTextField.typeText(americanExpressInvalidCVC)
+            XCTAssertEqual(cvcTextField.value as! String, "1234")
+        }
     }
-
-    //to-do: diners club, 
-
-    //to-do: discover, jcb, union pay, maestro, elo, mir, hiper, hipercard are same as visa and mastercard in terms of cvc length and gaps
 }
