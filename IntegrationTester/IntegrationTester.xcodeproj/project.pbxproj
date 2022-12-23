@@ -25,6 +25,7 @@
 		928869A229118DC4004E75E3 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924576CB2900519900A01E70 /* Configuration.swift */; };
 		928869A72911B564004E75E3 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924576CB2900519900A01E70 /* Configuration.swift */; };
 		929E30C32948D0F900A01A56 /* ElementServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E30C22948D0F900A01A56 /* ElementServiceTests.swift */; };
+		929E30CA29539A1A00A01A56 /* BasisTheoryElements in Frameworks */ = {isa = PBXBuildFile; productRef = 929E30C929539A1A00A01A56 /* BasisTheoryElements */; };
 		92A24DE7291DA1F0005DD4D2 /* SplitCardElementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A24DE6291DA1F0005DD4D2 /* SplitCardElementsViewController.swift */; };
 		92B7DCAF2939523C000DBB8A /* CardBrandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B7DCAE2939523C000DBB8A /* CardBrandTests.swift */; };
 		92C3019629132287009F8D92 /* Env.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92C3019529132287009F8D92 /* Env.plist */; };
@@ -95,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				929E30CA29539A1A00A01A56 /* BasisTheoryElements in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,6 +230,7 @@
 			);
 			name = AcceptanceTests;
 			packageProductDependencies = (
+				929E30C929539A1A00A01A56 /* BasisTheoryElements */,
 			);
 			productName = IntegrationTesterUITests;
 			productReference = 924576A528FF46C200A01E70 /* AcceptanceTests.xctest */;
@@ -683,6 +686,10 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		92566EA5293578B30047BFF2 /* BasisTheoryElements */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BasisTheoryElements;
+		};
+		929E30C929539A1A00A01A56 /* BasisTheoryElements */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BasisTheoryElements;
 		};

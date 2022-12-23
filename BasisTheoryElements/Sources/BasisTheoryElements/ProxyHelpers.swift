@@ -27,18 +27,13 @@ struct ProxyHelpers {
             url += "?\(urlQueryParams)"
         }
         
-        let Url = String(format: url)
-        
-        guard let serviceUrl = URL(string: Url) else {
-            // TODO: reconsider error thrown here
-            throw TokenizingError.invalidInput
-        }
+        let serviceUrl = URL(string: url)!
         
         return URLRequest(url: serviceUrl)
     }
     
     static func setMethodOnRequest(proxyHttpRequest: ProxyHttpRequest?, request: inout URLRequest) {
-        request.httpMethod = proxyHttpRequest?.method.rawValue ?? HttpMethod.get.rawValue
+        request.httpMethod = proxyHttpRequest?.method?.rawValue ?? HttpMethod.get.rawValue
     }
     
     static func setHeadersOnRequest(apiKey: String?, proxyKey: String?, proxyUrl: String?, proxyHttpRequest: ProxyHttpRequest?, request: inout URLRequest) {
@@ -65,19 +60,22 @@ struct ProxyHelpers {
     }
     
     static func setBodyOnRequest(proxyHttpRequest: ProxyHttpRequest?, request: inout URLRequest) {
-        // TODO: test empty body request. don't throw if one is not provided
-        guard let httpBody = try? JSONSerialization.data(withJSONObject: proxyHttpRequest?.body, options: []) else {
-            return
+        if let proxyHttpRequestBody = proxyHttpRequest?.body {
+            let httpBody = try! JSONSerialization.data(withJSONObject: proxyHttpRequestBody, options: [])
+            request.httpBody = httpBody
         }
-        request.httpBody = httpBody
     }
     
-    private static func traverseJson(dictionary: [String: Any], json: inout JSON) {
+    private static func traverseJsonDictionary(dictionary: [String: Any], json: inout JSON) {
         for (key, value) in dictionary {
             if let value = value as? [String: Any] {
                 json[key] = JSON.dictionaryValue([:])
                 
-                traverseJson(dictionary: value, json: &json[key]!)
+                traverseJsonDictionary(dictionary: value, json: &json[key]!)
+            } else if let value = value as? [Any] {
+                json[key] = JSON.arrayValue([])
+                
+                traverseJsonArray(array: value, json: &json[key]!)
             } else {
                 json[key] = JSON.elementValueReference(ElementValueReference(valueMethod: {
                     String(describing: value)
@@ -86,20 +84,43 @@ struct ProxyHelpers {
         }
     }
     
+    private static func traverseJsonArray(array: [Any], json: inout JSON) {
+        for (index, value) in array.enumerated() {
+            if let value = value as? [String: Any] {
+                json[index] = JSON.dictionaryValue([:])
+                
+                traverseJsonDictionary(dictionary: value, json: &json[index]!)
+            } else if let value = value as? [Any] {
+                json[index] = JSON.arrayValue([])
+                
+                traverseJsonArray(array: value, json: &json[index]!)
+            } else {
+                json[index] = JSON.elementValueReference(ElementValueReference(valueMethod: {
+                    String(describing: value)
+                }, isValid: true))
+            }
+        }
+    }
+    
     static func executeRequest(request: URLRequest, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) {
-        let session = URLSession.shared
-        session.dataTask(with: request) { (data, response, error) in
-            if let data = data {
-                do {
-                    let serializedJson = try JSONSerialization.jsonObject(with: data, options: [])
-                    
-                    var json = JSON.dictionaryValue([:])
-                    traverseJson(dictionary: serializedJson as! [String:Any], json: &json)
-                    
-                    completion(response, json, nil)
-                } catch {
-                    completion(response, nil, error)
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let response = response {
+                if let data = data {
+                    do {
+                        let serializedJson = try JSONSerialization.jsonObject(with: data, options: [])
+                        
+                        var json = JSON.dictionaryValue([:])
+                        traverseJsonDictionary(dictionary: serializedJson as! [String:Any], json: &json)
+                        
+                        completion(response, json, nil)
+                    } catch {
+                        completion(response, nil, error)
+                    }
+                } else {
+                    completion(response, nil, nil)
                 }
+            } else {
+                completion(nil, nil, ProxyError.invalidRequest)
             }
         }.resume()
     }

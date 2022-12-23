@@ -283,6 +283,7 @@ BasisTheoryElements.createToken(body: body, apiKey: "<YOUR PUBLIC API KEY>")
 #### `proxy`
 
 TODO: fill out
+note that all values passed to other service fns will be strings
 
 ## Full TextElementUITextField Example
 

@@ -12,8 +12,12 @@ import Combine
 
 public enum TokenizingError: Error {
     case applicationTypeNotPublic
-    case applicationTypeNotExpiring
     case invalidInput
+}
+
+public enum ProxyError: Error {
+    case invalidRequest
+    case applicationTypeNotExpiring
 }
 
 final public class BasisTheoryElements {
@@ -111,7 +115,7 @@ final public class BasisTheoryElements {
                 }
                 
                 guard data?.type == "expiring" else {
-                    completion(nil, nil, TokenizingError.applicationTypeNotExpiring)
+                    completion(nil, nil, ProxyError.applicationTypeNotExpiring)
                     return
                 }
             }

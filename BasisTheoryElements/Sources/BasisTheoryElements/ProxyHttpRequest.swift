@@ -8,14 +8,14 @@
 import Foundation
 
 public struct ProxyHttpRequest {
-    public var method: HttpMethod = .get
-    public var path: String? = nil
-    public var query: [String:String]? = nil
-    public var body: [String:Any]? = nil
-    public var headers: [String:String]? = nil
-    public var url: String? = nil
+    public var method: HttpMethod?
+    public var path: String?
+    public var query: [String:String]?
+    public var body: [String:Any]?
+    public var headers: [String:String]?
+    public var url: String?
     
-    public init(url: String? = nil, method: HttpMethod, path: String? = nil, query: [String : String]? = nil, body: [String : Any]? = nil, headers: [String : String]? = nil) {
+    public init(url: String? = nil, method: HttpMethod? = .get, path: String? = nil, query: [String : String]? = nil, body: [String : Any]? = nil, headers: [String : String]? = nil) {
         self.url = url
         self.method = method
         self.path = path

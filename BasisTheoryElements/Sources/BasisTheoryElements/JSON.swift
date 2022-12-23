@@ -10,7 +10,7 @@ import Foundation
 @dynamicMemberLookup
 public enum JSON {
     case elementValueReference(ElementValueReference)
-    case arrayValue(Array<JSON>)
+    case arrayValue(Array<JSON?>)
     case dictionaryValue(Dictionary<String, JSON>)
     
     public var elementValueReference: ElementValueReference? {
@@ -20,11 +20,25 @@ public enum JSON {
       return nil
    }
     
-    subscript(index: Int) -> JSON? {
-        if case .arrayValue(let arr) = self {
-            return index < arr.count ? arr[index] : nil
+    public subscript(index: Int) -> JSON? {
+        get {
+            if case .arrayValue(let arr) = self {
+                return index < arr.count ? arr[index] : nil
+            }
+            return nil
         }
-        return nil
+        
+        mutating set {
+            if case .arrayValue(var arr) = self {
+                if arr.capacity < index + 1 {
+                    arr.reserveCapacity(index + 1)
+                    arr.insert(newValue, at: index)
+                } else {
+                    arr[index] = newValue
+                }
+                self = JSON.arrayValue(arr)
+            }
+        }
     }
     
     public subscript(key: String) -> JSON? {
