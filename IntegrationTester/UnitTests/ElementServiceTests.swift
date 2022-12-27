@@ -545,4 +545,66 @@ final class ElementServiceTests: XCTestCase {
         
         waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
+    
+    func testProxyResponseInElement() throws {
+        let proxyKeyNoAuth = Configuration.getConfiguration().proxyKeyNoAuth!
+        let publicApiKey = Configuration.getConfiguration().btApiKey!
+        let privateApiKey = Configuration.getConfiguration().privateBtApiKey!
+        
+        let proxyExpectation = self.expectation(description: "Proxy")
+        var proxyResponseData: JSON = JSON.dictionaryValue([:])
+        let proxyHttpRequest = ProxyHttpRequest(method: .get)
+        BasisTheoryElements.proxy(
+            proxyKey: proxyKeyNoAuth,
+            proxyHttpRequest: proxyHttpRequest)
+        { response, data, error in
+            XCTAssertNil(error)
+            XCTAssertEqual(response?.url?.absoluteString, "https://api-dev.basistheory.com/proxy")
+            
+            let httpResponse = response as! HTTPURLResponse
+            
+            XCTAssertEqual(httpResponse.statusCode, 200)
+            
+            proxyResponseData = data!
+            proxyExpectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
+        
+        let textElement = TextElementUITextField()
+        textElement.setValue(elementValueReference: proxyResponseData.url?.elementValueReference)
+        
+        let body: [String: Any] = [
+            "data": ["textFieldRef": textElement],
+            "type": "token"
+        ]
+        let tokenizeExpectation = self.expectation(description: "Tokenize")
+        var createdToken: [String: Any] = [:]
+        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
+        BasisTheoryElements.tokenize(body: body, apiKey: publicApiKey) { data, error in
+            createdToken = data!.value as! [String: Any]
+            
+            XCTAssertNotNil(createdToken["id"])
+            XCTAssertEqual(createdToken["type"] as! String, "token")
+            
+            tokenizeExpectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 3)
+        
+        let idQueryExpectation = self.expectation(description: "Token ID Query")
+        TokensAPI.getByIdWithRequestBuilder(id: createdToken["id"] as! String).addHeader(name: "BT-API-KEY", value: privateApiKey).execute { result in
+            do {
+                let token = try result.get().body.data!.value as! [String: Any]
+                
+                XCTAssertEqual(token["textFieldRef"] as! String, "https://echo.basistheory.com/get")
+                
+                idQueryExpectation.fulfill()
+            } catch {
+                print(error)
+            }
+        }
+
+        waitForExpectations(timeout: 3)
+    }
 }

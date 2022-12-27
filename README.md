@@ -137,6 +137,7 @@ textElementUITextField.setConfig(options: TextElementOptions(mask: phoneMask, tr
 | --- | --- |
 | text | We restrict the getter for this value; it always returns nil. The setter works as is. |
 | subject | An instance of PassThroughSubject that allows you to subscribe to ElementEvents. |
+| setValue | A function that recieves an `ElementValueReference` parameter to set the value of the element. 🚨 Note: `ElementValueReference` instances can only be retrieved from [proxy](#proxy) responses. An `ElementValueReference` cannot be instantiated outside of the `BasisTheoryElements` package at this time. |
 
 ## ElementEvent
 
@@ -266,6 +267,8 @@ BasisTheoryElements.tokenize(body: body, apiKey: "<YOUR PUBLIC API KEY>")
 	{ data, error in print(data) }
 ```
 
+The callback provided calls your function with a `data` of type `AnyCodable`, and an `error` of type `Error`.
+
 #### `createToken`
 
 Elements' values can be securely tokenized utilizing our [createToken](https://docs.basistheory.com/#tokens-create-token) services. To accomplish this, simply pass the Element instance in the payload.
@@ -280,10 +283,56 @@ BasisTheoryElements.createToken(body: body, apiKey: "<YOUR PUBLIC API KEY>")
 	{ data, error in print(data) }
 ```
 
+The callback provided calls your function with a `data` of type `CreateTokenResponse`, and an `error` of type `Error`.
+
 #### `proxy`
 
-TODO: fill out
-note that all values passed to other service fns will be strings
+Proxy provides a simple way to retrieve data back into an element utilizing our [proxy](https://docs.basistheory.com/#proxy) service. To accomplish this, simply construct your proxy request like this:
+
+```swift
+let proxyHttpRequest = ProxyHttpRequest(method: .post, body: [
+    "testProp": "testValue",
+    "objProp": [
+        "nestedTestProp": "nestedTestValue"
+    ]
+], headers: [
+    "X-My-Custom-Header": "headerValue",
+])
+
+BasisTheoryElements.proxy(
+    apiKey: "<YOUR EXPIRING API KEY>",
+    proxyKey: "<YOUR PROXY KEY>",
+    proxyHttpRequest: proxyHttpRequest)
+{ response, data, error in
+    print(response)
+    print(data)
+}
+```
+
+The callback provided calls your function with a:
+* `response` of type `URLResponse`
+* `error` of type `Error`
+* `data` of type `JSON` - `JSON` is a data structure that has dynamic member lookup capabilities. This allows you to traverse a response from a proxy without giving you access to read any sensitive proxy response data, which means you stay compliant. Below is an example of how you can use a response from a proxy with our elements.
+
+```swift
+@IBOutlet private weak var myTextElement: TextElementUITextField!
+
+...
+
+BasisTheoryElements.proxy(
+    apiKey: "<YOUR EXPIRING API KEY>",
+    proxyKey: "<YOUR PROXY KEY>",
+    proxyHttpRequest: proxyHttpRequest)
+{ response, data, error in
+    myTextElement.setValue(elementValueReference: data.my?.nested?.property?.elementValueReference)
+    
+    let body: CreateToken = CreateToken(type: "token", data: [
+        "myProxyResponse": textElement,
+    ])
+    BasisTheoryElements.createToken(body: body, apiKey: "<YOUR PUBLIC API KEY>")
+    { data, error in print(data) }
+}
+```
 
 ## Full TextElementUITextField Example
 

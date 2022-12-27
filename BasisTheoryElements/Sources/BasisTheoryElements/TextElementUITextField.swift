@@ -63,6 +63,12 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         get { nil }
     }
     
+    public func setValue(elementValueReference: ElementValueReference?) {
+        if let elementValueReference = elementValueReference {
+            super.text = elementValueReference.getValue()
+        }
+    }
+    
     // detecting backspace, used for masking
     override public func deleteBackward() {
         self.backspacePressed = true

@@ -110,7 +110,7 @@ class ElementUITextFieldTests: XCTestCase {
             tokenizeExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 30, handler: nil)
+        waitForExpectations(timeout: 3)
 
         let privateApiKey = Configuration.getConfiguration().privateBtApiKey!
         let idQueryExpectation = self.expectation(description: "Token ID Query")

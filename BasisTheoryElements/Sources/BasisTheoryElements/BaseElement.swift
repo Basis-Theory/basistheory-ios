@@ -10,6 +10,7 @@ import Combine
 
 public protocol ElementProtocol {
     var subject: PassthroughSubject<ElementEvent, Error> {get set}
+    func setValue(elementValueReference: ElementValueReference?) -> Void
 }
 
 internal protocol InternalElementProtocol {
