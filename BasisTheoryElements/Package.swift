@@ -24,8 +24,7 @@ let package = Package(
         .target(
             name: "BasisTheoryElements",
             dependencies: [
-                .product(name: "BasisTheory", package: "basistheory-swift"),
-
+                .product(name: "BasisTheory", package: "basistheory-swift")
             ]
         )
     ]

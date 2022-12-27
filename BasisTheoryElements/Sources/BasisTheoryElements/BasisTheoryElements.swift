@@ -118,9 +118,15 @@ final public class BasisTheoryElements {
                     completion(nil, nil, ProxyError.applicationTypeNotExpiring)
                     return
                 }
+                
+                proxyRequest(apiKey: apiKey, proxyKey: proxyKey, proxyUrl: proxyUrl, proxyHttpRequest: proxyHttpRequest, completion: completion)
             }
+        } else {
+            proxyRequest(apiKey: apiKey, proxyKey: proxyKey, proxyUrl: proxyUrl, proxyHttpRequest: proxyHttpRequest, completion: completion)
         }
-        
+    }
+    
+    private static func proxyRequest(apiKey: String?, proxyKey: String?, proxyUrl: String?, proxyHttpRequest: ProxyHttpRequest?, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) {
         var request = try! ProxyHelpers.getUrlRequest(proxyHttpRequest: proxyHttpRequest)
         
         ProxyHelpers.setMethodOnRequest(proxyHttpRequest: proxyHttpRequest, request: &request)

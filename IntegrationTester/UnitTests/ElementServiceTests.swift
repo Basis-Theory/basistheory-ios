@@ -10,6 +10,8 @@ import BasisTheoryElements
 import BasisTheory
 
 final class ElementServiceTests: XCTestCase {
+    private final var TIMEOUT_EXPECTATION = 5.0
+    
     override func setUpWithError() throws {
         BasisTheoryAPI.basePath = "https://api-dev.basistheory.com"
     }
@@ -30,7 +32,7 @@ final class ElementServiceTests: XCTestCase {
             tokenizeExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
     func testTokenizeReturnsErrorFromApplicationCheck() throws {
@@ -46,7 +48,7 @@ final class ElementServiceTests: XCTestCase {
             tokenizeExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
     func testCreateTokenChecksForApplicationTypeOfPublic() throws {
@@ -63,7 +65,7 @@ final class ElementServiceTests: XCTestCase {
             tokenizeExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
     func testCreateReturnsErrorFromApplicationCheck() throws {
@@ -79,7 +81,7 @@ final class ElementServiceTests: XCTestCase {
             tokenizeExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
     func testProxyRequest() throws {
@@ -95,7 +97,7 @@ final class ElementServiceTests: XCTestCase {
             applicationExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
         
         let proxyExpectation = self.expectation(description: "Proxy")
         let proxyKey = "Y9CGfBNG6rAVnxN7fTiZMb"
@@ -122,7 +124,7 @@ final class ElementServiceTests: XCTestCase {
             proxyExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
         
         let createTokenExpectation = self.expectation(description: "Create token")
         var createdToken: CreateTokenResponse? = nil
@@ -141,7 +143,7 @@ final class ElementServiceTests: XCTestCase {
             createTokenExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
         
         let idQueryExpectation = self.expectation(description: "Token ID Query")
         TokensAPI.getByIdWithRequestBuilder(id: createdToken!.id!).addHeader(name: "BT-API-KEY", value: privateBtApiKey).execute { result in
@@ -153,7 +155,7 @@ final class ElementServiceTests: XCTestCase {
             idQueryExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
     func testProxyReturnsNilValuesFromResponse() throws {
@@ -169,7 +171,7 @@ final class ElementServiceTests: XCTestCase {
             applicationExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
         
         let proxyExpectation = self.expectation(description: "Proxy")
         let proxyKey = "Y9CGfBNG6rAVnxN7fTiZMb"
@@ -196,7 +198,7 @@ final class ElementServiceTests: XCTestCase {
             proxyExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
         
         XCTAssertNotNil(proxyResponseData.json?.testProp?.elementValueReference)
         XCTAssertNotNil(proxyResponseData.json?.objProp)
@@ -222,12 +224,12 @@ final class ElementServiceTests: XCTestCase {
         { response, data, error in
             XCTAssertNil(response)
             XCTAssertNil(data)
-            XCTAssertEqual(error as! ProxyError, ProxyError.applicationTypeNotExpiring)
+            XCTAssertEqual(error as? ProxyError, ProxyError.applicationTypeNotExpiring)
             
             proxyExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
     func testProxyWithArrayInBody() {
@@ -243,7 +245,7 @@ final class ElementServiceTests: XCTestCase {
             applicationExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
         
         let proxyExpectation = self.expectation(description: "Proxy")
         let proxyKey = "Y9CGfBNG6rAVnxN7fTiZMb"
@@ -267,7 +269,7 @@ final class ElementServiceTests: XCTestCase {
             proxyExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
         
         let createTokenExpectation = self.expectation(description: "Create token")
         var createdToken: CreateTokenResponse? = nil
@@ -287,7 +289,7 @@ final class ElementServiceTests: XCTestCase {
             createTokenExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
         
         let idQueryExpectation = self.expectation(description: "Token ID Query")
         TokensAPI.getByIdWithRequestBuilder(id: createdToken!.id!).addHeader(name: "BT-API-KEY", value: privateBtApiKey).execute { result in
@@ -300,7 +302,7 @@ final class ElementServiceTests: XCTestCase {
             idQueryExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
     func testProxyWithoutABody() {
@@ -315,7 +317,7 @@ final class ElementServiceTests: XCTestCase {
             applicationExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
         
         let proxyExpectation = self.expectation(description: "Proxy")
         let proxyKey = "AKGRn5nuNw2XqP5Vqh7uYE"
@@ -335,7 +337,7 @@ final class ElementServiceTests: XCTestCase {
             proxyExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
     func testProxyWithAProxyUrl() {
@@ -350,7 +352,7 @@ final class ElementServiceTests: XCTestCase {
             applicationExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
         
         let proxyExpectation = self.expectation(description: "Proxy")
         let proxyHttpRequest = ProxyHttpRequest(method: .post, body: [
@@ -374,7 +376,7 @@ final class ElementServiceTests: XCTestCase {
             proxyExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
     func testProxyWithValidUrlForRequest() throws {
@@ -389,7 +391,7 @@ final class ElementServiceTests: XCTestCase {
             applicationExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
         
         let proxyExpectation = self.expectation(description: "Proxy")
         let proxyKey = "Y9CGfBNG6rAVnxN7fTiZMb"
@@ -414,7 +416,7 @@ final class ElementServiceTests: XCTestCase {
             proxyExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
     func testProxyWithAnInvalidUrlForRequest() {
@@ -429,7 +431,7 @@ final class ElementServiceTests: XCTestCase {
             applicationExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
         
         let proxyExpectation = self.expectation(description: "Proxy")
         let proxyKey = "Y9CGfBNG6rAVnxN7fTiZMb"
@@ -451,7 +453,7 @@ final class ElementServiceTests: XCTestCase {
             proxyExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
     func testProxyWithCustomHeader() throws {
@@ -468,7 +470,7 @@ final class ElementServiceTests: XCTestCase {
             applicationExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
         
         let proxyExpectation = self.expectation(description: "Proxy")
         let proxyKey = "Y9CGfBNG6rAVnxN7fTiZMb"
@@ -491,7 +493,7 @@ final class ElementServiceTests: XCTestCase {
             proxyExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
         
         let createTokenExpectation = self.expectation(description: "Create token")
         var createdToken: CreateTokenResponse? = nil
@@ -509,7 +511,7 @@ final class ElementServiceTests: XCTestCase {
             createTokenExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
         
         let idQueryExpectation = self.expectation(description: "Token ID Query")
         TokensAPI.getByIdWithRequestBuilder(id: createdToken!.id!).addHeader(name: "BT-API-KEY", value: privateBtApiKey).execute { result in
@@ -520,7 +522,7 @@ final class ElementServiceTests: XCTestCase {
             idQueryExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
     func testProxyWithoutApiKey() throws {
@@ -543,6 +545,6 @@ final class ElementServiceTests: XCTestCase {
             proxyExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
 }

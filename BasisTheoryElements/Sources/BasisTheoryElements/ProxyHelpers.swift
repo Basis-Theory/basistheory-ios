@@ -117,7 +117,7 @@ struct ProxyHelpers {
                         completion(response, nil, error)
                     }
                 } else {
-                    completion(response, nil, nil)
+                    completion(response, nil, error)
                 }
             } else {
                 completion(nil, nil, ProxyError.invalidRequest)

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		428CB1062937C53000C8220E /* CardExpirationDateUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428CB1052937C53000C8220E /* CardExpirationDateUITextFieldTests.swift */; };
 		428CB10A293E398B00C8220E /* CardNumberUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428CB109293E398B00C8220E /* CardNumberUITextFieldTests.swift */; };
+		6286CEC129523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6286CEC029523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift */; };
+		62BEB1442953A1C600E5A0CE /* BasisTheoryElements in Frameworks */ = {isa = PBXBuildFile; productRef = 62BEB1432953A1C600E5A0CE /* BasisTheoryElements */; };
 		9206601D2922813C00A92A81 /* CardVerificationCodeUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9206601C2922813C00A92A81 /* CardVerificationCodeUITextFieldTests.swift */; };
 		9245768928FF46C100A01E70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9245768828FF46C100A01E70 /* AppDelegate.swift */; };
 		9245768B28FF46C100A01E70 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9245768A28FF46C100A01E70 /* SceneDelegate.swift */; };
@@ -53,6 +55,7 @@
 /* Begin PBXFileReference section */
 		428CB1052937C53000C8220E /* CardExpirationDateUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardExpirationDateUITextFieldTests.swift; sourceTree = "<group>"; };
 		428CB109293E398B00C8220E /* CardNumberUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNumberUITextFieldTests.swift; sourceTree = "<group>"; };
+		6286CEC029523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitCardElementsUITextFieldTests.swift; sourceTree = "<group>"; };
 		9206601C2922813C00A92A81 /* CardVerificationCodeUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardVerificationCodeUITextFieldTests.swift; sourceTree = "<group>"; };
 		9245768528FF46C100A01E70 /* IntegrationTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IntegrationTester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9245768828FF46C100A01E70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -96,7 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				929E30CA29539A1A00A01A56 /* BasisTheoryElements in Frameworks */,
+				62BEB1442953A1C600E5A0CE /* BasisTheoryElements in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				924576A928FF46C200A01E70 /* TextElementUITextFieldTests.swift */,
+				6286CEC029523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift */,
 			);
 			path = AcceptanceTests;
 			sourceTree = "<group>";
@@ -230,7 +234,7 @@
 			);
 			name = AcceptanceTests;
 			packageProductDependencies = (
-				929E30C929539A1A00A01A56 /* BasisTheoryElements */,
+				62BEB1432953A1C600E5A0CE /* BasisTheoryElements */,
 			);
 			productName = IntegrationTesterUITests;
 			productReference = 924576A528FF46C200A01E70 /* AcceptanceTests.xctest */;
@@ -342,6 +346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6286CEC129523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift in Sources */,
 				928869A229118DC4004E75E3 /* Configuration.swift in Sources */,
 				924576AA28FF46C200A01E70 /* TextElementUITextFieldTests.swift in Sources */,
 			);
@@ -685,6 +690,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		62BEB1432953A1C600E5A0CE /* BasisTheoryElements */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BasisTheoryElements;
+		};
 		92566EA5293578B30047BFF2 /* BasisTheoryElements */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BasisTheoryElements;
