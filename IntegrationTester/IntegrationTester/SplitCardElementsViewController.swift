@@ -44,7 +44,7 @@ class SplitCardElementsViewController: UIViewController {
         
         // this next line is used for our own testing purposes. you can simply pass in your public API key into the tokenize request below
         let config = Configuration.getConfiguration()
-        BasisTheoryElements.tokenize(body: body) { data, error in
+        BasisTheoryElements.tokenize(body: body, apiKey: config.btApiKey!) { data, error in
             guard error == nil else {
                 self.output.text = "There was an error!"
                 print(error)

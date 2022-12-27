@@ -11,6 +11,10 @@ cat <<EOT > ./IntegrationTester/Env.plist
 	<string>${DEV_BT_API_KEY}</string>
 	<key>privateBtApiKey</key>
 	<string>${DEV_PRIVATE_BT_API_KEY}</string>
+	<key>proxyKey</key>
+	<string>Y9CGfBNG6rAVnxN7fTiZMb</string>
+	<key>proxyKeyNoAuth</key>
+	<string>Ce3V4ygt9K8snVqSevZEis</string>
 </dict>
 </plist>
 EOT

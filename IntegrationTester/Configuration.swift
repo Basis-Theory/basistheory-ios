@@ -10,10 +10,14 @@ import Foundation
 struct EnvConfig: Decodable {
     let btApiKey: String?
     let privateBtApiKey: String?
+    let proxyKey: String?
+    let proxyKeyNoAuth: String?
     
     init() {
         self.btApiKey = nil
         self.privateBtApiKey = nil
+        self.proxyKey = nil
+        self.proxyKeyNoAuth = nil
     }
 }
 
