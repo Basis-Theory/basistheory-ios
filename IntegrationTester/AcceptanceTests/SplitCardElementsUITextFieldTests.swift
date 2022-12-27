@@ -34,7 +34,6 @@ final class SplitCardElementsIntegrationTesterUITests: XCTestCase {
         XCTAssertEqual(cardNumberTextField.value as! String, "4242 4242 4242 4242")
         XCTAssertEqual(expirationDateTextField.value as! String, "10/26")
         XCTAssertEqual(cvcTextField.value as! String, "909")
-        // To-do: how to get the card brand to be detected here?
     }
     
     
