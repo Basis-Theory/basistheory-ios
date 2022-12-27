@@ -312,7 +312,7 @@ BasisTheoryElements.proxy(
 The callback provided calls your function with a:
 * `response` of type `URLResponse`
 * `error` of type `Error`
-* `data` of type `JSON` - `JSON` is a data structure that has dynamic member lookup capabilities. This allows you to traverse a response from a proxy without giving you access to read any sensitive proxy response data, which means you stay compliant. Below is an example of how you can use a response from a proxy with our elements.
+* `data` of type `JSON` - `JSON` is a data structure that has dynamic member lookup capabilities. This allows you to traverse a response from a proxy without giving you access to read any sensitive proxy response data, which means you stay compliant. To retrieve a JSON property from a proxy response, traverse the JSON using dot or bracket notation and retrieve the value using the `elementValueReference`. As of now, only numbers, booleans, and strings can be retrieved using this method. Below is an example of how you can use a response from a proxy with our elements.
 
 ```swift
 @IBOutlet private weak var myTextElement: TextElementUITextField!
