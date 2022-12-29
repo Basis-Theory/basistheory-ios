@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
   s.name = 'BasisTheoryElements'
   s.ios.deployment_target = '14.0'
-  s.version = '1.0.1'
-  s.source = { :git => 'https://github.com/Basis-Theory/basistheory-ios.git', :tag => '1.0.1' }
+  s.version = '1.1.0'
+  s.source = { :git => 'https://github.com/Basis-Theory/basistheory-ios.git', :tag => '1.1.0' }
   s.authors = 'BasisTheory'
   s.license = 'Apache'
   s.homepage = 'https://github.com/Basis-Theory/basistheory-ios'

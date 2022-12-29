@@ -1,3 +1,11 @@
+## [1.1.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.0.1...1.1.0) (2022-12-29)
+
+
+### Features
+
+* adds proxy function ([#24](https://github.com/Basis-Theory/basistheory-ios/issues/24)) ([b91c3ce](https://github.com/Basis-Theory/basistheory-ios/commit/b91c3ce998e14f469f00c3eda334a49731f9ada7))
+
+
 ### [1.0.1](https://github.com/Basis-Theory/basistheory-ios/compare/1.0.0...1.0.1) (2022-12-13)
 
 
