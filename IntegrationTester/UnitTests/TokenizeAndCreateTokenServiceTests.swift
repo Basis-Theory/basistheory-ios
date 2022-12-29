@@ -9,8 +9,12 @@ import XCTest
 import BasisTheoryElements
 import BasisTheory
 
-final class ElementServiceTests: XCTestCase {
-    override func setUpWithError() throws { }
+final class TokenizeAndCreateTokenServiceTests: XCTestCase {
+    private final var TIMEOUT_EXPECTATION = 5.0
+    
+    override func setUpWithError() throws {
+        BasisTheoryAPI.basePath = "https://api-dev.basistheory.com"
+    }
     
     override func tearDownWithError() throws { }
     
@@ -21,15 +25,14 @@ final class ElementServiceTests: XCTestCase {
         
         let privateApiKey = Configuration.getConfiguration().privateBtApiKey!
         let tokenizeExpectation = self.expectation(description: "Tokenize")
-        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
         BasisTheoryElements.tokenize(body: body, apiKey: privateApiKey) { data, error in
             XCTAssertNil(data)
-            XCTAssertEqual(error as! TokenizingError, TokenizingError.applicationNotPublic)
+            XCTAssertEqual(error as! TokenizingError, TokenizingError.applicationTypeNotPublic)
             
             tokenizeExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
     func testTokenizeReturnsErrorFromApplicationCheck() throws {
@@ -38,7 +41,6 @@ final class ElementServiceTests: XCTestCase {
         ]
         
         let tokenizeExpectation = self.expectation(description: "Tokenize")
-        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
         BasisTheoryElements.tokenize(body: body, apiKey: "bad api key") { data, error in
             XCTAssertNil(data)
             XCTAssertNotNil(error)
@@ -46,7 +48,7 @@ final class ElementServiceTests: XCTestCase {
             tokenizeExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
     func testCreateTokenChecksForApplicationTypeOfPublic() throws {
@@ -56,15 +58,14 @@ final class ElementServiceTests: XCTestCase {
         
         let privateApiKey = Configuration.getConfiguration().privateBtApiKey!
         let tokenizeExpectation = self.expectation(description: "Tokenize")
-        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
         BasisTheoryElements.createToken(body: body, apiKey: privateApiKey) { data, error in
             XCTAssertNil(data)
-            XCTAssertEqual(error as! TokenizingError, TokenizingError.applicationNotPublic)
+            XCTAssertEqual(error as! TokenizingError, TokenizingError.applicationTypeNotPublic)
             
             tokenizeExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
     func testCreateReturnsErrorFromApplicationCheck() throws {
@@ -73,7 +74,6 @@ final class ElementServiceTests: XCTestCase {
         ])
         
         let tokenizeExpectation = self.expectation(description: "Tokenize")
-        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
         BasisTheoryElements.createToken(body: body, apiKey: "bad api key") { data, error in
             XCTAssertNil(data)
             XCTAssertNotNil(error)
@@ -81,6 +81,6 @@ final class ElementServiceTests: XCTestCase {
             tokenizeExpectation.fulfill()
         }
         
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
 }

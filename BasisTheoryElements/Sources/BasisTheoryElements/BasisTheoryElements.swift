@@ -11,8 +11,13 @@ import AnyCodable
 import Combine
 
 public enum TokenizingError: Error {
-    case applicationNotPublic
+    case applicationTypeNotPublic
     case invalidInput
+}
+
+public enum ProxyError: Error {
+    case invalidRequest
+    case applicationTypeNotExpiring
 }
 
 final public class BasisTheoryElements {
@@ -20,7 +25,7 @@ final public class BasisTheoryElements {
     public static var basePath: String = "https://api.basistheory.com"
     
     private static func getApiKey(_ apiKey: String?) -> String {
-        !BasisTheoryElements.apiKey.isEmpty ? BasisTheoryElements.apiKey : apiKey!
+        apiKey != nil ? apiKey! : BasisTheoryElements.apiKey
     }
     
     private static func completeApiRequest<T>(result: Result<Response<T>, ErrorResponse>, completion: @escaping ((_ data: T?, _ error: Error?) -> Void)) {
@@ -40,7 +45,7 @@ final public class BasisTheoryElements {
         }
     }
     
-    public static func tokenize(body: [String: Any], apiKey: String, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> Void {
+    public static func tokenize(body: [String: Any], apiKey: String? = nil, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> Void {
         var mutableBody = body
         do {
             try replaceElementRefs(body: &mutableBody)
@@ -57,7 +62,7 @@ final public class BasisTheoryElements {
             }
             
             guard data?.type == "public" else {
-                completion(nil, TokenizingError.applicationNotPublic)
+                completion(nil, TokenizingError.applicationTypeNotPublic)
                 return
             }
             
@@ -67,7 +72,7 @@ final public class BasisTheoryElements {
         }
     }
     
-    public static func createToken(body: CreateToken, apiKey: String, completion: @escaping ((_ data: CreateTokenResponse?, _ error: Error?) -> Void)) -> Void {
+    public static func createToken(body: CreateToken, apiKey: String? = nil, completion: @escaping ((_ data: CreateTokenResponse?, _ error: Error?) -> Void)) -> Void {
         var mutableBody = body
         var mutableData = body.data
         do {
@@ -87,7 +92,7 @@ final public class BasisTheoryElements {
             }
             
             guard data?.type == "public" else {
-                completion(nil, TokenizingError.applicationNotPublic)
+                completion(nil, TokenizingError.applicationTypeNotPublic)
                 return
             }
             
@@ -99,13 +104,47 @@ final public class BasisTheoryElements {
         }
     }
     
+    public static func proxy(apiKey: String? = nil, proxyKey: String? = nil, proxyUrl: String? = nil, proxyHttpRequest: ProxyHttpRequest? = nil, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) -> Void {
+        BasisTheoryAPI.basePath = basePath
+        
+        if apiKey != nil {
+            getApplicationKey(apiKey: getApiKey(apiKey)) {data, error in
+                guard error == nil else {
+                    completion(nil, nil, error)
+                    return
+                }
+                
+                guard data?.type == "expiring" else {
+                    completion(nil, nil, ProxyError.applicationTypeNotExpiring)
+                    return
+                }
+                
+                proxyRequest(apiKey: apiKey, proxyKey: proxyKey, proxyUrl: proxyUrl, proxyHttpRequest: proxyHttpRequest, completion: completion)
+            }
+        } else {
+            proxyRequest(apiKey: apiKey, proxyKey: proxyKey, proxyUrl: proxyUrl, proxyHttpRequest: proxyHttpRequest, completion: completion)
+        }
+    }
+    
+    private static func proxyRequest(apiKey: String?, proxyKey: String?, proxyUrl: String?, proxyHttpRequest: ProxyHttpRequest?, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) {
+        var request = try! ProxyHelpers.getUrlRequest(proxyHttpRequest: proxyHttpRequest)
+        
+        ProxyHelpers.setMethodOnRequest(proxyHttpRequest: proxyHttpRequest, request: &request)
+        
+        ProxyHelpers.setHeadersOnRequest(apiKey: apiKey, proxyKey: proxyKey, proxyUrl: proxyUrl, proxyHttpRequest: proxyHttpRequest, request: &request)
+        
+        ProxyHelpers.setBodyOnRequest(proxyHttpRequest: proxyHttpRequest, request: &request)
+        
+        ProxyHelpers.executeRequest(request: request, completion: completion)
+    }
+    
     private static func replaceElementRefs(body: inout [String: Any]) throws -> Void {
         for (key, val) in body {
             if var v = val as? [String: Any] {
                 try replaceElementRefs(body: &v)
                 body[key] = v
             } else if let v = val as? ElementReferenceProtocol {
-                var textValue = v.getValue()
+                let textValue = v.getValue()
                 
                 if !v.isValid! {
                     throw TokenizingError.invalidInput
