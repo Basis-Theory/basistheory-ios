@@ -23,17 +23,6 @@ final class ProxyServiceTests: XCTestCase {
         let publicApiKey = Configuration.getConfiguration().btApiKey!
         let proxyKey = Configuration.getConfiguration().proxyKey!
         
-        let applicationExpectation = self.expectation(description: "Create expiring applicaiton")
-        var expiringApiKey: String = ""
-        let createApplicationRequest = CreateApplicationRequest(name: "Expiring API key", type: "expiring", permissions: ["token:use"])
-        ApplicationsAPI.createWithRequestBuilder(createApplicationRequest: createApplicationRequest).addHeader(name: "BT-API-KEY", value: privateBtApiKey).execute { result in
-            expiringApiKey = try! result.get().body.key!
-            
-            applicationExpectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
-        
         let proxyExpectation = self.expectation(description: "Proxy")
         var proxyResponseData: JSON = JSON.dictionaryValue([:])
         let proxyHttpRequest = ProxyHttpRequest(method: .post, body: [
@@ -43,7 +32,7 @@ final class ProxyServiceTests: XCTestCase {
             ]
         ])
         BasisTheoryElements.proxy(
-            apiKey: expiringApiKey,
+            apiKey: privateBtApiKey,
             proxyKey: proxyKey,
             proxyHttpRequest: proxyHttpRequest)
         { response, data, error in
@@ -96,17 +85,6 @@ final class ProxyServiceTests: XCTestCase {
         let privateBtApiKey = Configuration.getConfiguration().privateBtApiKey!
         let proxyKey = Configuration.getConfiguration().proxyKey!
         
-        let applicationExpectation = self.expectation(description: "Create expiring applicaiton")
-        var expiringApiKey: String = ""
-        let createApplicationRequest = CreateApplicationRequest(name: "Expiring API key", type: "expiring", permissions: ["token:use"])
-        ApplicationsAPI.createWithRequestBuilder(createApplicationRequest: createApplicationRequest).addHeader(name: "BT-API-KEY", value: privateBtApiKey).execute { result in
-            expiringApiKey = try! result.get().body.key!
-            
-            applicationExpectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
-        
         let proxyExpectation = self.expectation(description: "Proxy")
         var proxyResponseData: JSON = JSON.dictionaryValue([:])
         let proxyHttpRequest = ProxyHttpRequest(method: .post, body: [
@@ -116,7 +94,7 @@ final class ProxyServiceTests: XCTestCase {
             ]
         ])
         BasisTheoryElements.proxy(
-            apiKey: expiringApiKey,
+            apiKey: privateBtApiKey,
             proxyKey: proxyKey,
             proxyHttpRequest: proxyHttpRequest)
         { response, data, error in
@@ -139,47 +117,10 @@ final class ProxyServiceTests: XCTestCase {
         XCTAssertNotNil(proxyResponseData.json?.objProp?.nestedTestProp?.elementValueReference)
     }
     
-    func testProxyWithoutExpiringKey() {
-        let privateBtApiKey = Configuration.getConfiguration().privateBtApiKey!
-        let proxyKey = Configuration.getConfiguration().proxyKey!
-        
-        let proxyExpectation = self.expectation(description: "Proxy")
-        let proxyHttpRequest = ProxyHttpRequest(method: .post, body: [
-            "testProp": "testValue",
-            "objProp": [
-                "nestedTestProp": "nestedTestValue"
-            ]
-        ])
-        BasisTheoryElements.proxy(
-            apiKey: privateBtApiKey,
-            proxyKey: proxyKey,
-            proxyHttpRequest: proxyHttpRequest)
-        { response, data, error in
-            XCTAssertNil(response)
-            XCTAssertNil(data)
-            XCTAssertEqual(error as? ProxyError, ProxyError.applicationTypeNotExpiring)
-            
-            proxyExpectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
-    }
-    
     func testProxyWithArrayInBody() {
         let privateBtApiKey = Configuration.getConfiguration().privateBtApiKey!
         let publicApiKey = Configuration.getConfiguration().btApiKey!
         let proxyKey = Configuration.getConfiguration().proxyKey!
-        
-        let applicationExpectation = self.expectation(description: "Create expiring applicaiton")
-        var expiringApiKey: String = ""
-        let createApplicationRequest = CreateApplicationRequest(name: "Expiring API key", type: "expiring", permissions: ["token:use"])
-        ApplicationsAPI.createWithRequestBuilder(createApplicationRequest: createApplicationRequest).addHeader(name: "BT-API-KEY", value: privateBtApiKey).execute { result in
-            expiringApiKey = try! result.get().body.key!
-            
-            applicationExpectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
         
         let proxyExpectation = self.expectation(description: "Proxy")
         var proxyResponseData: JSON = JSON.dictionaryValue([:])
@@ -187,7 +128,7 @@ final class ProxyServiceTests: XCTestCase {
             "testProp": [1, 2, 3],
         ])
         BasisTheoryElements.proxy(
-            apiKey: expiringApiKey,
+            apiKey: privateBtApiKey,
             proxyKey: proxyKey,
             proxyHttpRequest: proxyHttpRequest)
         { response, data, error in
@@ -242,21 +183,10 @@ final class ProxyServiceTests: XCTestCase {
         let privateBtApiKey = Configuration.getConfiguration().privateBtApiKey!
         let proxyKey = Configuration.getConfiguration().proxyKey!
         
-        let applicationExpectation = self.expectation(description: "Create expiring applicaiton")
-        var expiringApiKey: String = ""
-        let createApplicationRequest = CreateApplicationRequest(name: "Expiring API key", type: "expiring", permissions: ["token:use"])
-        ApplicationsAPI.createWithRequestBuilder(createApplicationRequest: createApplicationRequest).addHeader(name: "BT-API-KEY", value: privateBtApiKey).execute { result in
-            expiringApiKey = try! result.get().body.key!
-            
-            applicationExpectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
-        
         let proxyExpectation = self.expectation(description: "Proxy")
         let proxyHttpRequest = ProxyHttpRequest(method: .post)
         BasisTheoryElements.proxy(
-            apiKey: expiringApiKey,
+            apiKey: privateBtApiKey,
             proxyKey: proxyKey,
             proxyHttpRequest: proxyHttpRequest)
         { response, data, error in
@@ -276,17 +206,6 @@ final class ProxyServiceTests: XCTestCase {
     func testProxyWithAProxyUrl() {
         let privateBtApiKey = Configuration.getConfiguration().privateBtApiKey!
         
-        let applicationExpectation = self.expectation(description: "Create expiring applicaiton")
-        var expiringApiKey: String = ""
-        let createApplicationRequest = CreateApplicationRequest(name: "Expiring API key", type: "expiring", permissions: ["token:use"])
-        ApplicationsAPI.createWithRequestBuilder(createApplicationRequest: createApplicationRequest).addHeader(name: "BT-API-KEY", value: privateBtApiKey).execute { result in
-            expiringApiKey = try! result.get().body.key!
-            
-            applicationExpectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
-        
         let proxyExpectation = self.expectation(description: "Proxy")
         let proxyHttpRequest = ProxyHttpRequest(method: .post, body: [
             "testProp": "testValue",
@@ -295,7 +214,7 @@ final class ProxyServiceTests: XCTestCase {
             ]
         ])
         BasisTheoryElements.proxy(
-            apiKey: expiringApiKey,
+            apiKey: privateBtApiKey,
             proxyUrl: "https://echo.basistheory.com/post",
             proxyHttpRequest: proxyHttpRequest)
         { response, data, error in
@@ -316,17 +235,6 @@ final class ProxyServiceTests: XCTestCase {
         let privateBtApiKey = Configuration.getConfiguration().privateBtApiKey!
         let proxyKey = Configuration.getConfiguration().proxyKey!
         
-        let applicationExpectation = self.expectation(description: "Create expiring applicaiton")
-        var expiringApiKey: String = ""
-        let createApplicationRequest = CreateApplicationRequest(name: "Expiring API key", type: "expiring", permissions: ["token:use"])
-        ApplicationsAPI.createWithRequestBuilder(createApplicationRequest: createApplicationRequest).addHeader(name: "BT-API-KEY", value: privateBtApiKey).execute { result in
-            expiringApiKey = try! result.get().body.key!
-            
-            applicationExpectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
-        
         let proxyExpectation = self.expectation(description: "Proxy")
         let proxyHttpRequest = ProxyHttpRequest(url: "https://api-dev.basistheory.com/proxy", method: .post, body: [
             "testProp": "testValue",
@@ -335,7 +243,7 @@ final class ProxyServiceTests: XCTestCase {
             ]
         ])
         BasisTheoryElements.proxy(
-            apiKey: expiringApiKey,
+            apiKey: privateBtApiKey,
             proxyKey: proxyKey,
             proxyHttpRequest: proxyHttpRequest)
         { response, data, error in
@@ -356,17 +264,6 @@ final class ProxyServiceTests: XCTestCase {
         let privateBtApiKey = Configuration.getConfiguration().privateBtApiKey!
         let proxyKey = Configuration.getConfiguration().proxyKey!
         
-        let applicationExpectation = self.expectation(description: "Create expiring applicaiton")
-        var expiringApiKey: String = ""
-        let createApplicationRequest = CreateApplicationRequest(name: "Expiring API key", type: "expiring", permissions: ["token:use"])
-        ApplicationsAPI.createWithRequestBuilder(createApplicationRequest: createApplicationRequest).addHeader(name: "BT-API-KEY", value: privateBtApiKey).execute { result in
-            expiringApiKey = try! result.get().body.key!
-            
-            applicationExpectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
-        
         let proxyExpectation = self.expectation(description: "Proxy")
         let proxyHttpRequest = ProxyHttpRequest(url: "badprotocol://badhost.com/badpath", method: .post, body: [
             "testProp": "testValue",
@@ -375,7 +272,7 @@ final class ProxyServiceTests: XCTestCase {
             ]
         ])
         BasisTheoryElements.proxy(
-            apiKey: expiringApiKey,
+            apiKey: privateBtApiKey,
             proxyKey: proxyKey,
             proxyHttpRequest: proxyHttpRequest)
         { response, data, error in
@@ -394,24 +291,13 @@ final class ProxyServiceTests: XCTestCase {
         let publicApiKey = Configuration.getConfiguration().btApiKey!
         let proxyKey = Configuration.getConfiguration().proxyKey!
         
-        let applicationExpectation = self.expectation(description: "Create expiring applicaiton")
         var proxyResponseData: JSON = JSON.dictionaryValue([:])
-        var expiringApiKey: String = ""
-        let createApplicationRequest = CreateApplicationRequest(name: "Expiring API key", type: "expiring", permissions: ["token:use"])
-        ApplicationsAPI.createWithRequestBuilder(createApplicationRequest: createApplicationRequest).addHeader(name: "BT-API-KEY", value: privateBtApiKey).execute { result in
-            expiringApiKey = try! result.get().body.key!
-            
-            applicationExpectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
-        
         let proxyExpectation = self.expectation(description: "Proxy")
         let proxyHttpRequest = ProxyHttpRequest(method: .post, headers: [
             "X-Custom-Header": "headerValue",
         ])
         BasisTheoryElements.proxy(
-            apiKey: expiringApiKey,
+            apiKey: privateBtApiKey,
             proxyKey: proxyKey,
             proxyHttpRequest: proxyHttpRequest)
         { response, data, error in
