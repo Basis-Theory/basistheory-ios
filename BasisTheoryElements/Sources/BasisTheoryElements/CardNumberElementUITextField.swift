@@ -70,10 +70,15 @@ final public class CardNumberUITextField: TextElementUITextField {
     private func getCardElementEvent(text: String?, event: ElementEvent) -> ElementEvent {
         let complete = cardBrand?.complete ?? false
         let brand = cardBrand?.bestMatchCardBrand?.cardBrandName != nil ? String(describing: cardBrand!.bestMatchCardBrand!.cardBrandName) : "unknown"
-        let brandDetail = ElementEventDetails(type: "cardBrand", message: brand)
+        var details = [ElementEventDetails(type: "cardBrand", message: brand)]
         
-        let elementEvent = ElementEvent(type: "textChange", complete: complete, empty: text?.isEmpty ?? true, valid: event.valid, details: [brandDetail
-                                                                                                                                     ])
+        if complete {
+            details.append(ElementEventDetails(type: "last4", message: String(text!.suffix(4))))
+            details.append(ElementEventDetails(type: "bin", message: String(text!.prefix(6))))
+        }
+        
+        let elementEvent = ElementEvent(type: "textChange", complete: complete, empty: event.empty, valid: event.valid, details: details)
+        
         return elementEvent
     }
     
