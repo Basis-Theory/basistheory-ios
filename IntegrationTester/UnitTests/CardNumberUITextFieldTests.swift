@@ -30,12 +30,26 @@ final class CardNumberUITextFieldTests: XCTestCase {
             XCTAssertEqual(message.empty, false)
             XCTAssertEqual(message.valid, false)
             
+            let eventDetails = message.details as [ElementEventDetails]
+            let brandDetails = eventDetails[0]
+            
+            XCTAssertEqual(brandDetails.type, "cardBrand")
+            XCTAssertEqual(brandDetails.message, "visa")
+            
             if (!incompleteNumberExpectationHasBeenFulfilled) {
                 XCTAssertEqual(message.complete, false)
+                XCTAssertEqual(eventDetails.count, 1)
                 incompleteNumberExpectation.fulfill()
                 incompleteNumberExpectationHasBeenFulfilled = true
             } else {
                 XCTAssertEqual(message.complete, true) // mask completed but number invalid
+                
+                let last4Details = eventDetails[1]
+                let binDetails = eventDetails[2]
+                
+                XCTAssertEqual(last4Details.message, "5598")
+                XCTAssertEqual(binDetails.message, "412993")
+                
                 luhnInvalidNumberExpectation.fulfill()
             }
         }.store(in: &cancellables)
@@ -48,7 +62,7 @@ final class CardNumberUITextFieldTests: XCTestCase {
         waitForExpectations(timeout: 1, handler: nil)
     }
     
-    func testValidNumberAndBrandEvents() throws {
+    func testValidNumberAndEventDetails() throws {
         let cardNumberTextField = CardNumberUITextField()
         
         let validVisaCardNumberExpectation = self.expectation(description: "Valid visa card number")
@@ -65,22 +79,34 @@ final class CardNumberUITextFieldTests: XCTestCase {
             XCTAssertEqual(message.type, "textChange")
             XCTAssertEqual(message.empty, false)
             XCTAssertEqual(message.valid, true)
-            let brandDetails = message.details[0] as ElementEventDetails
+            let eventDetails = message.details as [ElementEventDetails]
+            let brandDetails = eventDetails[0]
+            let last4Details = eventDetails[1]
+            let binDetails = eventDetails[2]
+            
             XCTAssertEqual(brandDetails.type, "cardBrand")
+            XCTAssertEqual(last4Details.type, "last4")
+            XCTAssertEqual(binDetails.type, "bin")
             
             if (!visaExpectationHasBeenFulfilled) {
                 XCTAssertEqual(message.complete, true)
                 XCTAssertEqual(brandDetails.message, "visa")
+                XCTAssertEqual(last4Details.message, "4242")
+                XCTAssertEqual(binDetails.message, "424242")
                 validVisaCardNumberExpectation.fulfill()
                 visaExpectationHasBeenFulfilled = true
             } else if (!mastercardExpectationHasBeenFulfilled) {
                 XCTAssertEqual(message.complete, true)
                 XCTAssertEqual(brandDetails.message, "mastercard")
+                XCTAssertEqual(last4Details.message, "5717")
+                XCTAssertEqual(binDetails.message, "545442")
                 validMasterCardNumberExpectation.fulfill()
                 mastercardExpectationHasBeenFulfilled = true
             } else {
                 XCTAssertEqual(message.complete, true)
                 XCTAssertEqual(brandDetails.message, "americanExpress")
+                XCTAssertEqual(last4Details.message, "8868")
+                XCTAssertEqual(binDetails.message, "348570")
                 validAmexCardNumberExpectation.fulfill()
             }
         }.store(in: &cancellables)
