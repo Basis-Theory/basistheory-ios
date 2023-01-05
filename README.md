@@ -154,8 +154,13 @@ Events are triggered whenever a user types into an element textfield. An `Elemen
 
 | Property | Description |
 | --- | --- |
-| type | A `String` describing the type of detail. As of today, it is `cardBrand`. |
+| type | A `String` describing the type of detail. |
 | message | A `String` containing the message for the detail. |
+
+Available details include:
+* `cardBrand` when the card number can be identified
+* `cardLast4` when the card number is complete
+* `cardBin` when the card number is complete
 
 ## Element Instances
 

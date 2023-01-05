@@ -32,13 +32,15 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.smartDashesType = .no
-        self.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        subject.send(ElementEvent(type: "ready", complete: true, empty: true, valid: true, details: []))
+        setup()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        setup()
+    }
+    
+    private func setup() {
         self.smartDashesType = .no
         self.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         subject.send(ElementEvent(type: "ready", complete: true, empty: true, valid: true, details: []))

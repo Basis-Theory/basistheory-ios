@@ -65,8 +65,8 @@ final public class CardVerificationCodeUITextField: TextElementUITextField {
             complete = text?.count == 3 || text?.count == 4
         }
         
-        let elementEvent = ElementEvent(type: "textChange", complete: complete, empty: text?.isEmpty ?? true, valid: event.valid, details: [
-        ])
+        let elementEvent = ElementEvent(type: "textChange", complete: complete, empty: event.empty, valid: event.valid, details: [])
+        
         return elementEvent
     }
     
