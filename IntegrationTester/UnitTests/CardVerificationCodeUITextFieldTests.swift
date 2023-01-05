@@ -98,4 +98,61 @@ final class CardVerificationCodeUITextFieldTests: XCTestCase {
         
         waitForExpectations(timeout: 1, handler: nil)
     }
+    
+    func testCvcEventIsEmittedWhenCardBrandChanges() throws {
+        let cardNumberTextField = CardNumberUITextField()
+        let cvcTextField = CardVerificationCodeUITextField()
+        
+        cvcTextField.setConfig(options: CardVerificationCodeOptions(cardNumberUITextField: cardNumberTextField))
+        
+        var cvcInitialMaskHasBeenSet = false
+        var cvcInitialTextHasBeenEntered = false
+        let cvcTextExpectation = self.expectation(description: "CVC input")
+        let cvcMaskChangeExpectation1 = self.expectation(description: "CVC mask change 1")
+        let cvcMaskChangeExpectation2 = self.expectation(description: "CVC mask change 2")
+        var cancellables = Set<AnyCancellable>()
+        cvcTextField.subject.sink { completion in
+            print(completion)
+        } receiveValue: { message in
+            if !cvcInitialMaskHasBeenSet {
+                cvcInitialMaskHasBeenSet = true
+                
+                XCTAssertEqual(message.type, "maskChange")
+                XCTAssertEqual(message.valid, false)
+                XCTAssertEqual(message.complete, false)
+                
+                cvcMaskChangeExpectation1.fulfill()
+            } else if !cvcInitialTextHasBeenEntered {
+                cvcInitialTextHasBeenEntered = true
+                
+                XCTAssertEqual(message.type, "textChange")
+                XCTAssertEqual(message.valid, true)
+                XCTAssertEqual(message.complete, true)
+                
+                cvcTextExpectation.fulfill()
+            } else {
+                XCTAssertEqual(message.type, "maskChange")
+                XCTAssertEqual(message.valid, true)
+                XCTAssertEqual(message.complete, false)
+                
+                cvcMaskChangeExpectation2.fulfill()
+            }
+        }.store(in: &cancellables)
+        
+        let amExCardNumber = "378282246310005"
+        let amExCvc = "4321"
+        
+        cardNumberTextField.insertText(amExCardNumber)
+        cvcTextField.insertText(amExCvc)
+        
+        let visaCardNumber = "4242424242424242"
+        let masterCardCardNumber = "5555555555554444"
+        
+        cardNumberTextField.text = ""
+        cardNumberTextField.insertText(visaCardNumber)
+        cardNumberTextField.text = ""
+        cardNumberTextField.insertText(masterCardCardNumber)
+        
+        waitForExpectations(timeout: 1, handler: nil)
+    }
 }

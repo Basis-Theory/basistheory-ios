@@ -22,7 +22,7 @@ internal protocol InternalElementProtocol {
 
 internal protocol ElementReferenceProtocol {
     func getValue() -> String?
-    var isValid: Bool? { get set }
+    var isComplete: Bool? { get set }
 }
 
 public enum ElementConfigError: Error {
@@ -32,11 +32,11 @@ public enum ElementConfigError: Error {
 
 public class ElementValueReference: ElementReferenceProtocol {
     var valueMethod: (() -> String)?
-    var isValid: Bool? = true
+    var isComplete: Bool? = true
     
-    init(valueMethod: (() -> String)?, isValid: Bool?) {
+    init(valueMethod: (() -> String)?, isComplete: Bool?) {
         self.valueMethod = valueMethod
-        self.isValid = isValid
+        self.isComplete = isComplete
     }
 
     func getValue() -> String? {

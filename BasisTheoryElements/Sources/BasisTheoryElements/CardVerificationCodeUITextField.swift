@@ -99,11 +99,22 @@ final public class CardVerificationCodeUITextField: TextElementUITextField {
         
         let brand = cardNumberUITextField?.cardBrand?.bestMatchCardBrand
         
-        if brand != nil {
+        if brand != nil && self.cvcMask?.count != brand?.cvcMaskInput.count {
             self.cvcMask = brand?.cvcMaskInput
+            self.sendMaskChangeEvent()
         }
         
         return
+    }
+    
+    private func sendMaskChangeEvent() {
+        let text = super.getValue()
+        let valid = validateCvc(text: text)
+        let maskSatisfied = text?.count == self.inputMask?.count
+        let complete = valid && maskSatisfied
+        let elementEvent = ElementEvent(type: "maskChange", complete: complete, empty: text?.isEmpty ?? false, valid: valid, details: [])
+        
+        self.subject.send(elementEvent)
     }
     
     public override func setConfig(options: TextElementOptions?) throws {

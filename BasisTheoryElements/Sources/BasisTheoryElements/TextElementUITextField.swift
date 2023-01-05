@@ -20,7 +20,7 @@ public struct TextElementOptions {
 }
 
 public class TextElementUITextField: UITextField, InternalElementProtocol, ElementProtocol, ElementReferenceProtocol {
-    var isValid: Bool? = true
+    var isComplete: Bool? = true
     var getElementEvent: ((String?, ElementEvent) -> ElementEvent)?
     var validation: ((String?) -> Bool)?
     var backspacePressed: Bool = false
@@ -59,7 +59,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
             }
             
             if let validation = validation {
-                self.isValid = validation(transform(text: newValue))
+                self.isComplete = self.isComplete ?? true && validation(transform(text: newValue))
             }
         }
         get { nil }
@@ -167,24 +167,22 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         }
         
         if let validation = validation {
-            self.isValid = validation(transform(text: text))
+            self.isComplete = self.isComplete ?? true && validation(transform(text: text))
         }
     }
     
     @objc func textFieldDidChange() {
         var maskComplete = true
         
-        if inputMask != nil {
+        if let inputMask = inputMask {
             // dont conform on backspace pressed - just remove the value + check for backspace on empty
             if (!backspacePressed || super.text != nil) {
                 super.text = conformToMask(text: super.text)
             } else {
                 backspacePressed = false
             }
-
-            if (super.text?.count != inputMask!.count ) {
-                maskComplete = false
-            }
+            
+            maskComplete = super.text?.count == inputMask.count
         }
         
         let transformedTextValue = self.transform(text: super.text)
@@ -194,9 +192,9 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
             valid = validation(transformedTextValue)
         }
         
-        self.isValid = valid
-        
         let complete = valid && maskComplete
+        
+        self.isComplete = complete
         
         var elementEvent = ElementEvent(type: "textChange", complete: complete, empty: transformedTextValue.isEmpty , valid: valid, details: [])
         

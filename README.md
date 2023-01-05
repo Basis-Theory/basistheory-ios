@@ -150,6 +150,10 @@ Events are triggered whenever a user types into an element textfield. An `Elemen
 | valid | Whether the input is `valid` according to `validation` for each element. |
 | details | An array of [ElementEventDetail](#elementeventdetail) describing more information about the element event. |
 
+Available `type`'s include:
+* `textChange` - when the text has changed
+* `maskChange` - when the card brand has changed the CVC mask. This type is only emitted from the `CardExpirationDateUITextField` element.
+
 ### ElementEventDetail
 
 | Property | Description |
@@ -157,10 +161,10 @@ Events are triggered whenever a user types into an element textfield. An `Elemen
 | type | A `String` describing the type of detail. |
 | message | A `String` containing the message for the detail. |
 
-Available details include:
-* `cardBrand` when the card number can be identified
-* `cardLast4` when the card number is complete
-* `cardBin` when the card number is complete
+Available details include (All of the following can only be emitted by the `CardNumberUITextField`):
+* `cardBrand` - when the card number can be identified
+* `cardLast4` - when the card number is complete
+* `cardBin` - when the card number is complete
 
 ## Element Instances
 

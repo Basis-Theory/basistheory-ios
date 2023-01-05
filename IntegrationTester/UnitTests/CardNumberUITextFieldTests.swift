@@ -37,20 +37,13 @@ final class CardNumberUITextFieldTests: XCTestCase {
             XCTAssertEqual(brandDetails.message, "visa")
             
             if (!incompleteNumberExpectationHasBeenFulfilled) {
-                XCTAssertEqual(message.complete, false)
+                XCTAssertEqual(message.complete, false) // mask incomplete and number is invalid
                 XCTAssertEqual(eventDetails.count, 1)
                 incompleteNumberExpectation.fulfill()
                 incompleteNumberExpectationHasBeenFulfilled = true
             } else {
-                XCTAssertEqual(message.complete, true) // mask completed but number invalid
-                
-                let last4Details = eventDetails[1]
-                let binDetails = eventDetails[2]
-                
-                XCTAssertEqual(last4Details.type, "cardLast4")
-                XCTAssertEqual(binDetails.type, "cardBin")
-                XCTAssertEqual(last4Details.message, "5598")
-                XCTAssertEqual(binDetails.message, "412993")
+                XCTAssertEqual(message.complete, false) // mask completed but number invalid
+                XCTAssertEqual(eventDetails.count, 1)
                 
                 luhnInvalidNumberExpectation.fulfill()
             }
