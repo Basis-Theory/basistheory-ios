@@ -1,3 +1,11 @@
+### [1.1.1](https://github.com/Basis-Theory/basistheory-ios/compare/1.1.0...1.1.1) (2023-01-05)
+
+
+### Bug Fixes
+
+* removing application type check on proxy call ([#25](https://github.com/Basis-Theory/basistheory-ios/issues/25)) ([051bdba](https://github.com/Basis-Theory/basistheory-ios/commit/051bdba3a2c652500227b0518460d6bf9245edc6))
+
+
 ## [1.1.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.0.1...1.1.0) (2022-12-29)
 
 
