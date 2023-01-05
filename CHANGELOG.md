@@ -1,3 +1,11 @@
+## [1.2.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.1.1...1.2.0) (2023-01-05)
+
+
+### Features
+
+* adds BIN and last4 to textChange events ([#26](https://github.com/Basis-Theory/basistheory-ios/issues/26)) ([f5b1887](https://github.com/Basis-Theory/basistheory-ios/commit/f5b188744ed243a8d95979a6e15ac3012e5f17d9))
+
+
 ### [1.1.1](https://github.com/Basis-Theory/basistheory-ios/compare/1.1.0...1.1.1) (2023-01-05)
 
 
