@@ -47,6 +47,8 @@ final class CardNumberUITextFieldTests: XCTestCase {
                 let last4Details = eventDetails[1]
                 let binDetails = eventDetails[2]
                 
+                XCTAssertEqual(last4Details.type, "cardLast4")
+                XCTAssertEqual(binDetails.type, "cardBin")
                 XCTAssertEqual(last4Details.message, "5598")
                 XCTAssertEqual(binDetails.message, "412993")
                 
@@ -85,8 +87,8 @@ final class CardNumberUITextFieldTests: XCTestCase {
             let binDetails = eventDetails[2]
             
             XCTAssertEqual(brandDetails.type, "cardBrand")
-            XCTAssertEqual(last4Details.type, "last4")
-            XCTAssertEqual(binDetails.type, "bin")
+            XCTAssertEqual(last4Details.type, "cardLast4")
+            XCTAssertEqual(binDetails.type, "cardBin")
             
             if (!visaExpectationHasBeenFulfilled) {
                 XCTAssertEqual(message.complete, true)

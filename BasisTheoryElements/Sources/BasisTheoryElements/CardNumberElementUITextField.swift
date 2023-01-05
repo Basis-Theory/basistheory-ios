@@ -73,8 +73,8 @@ final public class CardNumberUITextField: TextElementUITextField {
         var details = [ElementEventDetails(type: "cardBrand", message: brand)]
         
         if complete {
-            details.append(ElementEventDetails(type: "last4", message: String(text!.suffix(4))))
-            details.append(ElementEventDetails(type: "bin", message: String(text!.prefix(6))))
+            details.append(ElementEventDetails(type: "cardLast4", message: String(text!.suffix(4))))
+            details.append(ElementEventDetails(type: "cardBin", message: String(text!.prefix(6))))
         }
         
         let elementEvent = ElementEvent(type: "textChange", complete: complete, empty: event.empty, valid: event.valid, details: details)
