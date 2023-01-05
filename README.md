@@ -77,7 +77,7 @@ The following options are available to be set via the `setConfig` function on th
 ```swift
 let regexDigit = try! NSRegularExpression(pattern: "\\d")
 let phoneMask = [ //(123)456-7890
-	"(",
+  "(",
   regexDigit,
   regexDigit,
   regexDigit,
@@ -109,7 +109,7 @@ The mask will be displayed as the user is typing, and will be used as the value 
 ```swift
 let regexDigit = try! NSRegularExpression(pattern: "\\d")
 let phoneMask = [ //(123)456-7890
-	"(",
+  "(",
   regexDigit,
   regexDigit,
   regexDigit,
@@ -136,7 +136,7 @@ textElementUITextField.setConfig(options: TextElementOptions(mask: phoneMask, tr
 | Fields | Description |
 | --- | --- |
 | text | We restrict the getter for this value; it always returns nil. The setter works as is. |
-| subject | An instance of PassThroughSubject that allows you to subscribe to ElementEvents. |
+| subject | An instance of `PassThroughSubject` that allows you to subscribe to [ElementEvent](#elementevent). |
 | setValue | A function that recieves an `ElementValueReference` parameter to set the value of the element. 🚨 Note: `ElementValueReference` instances can only be retrieved from [proxy](#proxy) responses. An `ElementValueReference` cannot be instantiated outside of the `BasisTheoryElements` package at this time. |
 
 ## ElementEvent
@@ -196,8 +196,8 @@ Both the month and year values need to be be retrieved from a `CardExpirationDat
 ```swift
 let body: [String: Any] = [
   "data": [
-	  "number": self.cardNumberTextField,
-	  "expiration_month": self.expirationDateTextField.month(),
+    "number": self.cardNumberTextField,
+    "expiration_month": self.expirationDateTextField.month(),
     "expiration_year": self.expirationDateTextField.year(),
     "cvc": self.cvcTextField
   ],
@@ -300,7 +300,7 @@ let proxyHttpRequest = ProxyHttpRequest(method: .post, body: [
 ])
 
 BasisTheoryElements.proxy(
-    apiKey: "<YOUR EXPIRING API KEY>",
+    apiKey: "<YOUR BT API KEY>",
     proxyKey: "<YOUR PROXY KEY>",
     proxyHttpRequest: proxyHttpRequest)
 { response, data, error in
@@ -320,7 +320,7 @@ The callback provided calls your function with a:
 ...
 
 BasisTheoryElements.proxy(
-    apiKey: "<YOUR EXPIRING API KEY>",
+    apiKey: "<YOUR BT API KEY>",
     proxyKey: "<YOUR PROXY KEY>",
     proxyHttpRequest: proxyHttpRequest)
 { response, data, error in

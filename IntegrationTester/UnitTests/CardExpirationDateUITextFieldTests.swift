@@ -37,6 +37,12 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         return currentMonth
     }
     
+    func formatMonth(month: Int) -> String {
+        let stringifiedMonth = "0" + String(month)
+        
+        return String(stringifiedMonth.suffix(2))
+    }
+    
     func testInvalidExpirationDateEvents() throws {
         let expirationDateTextField = CardExpirationDateUITextField()
         
@@ -76,7 +82,7 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         expirationDateTextField.text = ""
         expirationDateTextField.insertText("12/" + String(pastYear)) // year in the past
         expirationDateTextField.text = ""
-        expirationDateTextField.insertText(String(pastMonth) + "/" + String(getCurrentYear())) // month in past
+        expirationDateTextField.insertText(formatMonth(month: pastMonth) + "/" + String(getCurrentYear())) // month in past
         
         waitForExpectations(timeout: 1, handler: nil)
     }
@@ -116,11 +122,11 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         let futureYear = getCurrentYear() + 1
         let futureMonth = getCurrentMonth() + 1
         
-        expirationDateTextField.insertText(String(getCurrentMonth()) + "/" + String(futureYear)) // future year
+        expirationDateTextField.insertText(formatMonth(month: getCurrentMonth()) + "/" + String(futureYear)) // future year
         expirationDateTextField.text = ""
-        expirationDateTextField.insertText(String(futureMonth) + "/" + String(getCurrentYear())) // future month
+        expirationDateTextField.insertText(formatMonth(month: futureMonth) + "/" + String(getCurrentYear())) // future month
         expirationDateTextField.text = ""
-        expirationDateTextField.insertText(String(getCurrentMonth()) + "/" + String(getCurrentYear())) // current month/year
+        expirationDateTextField.insertText(formatMonth(month: getCurrentMonth()) + "/" + String(getCurrentYear())) // current month/year
         
         waitForExpectations(timeout: 1, handler: nil)
     }
@@ -149,7 +155,7 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         
         let futureYear = getCurrentYear() + 1
         
-        expirationDateTextField.insertText(String(getCurrentMonth()) + "/" + String(futureYear))
+        expirationDateTextField.insertText(formatMonth(month: getCurrentMonth()) + "/" + String(futureYear))
         expirationDateTextField.text = ""
         expirationDateTextField.insertText("")
         
@@ -160,7 +166,7 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         let expirationDateTextField = CardExpirationDateUITextField()
         let futureYear = getCurrentYear() + 1
         let formattedYear = "20" + String(futureYear)
-        expirationDateTextField.text = String(getCurrentMonth()) + "/" + String(futureYear)
+        expirationDateTextField.text = formatMonth(month: getCurrentMonth()) + "/" + String(futureYear)
         
         let body: [String: Any] = [
             "data": [
@@ -190,7 +196,7 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         TokensAPI.getByIdWithRequestBuilder(id: createdToken["id"] as! String).addHeader(name: "BT-API-KEY", value: privateApiKey).execute { result in
             do {
                 let token = try result.get().body.data!.value as! [String: Any]
-                XCTAssertEqual(token["monthRef"] as! String, String(self.getCurrentMonth()))
+                XCTAssertEqual(token["monthRef"] as! String, String(self.formatMonth(month: self.getCurrentMonth())))
                 XCTAssertEqual(token["yearRef"] as! String, formattedYear)
                 
                 idQueryExpectation.fulfill()
@@ -205,7 +211,7 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
     func testThrowsWithInvalidCardExpirationDateInput() {
         let expirationDateTextField = CardExpirationDateUITextField()
         let pastYear = getCurrentYear() - 2
-        let invalidExpirationDate = String(getCurrentMonth()) + "/" + String(pastYear)
+        let invalidExpirationDate = formatMonth(month: getCurrentMonth()) + "/" + String(pastYear)
         expirationDateTextField.text = invalidExpirationDate
         
         let body: [String: Any] = [

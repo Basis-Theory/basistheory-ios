@@ -17,7 +17,6 @@ public enum TokenizingError: Error {
 
 public enum ProxyError: Error {
     case invalidRequest
-    case applicationTypeNotExpiring
 }
 
 final public class BasisTheoryElements {
@@ -107,26 +106,6 @@ final public class BasisTheoryElements {
     public static func proxy(apiKey: String? = nil, proxyKey: String? = nil, proxyUrl: String? = nil, proxyHttpRequest: ProxyHttpRequest? = nil, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) -> Void {
         BasisTheoryAPI.basePath = basePath
         
-        if apiKey != nil {
-            getApplicationKey(apiKey: getApiKey(apiKey)) {data, error in
-                guard error == nil else {
-                    completion(nil, nil, error)
-                    return
-                }
-                
-                guard data?.type == "expiring" else {
-                    completion(nil, nil, ProxyError.applicationTypeNotExpiring)
-                    return
-                }
-                
-                proxyRequest(apiKey: apiKey, proxyKey: proxyKey, proxyUrl: proxyUrl, proxyHttpRequest: proxyHttpRequest, completion: completion)
-            }
-        } else {
-            proxyRequest(apiKey: apiKey, proxyKey: proxyKey, proxyUrl: proxyUrl, proxyHttpRequest: proxyHttpRequest, completion: completion)
-        }
-    }
-    
-    private static func proxyRequest(apiKey: String?, proxyKey: String?, proxyUrl: String?, proxyHttpRequest: ProxyHttpRequest?, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) {
         var request = try! ProxyHelpers.getUrlRequest(proxyHttpRequest: proxyHttpRequest)
         
         ProxyHelpers.setMethodOnRequest(proxyHttpRequest: proxyHttpRequest, request: &request)
