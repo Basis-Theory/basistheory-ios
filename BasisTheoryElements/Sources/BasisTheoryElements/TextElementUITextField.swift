@@ -70,7 +70,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     
     public override var isUserInteractionEnabled: Bool {
         set {
-            if (readOnly == false) {
+            if (!readOnly) {
                 super.isUserInteractionEnabled = newValue
             }
         }
