@@ -46,8 +46,8 @@ final class TextElementUITextFieldTests: XCTestCase {
         let completeField = TextElementUITextField()
         let incompleteField = TextElementUITextField()
         let regexDigit = try! NSRegularExpression(pattern: "\\d")
-        var mask = [regexDigit, regexDigit, regexDigit]
-        var options = TextElementOptions(mask: mask)
+        let mask = [regexDigit, regexDigit, regexDigit]
+        let options = TextElementOptions(mask: mask)
         
         try! completeField.setConfig(options: options)
         try! incompleteField.setConfig(options: options)
@@ -61,6 +61,7 @@ final class TextElementUITextFieldTests: XCTestCase {
         } receiveValue: { message in
             XCTAssertEqual(message.type, "textChange")
             XCTAssertEqual(message.complete, true)
+            XCTAssertEqual(message.maskSatisfied, true)
             XCTAssertEqual(message.valid, true)
             
             completeFieldExpectation.fulfill()
@@ -71,6 +72,7 @@ final class TextElementUITextFieldTests: XCTestCase {
         } receiveValue: { message in
             XCTAssertEqual(message.type, "textChange")
             XCTAssertEqual(message.complete, false)
+            XCTAssertEqual(message.maskSatisfied, false)
             XCTAssertEqual(message.valid, true)
             
             incompleteFieldExpectation.fulfill()
