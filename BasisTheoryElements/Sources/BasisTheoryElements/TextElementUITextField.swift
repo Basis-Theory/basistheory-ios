@@ -12,10 +12,12 @@ import Combine
 public struct TextElementOptions {
     let mask: [Any]?
     let transform: ElementTransform?
+    let readonly: Bool?
     
-    public init(mask: [Any]? = nil, transform: ElementTransform? = nil) {
+    public init(mask: [Any]? = nil, transform: ElementTransform? = nil, readonly: Bool? = false) {
         self.mask = mask
         self.transform = transform
+        self.readonly = readonly
     }
 }
 
@@ -27,6 +29,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     var inputMask: [Any]?
     var inputTransform: ElementTransform?
     var previousValue: String = ""
+    var isReadOnly: Bool = false
     
     public var subject = PassthroughSubject<ElementEvent, Error>()
     
@@ -67,7 +70,13 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     
     public func setValue(elementValueReference: ElementValueReference?) {
         if let elementValueReference = elementValueReference {
-            super.text = elementValueReference.getValue()
+            self.text = elementValueReference.getValue()
+        }
+    }
+    
+    public func setValue(element: TextElementUITextField?) {
+        if (element != nil) {
+            self.text = element?.getValue()
         }
     }
     
@@ -88,6 +97,11 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         
         if (options?.transform != nil) {
             self.inputTransform = options?.transform
+        }
+        
+        if (options?.readonly == true) {
+            self.isReadOnly = true
+            self.isUserInteractionEnabled = false
         }
     }
     

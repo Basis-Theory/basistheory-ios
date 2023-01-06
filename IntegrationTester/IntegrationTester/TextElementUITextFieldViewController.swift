@@ -17,6 +17,7 @@ class TextElementUITextFieldViewController: UIViewController {
     @IBOutlet private weak var nameTextField: TextElementUITextField!
     @IBOutlet weak var output: UITextView!
     @IBOutlet private weak var phoneNumberTextField: TextElementUITextField!
+    @IBOutlet private weak var readOnlyTextField: TextElementUITextField!
     
     @IBAction func printToConsoleLog(_ sender: Any) {
         nameTextField.text = "Tom Cruise"
@@ -82,13 +83,21 @@ class TextElementUITextFieldViewController: UIViewController {
         
         try! phoneNumberTextField.setConfig(options: phoneOptions)
         
+        let readOnlyOptions = TextElementOptions(readonly: true);
+        try! readOnlyTextField.setConfig(options: readOnlyOptions)
+        
         setStyles(textField: nameTextField, placeholder: "Name")
         setStyles(textField: phoneNumberTextField, placeholder: "Phone Number")
+        setStyles(textField: readOnlyTextField, placeholder: "Read Only")
 
         nameTextField.subject.sink { completion in
             print(completion)
         } receiveValue: { message in
             print(message)
+            
+            if (message.type == "textChange") {
+                self.readOnlyTextField.setValue(element: self.nameTextField)
+            }
         }.store(in: &cancellables)
     }
     

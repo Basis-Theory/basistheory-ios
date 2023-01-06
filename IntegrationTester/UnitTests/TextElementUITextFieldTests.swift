@@ -159,4 +159,12 @@ final class TextElementUITextFieldTests: XCTestCase {
 
         waitForExpectations(timeout: 3)
     }
+    
+    func testReadOnlyTextField() throws {
+        let textField = TextElementUITextField()
+        let textFieldOptions = TextElementOptions(readonly: true);
+        try! textField.setConfig(options: textFieldOptions)
+        
+        XCTAssertEqual(textField.isUserInteractionEnabled, false)
+    }
 }
