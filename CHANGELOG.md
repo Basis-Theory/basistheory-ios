@@ -1,3 +1,11 @@
+## [1.4.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.3.0...1.4.0) (2023-01-06)
+
+
+### Features
+
+* add setValueRef for mirroring text elements ([#28](https://github.com/Basis-Theory/basistheory-ios/issues/28)) ([5ae7560](https://github.com/Basis-Theory/basistheory-ios/commit/5ae756081b1efad894e33108de7f7b585c0ccd2b))
+
+
 ## [1.3.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.2.0...1.3.0) (2023-01-06)
 
 
