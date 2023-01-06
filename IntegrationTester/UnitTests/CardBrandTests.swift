@@ -17,7 +17,7 @@ final class CardBrandTests: XCTestCase {
         let threeDigitCvc = [regexDigit, regexDigit, regexDigit]
         let cardBrandResults = CardBrand.getCardBrand(text: "650032")
         
-        XCTAssertFalse(cardBrandResults.complete)
+        XCTAssertFalse(cardBrandResults.maskSatisfied)
         
         XCTAssertEqual(cardBrandResults.bestMatchCardBrand!.cardBrandName, CardBrand.CardBrandName.elo)
         XCTAssertEqual(cardBrandResults.bestMatchCardBrand!.cvcMaskInput, threeDigitCvc)
@@ -43,25 +43,25 @@ final class CardBrandTests: XCTestCase {
     func testCardBrandCompleteness() throws {
         let sixteenDigitCard = CardBrand.getCardBrand(text: "6582937163058334")
 
-        XCTAssertTrue(sixteenDigitCard.complete)
+        XCTAssertTrue(sixteenDigitCard.maskSatisfied)
         
         let seventeenDigitCard = CardBrand.getCardBrand(text: "65829371630583342")
         
-        XCTAssertFalse(seventeenDigitCard.complete)
+        XCTAssertFalse(seventeenDigitCard.maskSatisfied)
         
         let eighteenDigitCard = CardBrand.getCardBrand(text: "658293716305833421")
         
-        XCTAssertFalse(eighteenDigitCard.complete)
+        XCTAssertFalse(eighteenDigitCard.maskSatisfied)
         
         let nineteenDigitCard = CardBrand.getCardBrand(text: "6582937163058334210")
         
-        XCTAssertTrue(nineteenDigitCard.complete)
+        XCTAssertTrue(nineteenDigitCard.maskSatisfied)
     }
     
     func testTextThatHasNoBrand() throws {
         let textWithNoCardBrand = CardBrand.getCardBrand(text: "2937163058334684")
         
-        XCTAssertFalse(textWithNoCardBrand.complete)
+        XCTAssertFalse(textWithNoCardBrand.maskSatisfied)
         XCTAssertNil(textWithNoCardBrand.bestMatchCardBrand)
         XCTAssertEqual(textWithNoCardBrand.matchingCardBrands.count, 0)
     }
@@ -69,13 +69,13 @@ final class CardBrandTests: XCTestCase {
     func testEmptyAndNilText() throws {
         let emptyTextCardBrandResults = CardBrand.getCardBrand(text: "")
         
-        XCTAssertFalse(emptyTextCardBrandResults.complete)
+        XCTAssertFalse(emptyTextCardBrandResults.maskSatisfied)
         XCTAssertNil(emptyTextCardBrandResults.bestMatchCardBrand)
         XCTAssertEqual(emptyTextCardBrandResults.matchingCardBrands.count, 0)
         
         let nilTextCardBrandResults = CardBrand.getCardBrand(text: nil)
         
-        XCTAssertFalse(nilTextCardBrandResults.complete)
+        XCTAssertFalse(nilTextCardBrandResults.maskSatisfied)
         XCTAssertNil(nilTextCardBrandResults.bestMatchCardBrand)
         XCTAssertEqual(nilTextCardBrandResults.matchingCardBrands.count, 0)
     }
