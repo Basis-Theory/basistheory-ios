@@ -79,7 +79,7 @@ struct ProxyHelpers {
             } else {
                 json[key] = JSON.elementValueReference(ElementValueReference(valueMethod: {
                     String(describing: value)
-                }, isValid: true))
+                }, isComplete: true))
             }
         }
     }
@@ -97,7 +97,7 @@ struct ProxyHelpers {
             } else {
                 json[index] = JSON.elementValueReference(ElementValueReference(valueMethod: {
                     String(describing: value)
-                }, isValid: true))
+                }, isComplete: true))
             }
         }
     }

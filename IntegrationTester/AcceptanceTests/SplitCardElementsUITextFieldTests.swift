@@ -114,4 +114,32 @@ final class SplitCardElementsIntegrationTesterUITests: XCTestCase {
             XCTAssertEqual(cvcTextField.value as! String, "1234")
         }
     }
+    
+    func testCvcInputDoesNotChangeWithoutUserActionWhenCardBrandChanges() throws {
+        let amExCardNumber = "378282246310005"
+        
+        let cardNumberTextField = app.textFields["Card Number"]
+        cardNumberTextField.tap()
+        cardNumberTextField.typeText(amExCardNumber)
+        
+        let amExCvc = "4321"
+        
+        let cvcTextField = app.textFields["CVC"]
+        cvcTextField.tap()
+        cvcTextField.typeText(amExCvc)
+        
+        XCTAssertEqual(cvcTextField.value as! String, amExCvc)
+        
+        let visaCardNumber = "4242424242424242"
+        
+        cardNumberTextField.doubleTap()
+        cardNumberTextField.typeText(visaCardNumber)
+        
+        XCTAssertEqual(cvcTextField.value as! String, amExCvc) // CVC value doesn't change even though new mask is applied
+        
+        cvcTextField.tap()
+        cvcTextField.typeText("5") // user tries to type in 5
+        
+        XCTAssertEqual(cvcTextField.value as! String, "432") // mask is applied and truncates input after user action
+    }
 }

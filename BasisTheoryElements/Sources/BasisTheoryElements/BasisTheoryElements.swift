@@ -125,7 +125,7 @@ final public class BasisTheoryElements {
             } else if let v = val as? ElementReferenceProtocol {
                 let textValue = v.getValue()
                 
-                if !v.isValid! {
+                if !v.isComplete! {
                     throw TokenizingError.invalidInput
                 }
                 body[key] = textValue
