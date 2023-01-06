@@ -36,7 +36,7 @@ public struct CardBrandDetails {
 public struct CardBrandResults {
     public var matchingCardBrands: [CardBrandDetails] = []
     public var bestMatchCardBrand: CardBrandDetails?
-    public var complete: Bool = false
+    public var maskSatisfied: Bool = false
 }
 
 public struct CardBrand {
@@ -128,14 +128,14 @@ public struct CardBrand {
     
     public static func getCardBrand(text: String?) -> CardBrandResults {
         guard text != nil && !text!.isEmpty else {
-            return CardBrandResults(matchingCardBrands: [], complete: false)
+            return CardBrandResults(matchingCardBrands: [], maskSatisfied: false)
         }
         
         return findMatchingCardBrands(text: text!)
     }
     
     private static func findMatchingCardBrands(text: String) -> CardBrandResults {
-        var cardBrandResults = CardBrandResults(matchingCardBrands: [], complete: false)
+        var cardBrandResults = CardBrandResults(matchingCardBrands: [], maskSatisfied: false)
         var longestMatchingLength = 0
         
         for cardBrand in CardBrands {
@@ -172,7 +172,7 @@ public struct CardBrand {
             cardBrandResults.bestMatchCardBrand = cardBrand
             longestMatchingLength = lengthOfCardBrandIdentifier
             
-            cardBrandResults.complete = cardBrand.validLengths.contains(text!.count)
+            cardBrandResults.maskSatisfied = cardBrand.validLengths.contains(text!.count)
         }
     }
 }

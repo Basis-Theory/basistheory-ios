@@ -68,7 +68,8 @@ final public class CardNumberUITextField: TextElementUITextField {
     }
     
     private func getCardElementEvent(text: String?, event: ElementEvent) -> ElementEvent {
-        let complete = cardBrand?.complete ?? false && event.valid
+        let maskSatisfied = cardBrand?.maskSatisfied ?? false
+        let complete = maskSatisfied && event.valid
         let brand = cardBrand?.bestMatchCardBrand?.cardBrandName != nil ? String(describing: cardBrand!.bestMatchCardBrand!.cardBrandName) : "unknown"
         var details = [ElementEventDetails(type: "cardBrand", message: brand)]
         
@@ -77,7 +78,7 @@ final public class CardNumberUITextField: TextElementUITextField {
             details.append(ElementEventDetails(type: "cardBin", message: String(text!.prefix(6))))
         }
         
-        let elementEvent = ElementEvent(type: "textChange", complete: complete, empty: event.empty, valid: event.valid, maskSatisfied: event.maskSatisfied, details: details)
+        let elementEvent = ElementEvent(type: "textChange", complete: complete, empty: event.empty, valid: event.valid, maskSatisfied: maskSatisfied, details: details)
         
         return elementEvent
     }
