@@ -1,3 +1,11 @@
+## [1.3.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.2.0...1.3.0) (2023-01-06)
+
+
+### Features
+
+* adds maskChange event on CVC, makes complete flag consistent, checks complete flag on tokenize requests ([#27](https://github.com/Basis-Theory/basistheory-ios/issues/27)) ([bbef2fa](https://github.com/Basis-Theory/basistheory-ios/commit/bbef2fa8da4935fa6eb39459b81af505f2e650b9))
+
+
 ## [1.2.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.1.1...1.2.0) (2023-01-05)
 
 
