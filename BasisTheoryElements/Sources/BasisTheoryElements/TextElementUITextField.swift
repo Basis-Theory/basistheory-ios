@@ -27,6 +27,9 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     var inputMask: [Any]?
     var inputTransform: ElementTransform?
     var previousValue: String = ""
+    var readOnly: Bool = false
+    var valueRef: TextElementUITextField?
+    private var cancellables = Set<AnyCancellable>()
     
     public var subject = PassthroughSubject<ElementEvent, Error>()
     
@@ -65,10 +68,31 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         get { nil }
     }
     
+    public override var isUserInteractionEnabled: Bool {
+        set {
+            if (!readOnly) {
+                super.isUserInteractionEnabled = newValue
+            }
+        }
+        get { super.isUserInteractionEnabled }
+    }
+    
     public func setValue(elementValueReference: ElementValueReference?) {
         if let elementValueReference = elementValueReference {
-            super.text = elementValueReference.getValue()
+            self.text = elementValueReference.getValue()
         }
+    }
+    
+    public func setValueRef(element: TextElementUITextField) {
+        self.isUserInteractionEnabled = false
+        self.readOnly = true
+            
+        self.valueRef = element
+        self.valueRef!.subject.sink { completion in } receiveValue: { message in
+            if (message.type == "textChange") {
+                self.text = self.valueRef?.getValue()
+            }
+        }.store(in: &cancellables)
     }
     
     // detecting backspace, used for masking

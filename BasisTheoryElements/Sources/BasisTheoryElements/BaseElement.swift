@@ -11,6 +11,7 @@ import Combine
 public protocol ElementProtocol {
     var subject: PassthroughSubject<ElementEvent, Error> {get set}
     func setValue(elementValueReference: ElementValueReference?) -> Void
+    func setValueRef(element: TextElementUITextField) -> Void
 }
 
 internal protocol InternalElementProtocol {

@@ -137,8 +137,8 @@ textElementUITextField.setConfig(options: TextElementOptions(mask: phoneMask, tr
 | --- | --- |
 | text | We restrict the getter for this value; it always returns nil. The setter works as is. |
 | subject | An instance of `PassThroughSubject` that allows you to subscribe to [ElementEvent](#elementevent). |
-| setValue | A function that recieves an `ElementValueReference` parameter to set the value of the element. 🚨 Note: `ElementValueReference` instances can only be retrieved from [proxy](#proxy) responses. An `ElementValueReference` cannot be instantiated outside of the `BasisTheoryElements` package at this time. |
-
+| setValue | A function that receives an `ElementValueReference` parameter to set the value of the element. 🚨 Note: `ElementValueReference` instances can only be retrieved from [proxy](#proxy) responses. An `ElementValueReference` cannot be instantiated outside of the `BasisTheoryElements` package at this time. |
+| setValueRef | Binds the provided `element: TextElementUITextField` instance as a value source for this element, keeping the value of this element in sync with any changes made to the other element. When used, makes the caller element read-only. Any element type can be provided as an instance as they inherit from `TextElementUITextField`.
 ## ElementEvent
 
 Events are triggered whenever a user types into an element textfield. An `ElementEvent` is the struct that gets passed into the [subject](#element-modified-and-additional-fields)’s `receiveValue` function. The following are properties on the `ElementEvent` struct:
