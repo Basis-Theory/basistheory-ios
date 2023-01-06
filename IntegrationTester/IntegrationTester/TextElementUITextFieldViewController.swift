@@ -83,8 +83,7 @@ class TextElementUITextFieldViewController: UIViewController {
         
         try! phoneNumberTextField.setConfig(options: phoneOptions)
         
-        let readOnlyOptions = TextElementOptions(readonly: true);
-        try! readOnlyTextField.setConfig(options: readOnlyOptions)
+        readOnlyTextField.setValueRef(element: nameTextField)
         
         setStyles(textField: nameTextField, placeholder: "Name")
         setStyles(textField: phoneNumberTextField, placeholder: "Phone Number")
@@ -94,10 +93,6 @@ class TextElementUITextFieldViewController: UIViewController {
             print(completion)
         } receiveValue: { message in
             print(message)
-            
-            if (message.type == "textChange") {
-                self.readOnlyTextField.setValue(element: self.nameTextField)
-            }
         }.store(in: &cancellables)
     }
     

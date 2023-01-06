@@ -58,7 +58,7 @@ final class IntegrationTesterUITests: XCTestCase {
         XCTAssertEqual(phoneNumberTextField.value as! String, "(555)123-4567")
     }
     
-    func testElementSetValue() throws {
+    func testElementSetValueRef() throws {
         let nameTextField = app.textFields["Name"]
         let readOnlyTextField = app.textFields["Read Only"]
         

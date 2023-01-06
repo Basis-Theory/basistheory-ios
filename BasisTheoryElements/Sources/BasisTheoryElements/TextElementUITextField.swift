@@ -12,12 +12,10 @@ import Combine
 public struct TextElementOptions {
     let mask: [Any]?
     let transform: ElementTransform?
-    let readonly: Bool?
     
-    public init(mask: [Any]? = nil, transform: ElementTransform? = nil, readonly: Bool? = false) {
+    public init(mask: [Any]? = nil, transform: ElementTransform? = nil) {
         self.mask = mask
         self.transform = transform
-        self.readonly = readonly
     }
 }
 
@@ -29,7 +27,9 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     var inputMask: [Any]?
     var inputTransform: ElementTransform?
     var previousValue: String = ""
-    var isReadOnly: Bool = false
+    var readOnly: Bool = false
+    var valueRef: TextElementUITextField?
+    private var cancellables = Set<AnyCancellable>()
     
     public var subject = PassthroughSubject<ElementEvent, Error>()
     
@@ -68,16 +68,31 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         get { nil }
     }
     
+    public override var isUserInteractionEnabled: Bool {
+        set {
+            if (readOnly == false) {
+                super.isUserInteractionEnabled = newValue
+            }
+        }
+        get { super.isUserInteractionEnabled }
+    }
+    
     public func setValue(elementValueReference: ElementValueReference?) {
         if let elementValueReference = elementValueReference {
             self.text = elementValueReference.getValue()
         }
     }
     
-    public func setValue(element: TextElementUITextField?) {
-        if (element != nil) {
-            self.text = element?.getValue()
-        }
+    public func setValueRef(element: TextElementUITextField) {
+        self.isUserInteractionEnabled = false
+        self.readOnly = true
+            
+        self.valueRef = element
+        self.valueRef!.subject.sink { completion in } receiveValue: { message in
+            if (message.type == "textChange") {
+                self.text = self.valueRef?.getValue()
+            }
+        }.store(in: &cancellables)
     }
     
     // detecting backspace, used for masking
@@ -97,11 +112,6 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         
         if (options?.transform != nil) {
             self.inputTransform = options?.transform
-        }
-        
-        if (options?.readonly == true) {
-            self.isReadOnly = true
-            self.isUserInteractionEnabled = false
         }
     }
     
