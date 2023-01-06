@@ -21,11 +21,13 @@ The `IntegrationTester` project is a small sample iOS app that shows examples of
 1. Ensure `IntegrationTester` scheme is set
 2. Pick an iOS simulator to run
 3. Copy the contents `Env.plist.example` to a `Env.plist` file in the same directory and replace all necessary secrets.
-   a. All API keys should be keys for dev. The `privateBtApiKey` should have read permissions with a reveal transform, and the `btApiKey` should be a public key with create permissions
-   b. `proxyKey` should have the `destination_url` set to `https://echo.basistheory.com/post` with `require_auth` set to `true`
-   c. `proxyKeyNoAuth` should have the `destination_url` set to `https://echo.basistheory.com/get` with `require_auth` set to `false`
+
+   1. All API keys should be keys for dev. The `privateBtApiKey` should have `token:read` permissions with a `reveal` transform, and the `btApiKey` should be a public key with `token:create` permissions
+   2. `proxyKey` should have the `destination_url` set to `https://echo.basistheory.com/post` with `require_auth` set to `true`
+   3. `proxyKeyNoAuth` should have the `destination_url` set to `https://echo.basistheory.com/get` with `require_auth` set to `false`
+
 4. Run the app! 🎉
 
 ## Running tests
 
-Unit tests are under `IntegrationTester/UnitTests` and acceptance tests are under `IntegrationTester/AcceptanceTests`. 
+Unit tests are under `IntegrationTester/UnitTests` and acceptance tests are under `IntegrationTester/AcceptanceTests`.
