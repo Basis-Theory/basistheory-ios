@@ -1,3 +1,11 @@
+## [1.5.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.4.0...1.5.0) (2023-01-09)
+
+
+### Features
+
+* add  flag to  ([#29](https://github.com/Basis-Theory/basistheory-ios/issues/29)) ([aa8a038](https://github.com/Basis-Theory/basistheory-ios/commit/aa8a038e64e9747684aad5b8701ef7859aae8cfb))
+
+
 ## [1.4.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.3.0...1.4.0) (2023-01-06)
 
 
