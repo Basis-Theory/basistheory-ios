@@ -143,12 +143,13 @@ textElementUITextField.setConfig(options: TextElementOptions(mask: phoneMask, tr
 
 Events are triggered whenever a user types into an element textfield. An `ElementEvent` is the struct that gets passed into the [subject](#element-modified-and-additional-fields)’s `receiveValue` function. The following are properties on the `ElementEvent` struct:
 
-| Property | Description |
-| --- | --- |
-| type | The event type for the `ElementEvent`. As of today it’s just `textChange`. |
-| complete | Whether the input is `valid` and the `mask` is satisfied. |
-| valid | Whether the input is `valid` according to `validation` for each element. |
-| details | An array of [ElementEventDetail](#elementeventdetail) describing more information about the element event. |
+| Property      | Description                                                                                                |
+| ------------- | ---------------------------------------------------------------------------------------------------------- |
+| type          | The event type for the `ElementEvent`. As of today it’s just `textChange`.                                 |
+| complete      | Whether the input is `valid` and the `mask` is satisfied.                                                  |
+| valid         | Whether the input is `valid` according to `validation` for each element.                                   |
+| maskSatisfied | Whether the input satisfies the mask length requirements.                                                  |
+| details       | An array of [ElementEventDetail](#elementeventdetail) describing more information about the element event. |
 
 Available `type`'s include:
 * `textChange` - when the text has changed

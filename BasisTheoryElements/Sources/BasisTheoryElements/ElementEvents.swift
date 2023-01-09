@@ -15,5 +15,6 @@ public struct ElementEvent {
     public var complete: Bool
     public var empty: Bool
     public var valid: Bool
+    public var maskSatisfied: Bool
     public var details: [ElementEventDetails]
 }

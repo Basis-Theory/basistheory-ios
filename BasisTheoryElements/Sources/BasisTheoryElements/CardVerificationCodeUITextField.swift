@@ -56,16 +56,25 @@ final public class CardVerificationCodeUITextField: TextElementUITextField {
         }
     }
     
-    private func getCvcElementEvent(text: String?, event: ElementEvent) -> ElementEvent {
-        var complete = false
-        
-        if (cardNumberUITextField != nil) {
-            complete = text?.count == inputMask?.count
-        } else {
-            complete = text?.count == 3 || text?.count == 4
+    private func validateMaskLength(text: String?) -> Bool {
+        guard text != nil else {
+            return false
         }
         
-        let elementEvent = ElementEvent(type: "textChange", complete: complete, empty: event.empty, valid: event.valid, details: [])
+        
+        if(self.inputMask != nil && cardNumberUITextField != nil) {
+           return text?.count == self.inputMask?.count
+        } else {
+            return (text?.count == 3 || text?.count == 4)
+        }
+    }
+    
+    private func getCvcElementEvent(text: String?, event: ElementEvent) -> ElementEvent {
+        let valid = validateCvc(text: text)
+        let maskSatisfied = validateMaskLength(text: text)
+        let complete = valid && maskSatisfied
+        
+        let elementEvent = ElementEvent(type: "textChange", complete: complete, empty: event.empty, valid: event.valid, maskSatisfied: maskSatisfied, details: [])
         
         return elementEvent
     }
@@ -110,9 +119,9 @@ final public class CardVerificationCodeUITextField: TextElementUITextField {
     private func sendMaskChangeEvent() {
         let text = super.getValue()
         let valid = validateCvc(text: text)
-        let maskSatisfied = text?.count == self.inputMask?.count
+        let maskSatisfied = validateMaskLength(text: text)
         let complete = valid && maskSatisfied
-        let elementEvent = ElementEvent(type: "maskChange", complete: complete, empty: text?.isEmpty ?? false, valid: valid, details: [])
+        let elementEvent = ElementEvent(type: "maskChange", complete: complete, empty: text?.isEmpty ?? false, valid: valid, maskSatisfied: maskSatisfied, details: [])
         
         self.subject.send(elementEvent)
     }

@@ -46,7 +46,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     private func setup() {
         self.smartDashesType = .no
         self.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        subject.send(ElementEvent(type: "ready", complete: true, empty: true, valid: true, details: []))
+        subject.send(ElementEvent(type: "ready", complete: true, empty: true, valid: true, maskSatisfied: false, details: []))
     }
     
     deinit {
@@ -220,7 +220,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         
         self.isComplete = complete
         
-        var elementEvent = ElementEvent(type: "textChange", complete: complete, empty: transformedTextValue.isEmpty , valid: valid, details: [])
+        var elementEvent = ElementEvent(type: "textChange", complete: complete, empty: transformedTextValue.isEmpty, valid: valid, maskSatisfied: maskComplete, details: [])
         
         if let getElementEvent = getElementEvent {
             elementEvent = getElementEvent(transformedTextValue, elementEvent)
