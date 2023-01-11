@@ -1,3 +1,11 @@
+## [1.7.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.6.0...1.7.0) (2023-01-11)
+
+
+### Features
+
+* add metadata and cardElementMetadata variables ([#32](https://github.com/Basis-Theory/basistheory-ios/issues/32)) ([ed35a04](https://github.com/Basis-Theory/basistheory-ios/commit/ed35a04c209ffc2e2fd21376842546340352a3a1))
+
+
 ## [1.6.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.5.0...1.6.0) (2023-01-11)
 
 
