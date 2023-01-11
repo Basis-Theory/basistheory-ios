@@ -15,7 +15,7 @@ public struct ElementMetadata {
 }
 
 public struct CardMetadata {
-    public var cardLast4: String
-    public var cardBin: String
+    public var cardLast4: String?
+    public var cardBin: String?
     public var cardBrand: String
 }

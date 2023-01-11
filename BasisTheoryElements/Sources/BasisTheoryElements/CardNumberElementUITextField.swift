@@ -8,7 +8,7 @@
 import UIKit
 
 final public class CardNumberUITextField: TextElementUITextField, CardElementProtocol {
-    public var cardMetadata: CardMetadata = CardMetadata(cardLast4: "", cardBin: "", cardBrand: "unknown")
+    public var cardMetadata: CardMetadata = CardMetadata(cardBrand: "unknown")
     
     internal var cardBrand: CardBrandResults?
     private var cardMask: [Any]?
