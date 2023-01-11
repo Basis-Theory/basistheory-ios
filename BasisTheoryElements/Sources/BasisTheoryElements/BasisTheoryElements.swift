@@ -19,6 +19,17 @@ public enum ProxyError: Error {
     case invalidRequest
 }
 
+extension RequestBuilder {
+    func addBasisTheoryElementHeaders(apiKey: String) -> Self {
+        addHeaders([
+            "User-Agent": "BasisTheory iOS Elements",
+            "BT-API-KEY": apiKey,
+        ])
+        
+        return self
+    }
+}
+
 final public class BasisTheoryElements {
     public static var apiKey: String = ""
     public static var basePath: String = "https://api.basistheory.com"
@@ -39,7 +50,7 @@ final public class BasisTheoryElements {
     
     private static func getApplicationKey(apiKey: String, completion: @escaping ((_ data: Application?, _ error: Error?) -> Void)) {
         BasisTheoryAPI.basePath = basePath
-        ApplicationsAPI.getByKeyWithRequestBuilder().addHeader(name: "User-Agent", value: "BasisTheory iOS Elements").addHeader(name: "BT-API-KEY", value: getApiKey(apiKey)).execute { result in
+        ApplicationsAPI.getByKeyWithRequestBuilder().addBasisTheoryElementHeaders(apiKey: getApiKey(apiKey)).execute { result in
             completeApiRequest(result: result, completion: completion)
         }
     }
@@ -65,7 +76,7 @@ final public class BasisTheoryElements {
                 return
             }
             
-            TokenizeAPI.tokenizeWithRequestBuilder(body: AnyCodable(mutableBody)).addHeader(name: "BT-API-KEY", value: getApiKey(apiKey)).execute { result in
+            TokenizeAPI.tokenizeWithRequestBuilder(body: AnyCodable(mutableBody)).addBasisTheoryElementHeaders(apiKey: getApiKey(apiKey)).execute { result in
                 completeApiRequest(result: result, completion: completion)
             }
         }
@@ -97,7 +108,7 @@ final public class BasisTheoryElements {
             
             let createTokenRequest = mutableBody.toCreateTokenRequest()
             
-            TokensAPI.createWithRequestBuilder(createTokenRequest: createTokenRequest).addHeader(name: "User-Agent", value: "BasisTheory iOS Elements").addHeader(name: "BT-API-KEY", value: getApiKey(apiKey)).execute { result in
+            TokensAPI.createWithRequestBuilder(createTokenRequest: createTokenRequest).addBasisTheoryElementHeaders(apiKey: getApiKey(apiKey)).execute { result in
                 completeApiRequest(result: result, completion: completion)
             }
         }
@@ -115,6 +126,12 @@ final public class BasisTheoryElements {
         ProxyHelpers.setBodyOnRequest(proxyHttpRequest: proxyHttpRequest, request: &request)
         
         ProxyHelpers.executeRequest(request: request, completion: completion)
+    }
+    
+    public static func createSession(apiKey: String? = nil, completion: @escaping ((_ data: CreateSessionResponse?, _ error: Error?) -> Void)) -> Void {
+        SessionsAPI.createWithRequestBuilder().addBasisTheoryElementHeaders(apiKey: getApiKey(apiKey)).execute { result in
+            completeApiRequest(result: result, completion: completion)
+        }
     }
     
     private static func replaceElementRefs(body: inout [String: Any]) throws -> Void {

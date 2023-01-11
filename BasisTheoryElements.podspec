@@ -8,6 +8,6 @@ Pod::Spec.new do |s|
   s.homepage = 'https://github.com/Basis-Theory/basistheory-ios'
   s.summary = 'BasisTheory SDK for Elements'
   s.source_files = 'BasisTheoryElements/Sources/BasisTheoryElements**/*.swift'
-  s.dependency 'BasisTheory', '0.5.5'
+  s.dependency 'BasisTheory', '0.6.0'
   s.swift_version = '5.5'
 end

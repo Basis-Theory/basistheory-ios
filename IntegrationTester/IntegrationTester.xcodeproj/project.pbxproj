@@ -24,6 +24,7 @@
 		924576CC2900519900A01E70 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924576CB2900519900A01E70 /* Configuration.swift */; };
 		9253E8E2291EB66E00FDF1A9 /* ElementUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9253E8E1291EB66E00FDF1A9 /* ElementUITextFieldTests.swift */; };
 		92566EA6293578B30047BFF2 /* BasisTheoryElements in Frameworks */ = {isa = PBXBuildFile; productRef = 92566EA5293578B30047BFF2 /* BasisTheoryElements */; };
+		9262E291296E050F00A77B83 /* SessionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9262E290296E050F00A77B83 /* SessionServiceTests.swift */; };
 		928869A229118DC4004E75E3 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924576CB2900519900A01E70 /* Configuration.swift */; };
 		928869A72911B564004E75E3 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924576CB2900519900A01E70 /* Configuration.swift */; };
 		929E30C32948D0F900A01A56 /* TokenizeAndCreateTokenServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E30C22948D0F900A01A56 /* TokenizeAndCreateTokenServiceTests.swift */; };
@@ -73,6 +74,7 @@
 		924576CB2900519900A01E70 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		9253E8E1291EB66E00FDF1A9 /* ElementUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementUITextFieldTests.swift; sourceTree = "<group>"; };
 		92566EA4293578AB0047BFF2 /* BasisTheoryElements */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BasisTheoryElements; path = ../BasisTheoryElements; sourceTree = "<group>"; };
+		9262E290296E050F00A77B83 /* SessionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionServiceTests.swift; sourceTree = "<group>"; };
 		929E30C22948D0F900A01A56 /* TokenizeAndCreateTokenServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenizeAndCreateTokenServiceTests.swift; sourceTree = "<group>"; };
 		929E30CB295C9A0100A01A56 /* ProxyServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyServiceTests.swift; sourceTree = "<group>"; };
 		92A24DE6291DA1F0005DD4D2 /* SplitCardElementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitCardElementsViewController.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				92B7DCAE2939523C000DBB8A /* CardBrandTests.swift */,
 				428CB109293E398B00C8220E /* CardNumberUITextFieldTests.swift */,
 				929E30CB295C9A0100A01A56 /* ProxyServiceTests.swift */,
+				9262E290296E050F00A77B83 /* SessionServiceTests.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9262E291296E050F00A77B83 /* SessionServiceTests.swift in Sources */,
 				428CB10A293E398B00C8220E /* CardNumberUITextFieldTests.swift in Sources */,
 				929E30CC295C9A0100A01A56 /* ProxyServiceTests.swift in Sources */,
 				928869A72911B564004E75E3 /* Configuration.swift in Sources */,
