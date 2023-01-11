@@ -9,9 +9,14 @@ import Foundation
 import Combine
 
 public protocol ElementProtocol {
-    var subject: PassthroughSubject<ElementEvent, Error> {get set}
+    var subject: PassthroughSubject<ElementEvent, Error> { get set }
+    var metadata: ElementMetadata { get }
     func setValue(elementValueReference: ElementValueReference?) -> Void
     func setValueRef(element: TextElementUITextField) -> Void
+}
+
+public protocol CardElementProtocol {
+    var cardMetadata: CardMetadata { get }
 }
 
 internal protocol InternalElementProtocol {

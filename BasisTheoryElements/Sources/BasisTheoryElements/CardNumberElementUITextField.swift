@@ -7,7 +7,9 @@
 
 import UIKit
 
-final public class CardNumberUITextField: TextElementUITextField {
+final public class CardNumberUITextField: TextElementUITextField, CardElementProtocol {
+    public var cardMetadata: CardMetadata = CardMetadata(cardBrand: "unknown")
+    
     internal var cardBrand: CardBrandResults?
     private var cardMask: [Any]?
     
@@ -72,10 +74,18 @@ final public class CardNumberUITextField: TextElementUITextField {
         let complete = maskSatisfied && event.valid
         let brand = cardBrand?.bestMatchCardBrand?.cardBrandName != nil ? String(describing: cardBrand!.bestMatchCardBrand!.cardBrandName) : "unknown"
         var details = [ElementEventDetails(type: "cardBrand", message: brand)]
+        cardMetadata.cardBrand = brand
         
         if complete {
-            details.append(ElementEventDetails(type: "cardLast4", message: String(text!.suffix(4))))
-            details.append(ElementEventDetails(type: "cardBin", message: String(text!.prefix(6))))
+            var last4 = String(text!.suffix(4))
+            var bin = String(text!.prefix(6))
+            details.append(ElementEventDetails(type: "cardLast4", message: last4))
+            details.append(ElementEventDetails(type: "cardBin", message: bin))
+            cardMetadata.cardLast4 = last4
+            cardMetadata.cardBin = bin
+        } else {
+            cardMetadata.cardLast4 = nil
+            cardMetadata.cardBin = nil
         }
         
         let elementEvent = ElementEvent(type: "textChange", complete: complete, empty: event.empty, valid: event.valid, maskSatisfied: maskSatisfied, details: details)

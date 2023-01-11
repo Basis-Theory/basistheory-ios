@@ -36,6 +36,11 @@ final class CardNumberUITextFieldTests: XCTestCase {
             XCTAssertEqual(brandDetails.type, "cardBrand")
             XCTAssertEqual(brandDetails.message, "visa")
             
+            // assert metadta
+            XCTAssertEqual(cardNumberTextField.metadata.empty, false)
+            XCTAssertEqual(cardNumberTextField.metadata.valid, false)
+            XCTAssertEqual(cardNumberTextField.cardMetadata.cardBrand, "visa")
+            
             if (!incompleteNumberExpectationHasBeenFulfilled) {
                 XCTAssertEqual(message.complete, false) // mask incomplete and number is invalid
                 XCTAssertEqual(eventDetails.count, 1)
@@ -74,6 +79,11 @@ final class CardNumberUITextFieldTests: XCTestCase {
             XCTAssertEqual(message.type, "textChange")
             XCTAssertEqual(message.empty, false)
             XCTAssertEqual(message.valid, true)
+            
+            // assert metadata
+            XCTAssertEqual(cardNumberTextField.metadata.empty, false)
+            XCTAssertEqual(cardNumberTextField.metadata.valid, true)
+            
             let eventDetails = message.details as [ElementEventDetails]
             let brandDetails = eventDetails[0]
             let last4Details = eventDetails[1]
@@ -88,6 +98,13 @@ final class CardNumberUITextFieldTests: XCTestCase {
                 XCTAssertEqual(brandDetails.message, "visa")
                 XCTAssertEqual(last4Details.message, "4242")
                 XCTAssertEqual(binDetails.message, "424242")
+                
+                // assert metadata
+                XCTAssertEqual(cardNumberTextField.metadata.complete, true)
+                XCTAssertEqual(cardNumberTextField.cardMetadata.cardBrand, "visa")
+                XCTAssertEqual(cardNumberTextField.cardMetadata.cardLast4, "4242")
+                XCTAssertEqual(cardNumberTextField.cardMetadata.cardBin, "424242")
+                
                 validVisaCardNumberExpectation.fulfill()
                 visaExpectationHasBeenFulfilled = true
             } else if (!mastercardExpectationHasBeenFulfilled) {
@@ -95,6 +112,12 @@ final class CardNumberUITextFieldTests: XCTestCase {
                 XCTAssertEqual(brandDetails.message, "mastercard")
                 XCTAssertEqual(last4Details.message, "5717")
                 XCTAssertEqual(binDetails.message, "545442")
+                
+                // assert metadata
+                XCTAssertEqual(cardNumberTextField.metadata.complete, true)
+                XCTAssertEqual(cardNumberTextField.cardMetadata.cardBrand, "mastercard")
+                XCTAssertEqual(cardNumberTextField.cardMetadata.cardLast4, "5717")
+                XCTAssertEqual(cardNumberTextField.cardMetadata.cardBin, "545442")
                 validMasterCardNumberExpectation.fulfill()
                 mastercardExpectationHasBeenFulfilled = true
             } else {
@@ -102,6 +125,12 @@ final class CardNumberUITextFieldTests: XCTestCase {
                 XCTAssertEqual(brandDetails.message, "americanExpress")
                 XCTAssertEqual(last4Details.message, "8868")
                 XCTAssertEqual(binDetails.message, "348570")
+                
+                // assert metadata
+                XCTAssertEqual(cardNumberTextField.metadata.complete, true)
+                XCTAssertEqual(cardNumberTextField.cardMetadata.cardBrand, "americanExpress")
+                XCTAssertEqual(cardNumberTextField.cardMetadata.cardLast4, "8868")
+                XCTAssertEqual(cardNumberTextField.cardMetadata.cardBin, "348570")
                 validAmexCardNumberExpectation.fulfill()
             }
         }.store(in: &cancellables)
@@ -129,10 +158,22 @@ final class CardNumberUITextFieldTests: XCTestCase {
             if (!message.empty) {
                 XCTAssertEqual(message.valid, true)
                 XCTAssertEqual(message.complete, true)
+                
+                // assert metadata
+                XCTAssertEqual(cardNumberTextField.metadata.valid, true)
+                XCTAssertEqual(cardNumberTextField.metadata.complete, true)
                 numberInputExpectation.fulfill()
             } else {
                 XCTAssertEqual(message.valid, false)
                 XCTAssertEqual(message.complete, false)
+                
+                // assert metadata
+                XCTAssertEqual(cardNumberTextField.metadata.valid, false)
+                XCTAssertEqual(cardNumberTextField.metadata.complete, false)
+                
+                // card bin and last 4 should be nil for non-complete
+                XCTAssertEqual(cardNumberTextField.cardMetadata.cardLast4, nil)
+                XCTAssertEqual(cardNumberTextField.cardMetadata.cardBin, nil)
                 numberDeleteExpectation.fulfill()
             }
         }.store(in: &cancellables)
