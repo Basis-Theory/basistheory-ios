@@ -27,8 +27,13 @@ final class TextElementUITextFieldTests: XCTestCase {
             XCTAssertEqual(message.type, "textChange")
             XCTAssertEqual(message.complete, true)
             XCTAssertEqual(message.valid, true)
+            
+            // assert metadata updated
+            XCTAssertEqual(nameTextField.metadata.complete, message.complete)
+            XCTAssertEqual(nameTextField.metadata.valid, message.valid)
 
             if (!message.empty) {
+                XCTAssertEqual(nameTextField.metadata.empty, false)
                 nameInputExpectation.fulfill()
             } else {
                 nameDeleteExpectation.fulfill()
@@ -64,6 +69,11 @@ final class TextElementUITextFieldTests: XCTestCase {
             XCTAssertEqual(message.maskSatisfied, true)
             XCTAssertEqual(message.valid, true)
             
+            // assert metadata updated
+            XCTAssertEqual(completeField.metadata.complete, message.complete)
+            XCTAssertEqual(completeField.metadata.valid, message.valid)
+            XCTAssertEqual(completeField.metadata.maskSatisfied, message.maskSatisfied)
+            
             completeFieldExpectation.fulfill()
         }.store(in: &cancellables)
         
@@ -74,6 +84,11 @@ final class TextElementUITextFieldTests: XCTestCase {
             XCTAssertEqual(message.complete, false)
             XCTAssertEqual(message.maskSatisfied, false)
             XCTAssertEqual(message.valid, true)
+            
+            // assert metadata updated
+            XCTAssertEqual(incompleteField.metadata.complete, message.complete)
+            XCTAssertEqual(incompleteField.metadata.valid, message.valid)
+            XCTAssertEqual(incompleteField.metadata.maskSatisfied, message.maskSatisfied)
             
             incompleteFieldExpectation.fulfill()
         }.store(in: &cancellables)

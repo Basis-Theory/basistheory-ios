@@ -32,6 +32,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     private var cancellables = Set<AnyCancellable>()
     
     public var subject = PassthroughSubject<ElementEvent, Error>()
+    public var metadata: ElementMetadata = ElementMetadata(complete: true, empty: true, valid: true, maskSatisfied: false)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -225,6 +226,8 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         if let getElementEvent = getElementEvent {
             elementEvent = getElementEvent(transformedTextValue, elementEvent)
         }
+        
+        self.metadata = ElementMetadata(complete: elementEvent.complete, empty: elementEvent.empty, valid: elementEvent.valid, maskSatisfied: elementEvent.maskSatisfied)
         
         // prevents sending an additional event if input didn't change
         if (previousValue == super.text) {
