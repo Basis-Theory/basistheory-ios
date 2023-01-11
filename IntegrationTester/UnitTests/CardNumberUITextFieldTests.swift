@@ -170,6 +170,10 @@ final class CardNumberUITextFieldTests: XCTestCase {
                 // assert metadata
                 XCTAssertEqual(cardNumberTextField.metadata.valid, false)
                 XCTAssertEqual(cardNumberTextField.metadata.complete, false)
+                
+                // card bin and last 4 should be nil for non-complete
+                XCTAssertEqual(cardNumberTextField.cardMetadata.cardLast4, nil)
+                XCTAssertEqual(cardNumberTextField.cardMetadata.cardBin, nil)
                 numberDeleteExpectation.fulfill()
             }
         }.store(in: &cancellables)
