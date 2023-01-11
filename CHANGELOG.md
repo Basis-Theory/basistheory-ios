@@ -1,3 +1,11 @@
+## [1.6.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.5.0...1.6.0) (2023-01-11)
+
+
+### Features
+
+* adds createSession service function ([#31](https://github.com/Basis-Theory/basistheory-ios/issues/31)) ([d267347](https://github.com/Basis-Theory/basistheory-ios/commit/d2673477be0aefc6c0e1049d543ba940331c00c9))
+
+
 ## [1.5.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.4.0...1.5.0) (2023-01-09)
 
 
