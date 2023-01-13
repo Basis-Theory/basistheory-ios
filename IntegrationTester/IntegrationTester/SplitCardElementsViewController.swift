@@ -15,6 +15,7 @@ class SplitCardElementsViewController: UIViewController {
     private let darkBackgroundColor : UIColor = UIColor( red: 200/255, green: 200/255, blue: 200/255, alpha: 1.0 )
     private var cancellables = Set<AnyCancellable>()
     
+    @IBOutlet weak var readOnlyTextField: TextElementUITextField!
     @IBOutlet weak var cardNumberTextField: CardNumberUITextField!
     @IBOutlet weak var expirationDateTextField: CardExpirationDateUITextField!
     @IBOutlet weak var cvcTextField: CardVerificationCodeUITextField!
@@ -62,9 +63,12 @@ class SplitCardElementsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        readOnlyTextField.setValueRef(element: cardNumberTextField)
+        
         setStyles(textField: cardNumberTextField, placeholder: "Card Number")
         setStyles(textField: expirationDateTextField, placeholder: "MM/YY")
         setStyles(textField: cvcTextField, placeholder: "CVC")
+        setStyles(textField: readOnlyTextField, placeholder: "Read Only")
         
         let cvcOptions = CardVerificationCodeOptions(cardNumberUITextField: cardNumberTextField)
         cvcTextField.setConfig(options: cvcOptions)
