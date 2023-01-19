@@ -28,30 +28,42 @@ class TextElementUITextFieldViewController: UIViewController {
     }
     
     @IBAction func tokenize(_ sender: Any) {
-        let body: [String: Any] = [
-            "data": [
-                "name": self.nameTextField,
-                "phoneNumber": self.phoneNumberTextField,
-                "myProp": "myValue",
-                "object": [
-                    "nestedProp": "nestedValue",
-                    "phoneNumber": self.phoneNumberTextField,
-                ]
-            ],
-            "search_indexes": ["{{ data.phoneNumber }}"],
-            "type": "token"
-        ]
+        class NestedStruct {
+            var nestedProp: String
+            var phoneNumber: TextElementUITextField
+            
+            init(nestedProp: String, phoneNumber: TextElementUITextField) {
+                self.phoneNumber = phoneNumber
+                self.nestedProp = nestedProp
+            }
+        }
+        
+        class MyStruct: BTEncodable {
+            var name: TextElementUITextField
+            var phoneNumber: TextElementUITextField
+            var myProp: String
+            var object: NestedStruct
+            
+            init(name: TextElementUITextField, phoneNumber: TextElementUITextField, myProp: String, object: NestedStruct) {
+                self.name = name
+                self.phoneNumber = phoneNumber
+                self.myProp = myProp
+                self.object = object
+                super.init()
+            }
+        }
+        let body = CreateToken(type: "token", data: MyStruct(name: self.nameTextField, phoneNumber: self.phoneNumberTextField, myProp: "myValue", object: NestedStruct(nestedProp: "nestedValue", phoneNumber: self.phoneNumberTextField)))
         
         // this next line is used for our own testing purposes. you can simply pass in your public API key into the tokenize request below
         let config = Configuration.getConfiguration()
-        BasisTheoryElements.tokenize(body: body, apiKey: config.btApiKey!) { data, error in
+        BasisTheoryElements.createToken(body: body, apiKey: config.btApiKey!) { data, error in
             guard error == nil else {
                 self.output.text = "There was an error!"
                 print(error)
                 return
             }
 
-            let stringifiedData = String(data: try! JSONSerialization.data(withJSONObject: data!.value as! [String: Any], options: .prettyPrinted), encoding: .utf8)!
+            let stringifiedData = String(describing: data)
 
             self.output.text = stringifiedData
             print(stringifiedData)

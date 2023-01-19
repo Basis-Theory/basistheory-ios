@@ -30,6 +30,48 @@ extension RequestBuilder {
     }
 }
 
+// Notes: Having a BTEncodable class that inherits from Decodable will not work since the user
+// would need to convert from our element types to primitives that get returned from a create token
+// response
+open class BTEncodable: Decodable {
+    public subscript(key: String) -> Any? {
+        return asDictionary[key]
+    }
+    
+    public var asDictionary: [String: Any] {
+        let mirror = Mirror(reflecting: self)
+        let dict = Dictionary(uniqueKeysWithValues: mirror.children.lazy.map({ (label:String?, value:Any) -> (String, Any)? in
+            guard let label = label else { return nil }
+            
+            var resultingValue = value
+            
+            if var btEncodeableValue = value as? BTEncodable {
+                resultingValue = btEncodeableValue.asDictionary
+            }
+            
+            return (label, resultingValue)
+        }).compactMap { $0 })
+        
+        return dict
+    }
+    
+    public init() {}
+}
+
+extension Dictionary {
+    internal func asClass<T: Decodable>() -> T {
+        // this feels pretty hacky
+        let jsonData = try! JSONSerialization.data(withJSONObject: self, options: .prettyPrinted)
+        let decoder = JSONDecoder()
+        
+        return try! decoder.decode(T.self, from: jsonData)
+    }
+    
+    internal func asClass2() {
+        
+    }
+}
+
 final public class BasisTheoryElements {
     public static var apiKey: String = ""
     public static var basePath: String = "https://api.basistheory.com"
@@ -55,10 +97,12 @@ final public class BasisTheoryElements {
         }
     }
     
-    public static func tokenize(body: [String: Any], apiKey: String? = nil, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> Void {
-        var mutableBody = body
+    public static func tokenize<T: Decodable>(body: BTEncodable, apiKey: String? = nil, completion: @escaping ((_ data: T?, _ error: Error?) -> Void)) -> Void {
+        let mutableBody = body.asDictionary
+        var mutableBodyDictionary = mutableBody
+        
         do {
-            try replaceElementRefs(body: &mutableBody)
+            try replaceElementRefs(body: &mutableBodyDictionary)
         } catch {
             completion(nil, TokenizingError.invalidInput)
             return
@@ -76,23 +120,32 @@ final public class BasisTheoryElements {
                 return
             }
             
-            TokenizeAPI.tokenizeWithRequestBuilder(body: AnyCodable(mutableBody)).addBasisTheoryElementHeaders(apiKey: getApiKey(apiKey)).execute { result in
-                completeApiRequest(result: result, completion: completion)
+            // need to set mutablebody data back to what it was
+            TokenizeAPI.tokenizeWithRequestBuilder(body: AnyCodable(mutableBodyDictionary)).addBasisTheoryElementHeaders(apiKey: getApiKey(apiKey)).execute { result in
+//                completeApiRequest(result: result, completion: completion)
+                do {
+                    let app = try result.get()
+                    
+                    // need to convert back to T
+                    let dictionaryValue = app.body.value as! [String: Any]
+                    completion(dictionaryValue.asClass(), nil)
+                } catch {
+                    completion(nil, error)
+                }
             }
         }
     }
     
     public static func createToken(body: CreateToken, apiKey: String? = nil, completion: @escaping ((_ data: CreateTokenResponse?, _ error: Error?) -> Void)) -> Void {
-        var mutableBody = body
-        var mutableData = body.data
+        let mutableBody = body
+        var mutableData = body.data.asDictionary
+        
         do {
             try replaceElementRefs(body: &mutableData)
         } catch {
             completion(nil, TokenizingError.invalidInput)
             return
         }
-        
-        mutableBody.data = mutableData
         
         BasisTheoryAPI.basePath = basePath
         getApplicationKey(apiKey: getApiKey(apiKey)) {data, error in
@@ -106,7 +159,8 @@ final public class BasisTheoryElements {
                 return
             }
             
-            let createTokenRequest = mutableBody.toCreateTokenRequest()
+            // TODO: re-evaluate this solution
+            let createTokenRequest = mutableBody.toCreateTokenRequest(data: mutableData)
             
             TokensAPI.createWithRequestBuilder(createTokenRequest: createTokenRequest).addBasisTheoryElementHeaders(apiKey: getApiKey(apiKey)).execute { result in
                 completeApiRequest(result: result, completion: completion)

@@ -32,29 +32,70 @@ class SplitCardElementsViewController: UIViewController {
     }
     
     @IBAction func tokenize(_ sender: Any) {
-        let body: [String: Any] = [
-            "data": [
-                "number": self.cardNumberTextField,
-                "expiration_month": self.expirationDateTextField.month(),
-                "expiration_year": self.expirationDateTextField.year(),
-                "cvc": self.cvcTextField
-            ],
-            "type": "card"
-        ]
+        class MyStructData: BTEncodable {
+            var number: CardNumberUITextField
+            var expirationMonth: ElementValueReference
+            var expirationYear: ElementValueReference
+            var cvc: CardVerificationCodeUITextField
+            
+            init(number: CardNumberUITextField, expirationMonth: ElementValueReference, expirationYear: ElementValueReference, cvc: CardVerificationCodeUITextField) {
+                self.number = number
+                self.expirationMonth = expirationMonth
+                self.expirationYear = expirationYear
+                self.cvc = cvc
+                super.init()
+            }
+            
+            private enum CodingKeys: String, CodingKey {
+                case number
+                
+            }
+            
+            required init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                number = try container.decode(String.self, forKey: .number)
+            }
+        }
+        
+        class MyStruct: BTEncodable {
+            var data: MyStructData
+            var type: String
+            
+            init(data: MyStructData, type: String) {
+                self.data = data
+                self.type = type
+                super.init()
+            }
+            
+            required init(from decoder: Decoder) throws {
+                fatalError("init(from:) has not been implemented")
+            }
+        }
+          
+        let body = MyStruct(data: MyStructData(number: self.cardNumberTextField, expirationMonth: self.expirationDateTextField.month(), expirationYear: self.expirationDateTextField.year(), cvc: self.cvcTextField), type: "card")
+//        let body: [String: Any] = [
+//            "data": [
+//                "number": self.cardNumberTextField,
+//                "expiration_month": self.expirationDateTextField.month(),
+//                "expiration_year": self.expirationDateTextField.year(),
+//                "cvc": self.cvcTextField
+//            ],
+//            "type": "card"
+//        ]
         
         // this next line is used for our own testing purposes. you can simply pass in your public API key into the tokenize request below
         let config = Configuration.getConfiguration()
-        BasisTheoryElements.tokenize(body: body, apiKey: config.btApiKey!) { data, error in
+        BasisTheoryElements.tokenize(body: body, apiKey: config.btApiKey!) { (_ data: MyStruct?, _ error: Error?) -> Void in
             guard error == nil else {
                 self.output.text = "There was an error!"
                 print(error)
                 return
             }
             
-            let stringifiedData = String(data: try! JSONSerialization.data(withJSONObject: data!.value as! [String: Any], options: .prettyPrinted), encoding: .utf8)!
+//            let stringifiedData = String(data: try! JSONSerialization.data(withJSONObject: data!.value as! [String: Any], options: .prettyPrinted), encoding: .utf8)!
             
-            self.output.text = stringifiedData
-            print(stringifiedData)
+            self.output.text = String(describing: data)
+            print(String(describing: data))
         }
     }
     
