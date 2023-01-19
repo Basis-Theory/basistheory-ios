@@ -12,6 +12,7 @@
 		6286CEC129523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6286CEC029523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift */; };
 		62BEB1442953A1C600E5A0CE /* BasisTheoryElements in Frameworks */ = {isa = PBXBuildFile; productRef = 62BEB1432953A1C600E5A0CE /* BasisTheoryElements */; };
 		9206601D2922813C00A92A81 /* CardVerificationCodeUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9206601C2922813C00A92A81 /* CardVerificationCodeUITextFieldTests.swift */; };
+		92278B862979CBF700168E25 /* GetTokenByIdServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92278B852979CBF700168E25 /* GetTokenByIdServiceTests.swift */; };
 		9245768928FF46C100A01E70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9245768828FF46C100A01E70 /* AppDelegate.swift */; };
 		9245768B28FF46C100A01E70 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9245768A28FF46C100A01E70 /* SceneDelegate.swift */; };
 		9245768D28FF46C100A01E70 /* TextElementUITextFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9245768C28FF46C100A01E70 /* TextElementUITextFieldViewController.swift */; };
@@ -58,6 +59,7 @@
 		428CB109293E398B00C8220E /* CardNumberUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNumberUITextFieldTests.swift; sourceTree = "<group>"; };
 		6286CEC029523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitCardElementsUITextFieldTests.swift; sourceTree = "<group>"; };
 		9206601C2922813C00A92A81 /* CardVerificationCodeUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardVerificationCodeUITextFieldTests.swift; sourceTree = "<group>"; };
+		92278B852979CBF700168E25 /* GetTokenByIdServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTokenByIdServiceTests.swift; sourceTree = "<group>"; };
 		9245768528FF46C100A01E70 /* IntegrationTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IntegrationTester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9245768828FF46C100A01E70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9245768A28FF46C100A01E70 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				428CB109293E398B00C8220E /* CardNumberUITextFieldTests.swift */,
 				929E30CB295C9A0100A01A56 /* ProxyServiceTests.swift */,
 				9262E290296E050F00A77B83 /* SessionServiceTests.swift */,
+				92278B852979CBF700168E25 /* GetTokenByIdServiceTests.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92278B862979CBF700168E25 /* GetTokenByIdServiceTests.swift in Sources */,
 				9262E291296E050F00A77B83 /* SessionServiceTests.swift in Sources */,
 				428CB10A293E398B00C8220E /* CardNumberUITextFieldTests.swift in Sources */,
 				929E30CC295C9A0100A01A56 /* ProxyServiceTests.swift in Sources */,
