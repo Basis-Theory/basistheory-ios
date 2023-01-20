@@ -134,6 +134,21 @@ final public class BasisTheoryElements {
         }
     }
     
+    public static func getTokenById(id: String, apiKey: String? = nil, completion: @escaping ((_ data: GetTokenByIdResponse?, _ error: Error?) -> Void)) -> Void {
+        TokensAPI.getByIdWithRequestBuilder(id: id).addBasisTheoryElementHeaders(apiKey: getApiKey(apiKey)).execute { result in
+            do {
+                let token = try result.get().body
+                
+                var json = JSON.dictionaryValue([:])
+                BasisTheoryElements.traverseJsonDictionary(dictionary: token.data!.value as! [String:Any], json: &json)
+                
+                completion(token.toGetTokenByIdResponse(data: json), nil)
+            } catch {
+                completion(nil, error)
+            }
+        }
+    }
+    
     private static func replaceElementRefs(body: inout [String: Any]) throws -> Void {
         for (key, val) in body {
             if var v = val as? [String: Any] {
@@ -146,6 +161,42 @@ final public class BasisTheoryElements {
                     throw TokenizingError.invalidInput
                 }
                 body[key] = textValue
+            }
+        }
+    }
+    
+    internal static func traverseJsonDictionary(dictionary: [String: Any], json: inout JSON) {
+        for (key, value) in dictionary {
+            if let value = value as? [String: Any] {
+                json[key] = JSON.dictionaryValue([:])
+                
+                traverseJsonDictionary(dictionary: value, json: &json[key]!)
+            } else if let value = value as? [Any] {
+                json[key] = JSON.arrayValue([])
+                
+                traverseJsonArray(array: value, json: &json[key]!)
+            } else {
+                json[key] = JSON.elementValueReference(ElementValueReference(valueMethod: {
+                    String(describing: value)
+                }, isComplete: true))
+            }
+        }
+    }
+    
+    internal static func traverseJsonArray(array: [Any], json: inout JSON) {
+        for (index, value) in array.enumerated() {
+            if let value = value as? [String: Any] {
+                json[index] = JSON.dictionaryValue([:])
+                
+                traverseJsonDictionary(dictionary: value, json: &json[index]!)
+            } else if let value = value as? [Any] {
+                json[index] = JSON.arrayValue([])
+                
+                traverseJsonArray(array: value, json: &json[index]!)
+            } else {
+                json[index] = JSON.elementValueReference(ElementValueReference(valueMethod: {
+                    String(describing: value)
+                }, isComplete: true))
             }
         }
     }
