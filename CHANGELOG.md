@@ -1,3 +1,11 @@
+## [1.8.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.7.0...1.8.0) (2023-01-20)
+
+
+### Features
+
+* adds getTokenById func ([#34](https://github.com/Basis-Theory/basistheory-ios/issues/34)) ([f82bfd6](https://github.com/Basis-Theory/basistheory-ios/commit/f82bfd60cb6d252847b6863b4842b23992630b47))
+
+
 ## [1.7.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.6.0...1.7.0) (2023-01-11)
 
 
