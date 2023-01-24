@@ -1,3 +1,11 @@
+### [1.8.1](https://github.com/Basis-Theory/basistheory-ios/compare/1.8.0...1.8.1) (2023-01-24)
+
+
+### Bug Fixes
+
+* fixes complete flag on card number element ([#35](https://github.com/Basis-Theory/basistheory-ios/issues/35)) ([f072a3f](https://github.com/Basis-Theory/basistheory-ios/commit/f072a3fa950df34c415ca7535f307b358c6ce0eb))
+
+
 ## [1.8.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.7.0...1.8.0) (2023-01-20)
 
 
