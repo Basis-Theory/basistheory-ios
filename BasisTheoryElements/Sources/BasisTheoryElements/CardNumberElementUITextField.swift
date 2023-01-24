@@ -72,6 +72,7 @@ final public class CardNumberUITextField: TextElementUITextField, CardElementPro
     private func getCardElementEvent(text: String?, event: ElementEvent) -> ElementEvent {
         let maskSatisfied = cardBrand?.maskSatisfied ?? false
         let complete = maskSatisfied && event.valid
+        self.isComplete = complete
         let brand = cardBrand?.bestMatchCardBrand?.cardBrandName != nil ? String(describing: cardBrand!.bestMatchCardBrand!.cardBrandName) : "unknown"
         var details = [ElementEventDetails(type: "cardBrand", message: brand)]
         cardMetadata.cardBrand = brand
