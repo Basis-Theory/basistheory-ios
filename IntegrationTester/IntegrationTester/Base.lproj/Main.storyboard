@@ -9,6 +9,56 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Card Reveal View Controller-->
+        <scene sceneID="SPV-M2-Kim">
+            <objects>
+                <viewController id="9MN-z8-M6Q" customClass="CardRevealViewController" customModule="IntegrationTester" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Nb2-KN-PyX">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Card Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="x9C-1n-nUq" customClass="CardNumberUITextField" customModule="BasisTheoryElements">
+                                <rect key="frame" x="59" y="68" width="275" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Expiration Date" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mxy-fC-8EK" customClass="CardExpirationDateUITextField" customModule="BasisTheoryElements">
+                                <rect key="frame" x="59" y="123" width="195" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="CVC" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZuX-rs-udO" customClass="CardVerificationCodeUITextField" customModule="BasisTheoryElements">
+                                <rect key="frame" x="262" y="123" width="72" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hWH-9P-Lk1">
+                                <rect key="frame" x="133" y="199" width="127" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Retrieve Card"/>
+                                <connections>
+                                    <action selector="retrieveCard:" destination="9MN-z8-M6Q" eventType="touchUpInside" id="x2K-QS-n9L"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="hmo-bm-BWk"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="zp3-c6-qe7"/>
+                    <connections>
+                        <outlet property="cardExpirationDateTextField" destination="Mxy-fC-8EK" id="qn3-5m-VzV"/>
+                        <outlet property="cardNumberTextField" destination="x9C-1n-nUq" id="kgb-zq-AmU"/>
+                        <outlet property="cvcTextField" destination="ZuX-rs-udO" id="4jq-YM-XmG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CGQ-4C-3cq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1583.9694656488548" y="-90.140845070422543"/>
+        </scene>
         <!--Text ElementUI Text Field View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -77,7 +127,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1536.6412213740457" y="-120.42253521126761"/>
+            <point key="canvasLocation" x="2343" y="-675"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="cPm-4T-QPM">
@@ -96,8 +146,17 @@
                                     <segue destination="BYZ-38-t0r" kind="show" id="KAC-is-bqf"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FFn-fE-CIR">
+                                <rect key="frame" x="60" y="230" width="271" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Card Reveal Example"/>
+                                <connections>
+                                    <segue destination="9MN-z8-M6Q" kind="show" id="4cC-Bc-QXs"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OVA-6p-g7E">
-                                <rect key="frame" x="60" y="151" width="271" height="35"/>
+                                <rect key="frame" x="60" y="154" width="271" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Split Card Elements Example"/>
@@ -112,7 +171,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zvg-9q-GmG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="207.69230769230768" y="-674.64454976303318"/>
+            <point key="canvasLocation" x="206.87022900763358" y="-674.64788732394368"/>
         </scene>
         <!--Split Card Elements View Controller-->
         <scene sceneID="oDY-lw-nmO">
@@ -189,7 +248,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WAN-47-by4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1561.5384615384614" y="-910.66350710900474"/>
+            <point key="canvasLocation" x="1585" y="-1186"/>
         </scene>
     </scenes>
     <resources>

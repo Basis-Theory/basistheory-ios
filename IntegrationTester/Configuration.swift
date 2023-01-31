@@ -12,12 +12,16 @@ struct EnvConfig: Decodable {
     let privateBtApiKey: String?
     let proxyKey: String?
     let proxyKeyNoAuth: String?
+    let privateProdBtApiKey: String?
+    let prodBtApiKey: String?
     
     init() {
         self.btApiKey = nil
         self.privateBtApiKey = nil
         self.proxyKey = nil
         self.proxyKeyNoAuth = nil
+        self.privateProdBtApiKey = nil
+        self.prodBtApiKey = nil
     }
 }
 
