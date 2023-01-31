@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/Basis-Theory/basistheory-swift",
         "state": {
           "branch": null,
-          "revision": "d4d10d63fe9373ec667a95910fbc4504b6004fde",
-          "version": "0.5.5"
+          "revision": "d66e6cbdec55fac6ded14b3771fbfd504a3679ab",
+          "version": "0.6.0"
         }
       }
     ]
