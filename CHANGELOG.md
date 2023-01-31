@@ -1,3 +1,11 @@
+### [1.8.2](https://github.com/Basis-Theory/basistheory-ios/compare/1.8.1...1.8.2) (2023-01-31)
+
+
+### Bug Fixes
+
+* bump swift SDK version ([#37](https://github.com/Basis-Theory/basistheory-ios/issues/37)) ([9ee11ce](https://github.com/Basis-Theory/basistheory-ios/commit/9ee11cead66b84324a678ffa61e4926c88e415e5))
+
+
 ### [1.8.1](https://github.com/Basis-Theory/basistheory-ios/compare/1.8.0...1.8.1) (2023-01-24)
 
 
