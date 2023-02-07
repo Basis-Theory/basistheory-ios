@@ -42,22 +42,15 @@ final class GetTokenByIdServiceTests: XCTestCase {
         waitForExpectations(timeout: TIMEOUT_EXPECTATION)
         
         let privateBtApiKey = Configuration.getConfiguration().privateBtApiKey!
+        let accessRule = AccessRule(description: "GetTokenById iOS Test", priority: 1, transform: "reveal", conditions: [Condition(attribute: "id", _operator: "equals", value: self.createdToken!.id)], permissions: ["token:read"])
         let authorizeSessionExpectation = self.expectation(description: "Authorize session")
-        SessionsAPI.authorizeWithRequestBuilder(authorizeSessionRequest: AuthorizeSessionRequest(nonce: nonce, rules: [AccessRule(description: "GetTokenById iOS Test", priority: 1, transform: "reveal", conditions: [Condition(attribute: "id", _operator: "equals", value: self.createdToken!.id)], permissions: ["token:read"])])).addHeader(name: "BT-API-KEY", value: privateBtApiKey).execute { result in
+        SessionsAPI.authorizeWithRequestBuilder(authorizeSessionRequest: AuthorizeSessionRequest(nonce: nonce, rules: [accessRule])).addHeader(name: "BT-API-KEY", value: privateBtApiKey).execute { result in
             do {
                 try result.get().body
                 
                 authorizeSessionExpectation.fulfill()
             } catch {
-                if case let ErrorResponse.error(errorResponse) = error {
-                    print(errorResponse.0)
-                    print(errorResponse.1)
-                    print(try! JSONSerialization.jsonObject(with: errorResponse.1!, options: []))
-                    print(errorResponse.2)
-                    print(errorResponse.3)
-                } else {
-                    print("not matching")
-                }
+                print(error)
             }
         }
         

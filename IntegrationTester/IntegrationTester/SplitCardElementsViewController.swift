@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import BasisTheoryElements
+import BasisTheory
 import Combine
 
 class SplitCardElementsViewController: UIViewController {

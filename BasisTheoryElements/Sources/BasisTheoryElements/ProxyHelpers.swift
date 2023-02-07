@@ -10,7 +10,7 @@ import BasisTheory
 
 struct ProxyHelpers {
     static func getUrlRequest(proxyHttpRequest: ProxyHttpRequest?) throws -> URLRequest {
-        var url = proxyHttpRequest?.url ?? "\(BasisTheoryAPI.basePath)/proxy"
+        var url = proxyHttpRequest?.url ?? "\(BasisTheoryElements.basePath)/proxy"
         
         if proxyHttpRequest?.path != nil {
             url += proxyHttpRequest!.path!
