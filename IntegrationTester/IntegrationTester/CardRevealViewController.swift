@@ -22,7 +22,7 @@ class CardRevealViewController: UIViewController {
         BasisTheoryElements.createSession(apiKey: prodBtApiKey) { data, error in
             let sessionApiKey = data!.sessionKey!
             let nonce = data!.nonce!
-             
+
             // AUTHORIZING A SESSION SHOULD HAPPEN ON THE BACKEND
             let privateProdBtApiKey = Configuration.getConfiguration().privateProdBtApiKey!
             let btCardTokenId = "a568dd92-c48c-4221-8ce4-a0be9cbfa927"
