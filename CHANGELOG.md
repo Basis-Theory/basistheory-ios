@@ -1,3 +1,11 @@
+### [1.8.3](https://github.com/Basis-Theory/basistheory-ios/compare/1.8.2...1.8.3) (2023-02-09)
+
+
+### Bug Fixes
+
+* fix constant variables on card number ([#38](https://github.com/Basis-Theory/basistheory-ios/issues/38)) ([557d195](https://github.com/Basis-Theory/basistheory-ios/commit/557d1954c77c9410f07fa0fa25d3faa4299f87b8))
+
+
 ### [1.8.2](https://github.com/Basis-Theory/basistheory-ios/compare/1.8.1...1.8.2) (2023-01-31)
 
 
