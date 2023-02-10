@@ -31,18 +31,22 @@ class CardRevealViewController: UIViewController {
                 try! result.get().body
                 
                 let lithicCardTokenPath = "/b9e07ec5-5220-4500-9e71-e788fcb1084e"
-                let proxyKey = "BnBccfKBidARBiycsnoDQW"
+                let proxyKey = "NmRFa5myoM7s5ZF9NiFuYc"
                 let proxyHttpRequest = ProxyHttpRequest(method: .get, path: lithicCardTokenPath)
                 BasisTheoryElements.proxy(
                     apiKey: sessionApiKey,
                     proxyKey: proxyKey,
                     proxyHttpRequest: proxyHttpRequest)
                 { response, data, error in
-                    self.cvcTextField.setValue(elementValueReference: data!.cvv!.elementValueReference)
+                    DispatchQueue.main.async {
+                        self.cvcTextField.setValue(elementValueReference: data!.cvv!.elementValueReference)
+                    }
                     
                     BasisTheoryElements.getTokenById(id: btCardTokenId, apiKey: sessionApiKey) { data, error in
-                        self.cardNumberTextField.setValue(elementValueReference: data!.data!.number!.elementValueReference)
-                        self.cardExpirationDateTextField.setValue(month: data!.data!.expiration_month!.elementValueReference, year: data!.data!.expiration_year!.elementValueReference)
+                        DispatchQueue.main.async {
+                            self.cardNumberTextField.setValue(elementValueReference: data!.data!.number!.elementValueReference)
+                            self.cardExpirationDateTextField.setValue(month: data!.data!.expiration_month!.elementValueReference, year: data!.data!.expiration_year!.elementValueReference)
+                        }
                     }
                 }
             }
