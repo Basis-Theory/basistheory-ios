@@ -1,3 +1,35 @@
+### [1.8.3](https://github.com/Basis-Theory/basistheory-ios/compare/1.8.2...1.8.3) (2023-02-09)
+
+
+### Bug Fixes
+
+* fix constant variables on card number ([#38](https://github.com/Basis-Theory/basistheory-ios/issues/38)) ([557d195](https://github.com/Basis-Theory/basistheory-ios/commit/557d1954c77c9410f07fa0fa25d3faa4299f87b8))
+
+
+### [1.8.2](https://github.com/Basis-Theory/basistheory-ios/compare/1.8.1...1.8.2) (2023-01-31)
+
+
+### Bug Fixes
+
+* bump swift SDK version ([#37](https://github.com/Basis-Theory/basistheory-ios/issues/37)) ([9ee11ce](https://github.com/Basis-Theory/basistheory-ios/commit/9ee11cead66b84324a678ffa61e4926c88e415e5))
+
+
+### [1.8.1](https://github.com/Basis-Theory/basistheory-ios/compare/1.8.0...1.8.1) (2023-01-24)
+
+
+### Bug Fixes
+
+* fixes complete flag on card number element ([#35](https://github.com/Basis-Theory/basistheory-ios/issues/35)) ([f072a3f](https://github.com/Basis-Theory/basistheory-ios/commit/f072a3fa950df34c415ca7535f307b358c6ce0eb))
+
+
+## [1.8.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.7.0...1.8.0) (2023-01-20)
+
+
+### Features
+
+* adds getTokenById func ([#34](https://github.com/Basis-Theory/basistheory-ios/issues/34)) ([f82bfd6](https://github.com/Basis-Theory/basistheory-ios/commit/f82bfd60cb6d252847b6863b4842b23992630b47))
+
+
 ## [1.7.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.6.0...1.7.0) (2023-01-11)
 
 

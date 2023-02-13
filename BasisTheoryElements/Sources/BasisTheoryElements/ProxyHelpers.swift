@@ -10,7 +10,7 @@ import BasisTheory
 
 struct ProxyHelpers {
     static func getUrlRequest(proxyHttpRequest: ProxyHttpRequest?) throws -> URLRequest {
-        var url = proxyHttpRequest?.url ?? "\(BasisTheoryAPI.basePath)/proxy"
+        var url = proxyHttpRequest?.url ?? "\(BasisTheoryElements.basePath)/proxy"
         
         if proxyHttpRequest?.path != nil {
             url += proxyHttpRequest!.path!
@@ -66,42 +66,6 @@ struct ProxyHelpers {
         }
     }
     
-    private static func traverseJsonDictionary(dictionary: [String: Any], json: inout JSON) {
-        for (key, value) in dictionary {
-            if let value = value as? [String: Any] {
-                json[key] = JSON.dictionaryValue([:])
-                
-                traverseJsonDictionary(dictionary: value, json: &json[key]!)
-            } else if let value = value as? [Any] {
-                json[key] = JSON.arrayValue([])
-                
-                traverseJsonArray(array: value, json: &json[key]!)
-            } else {
-                json[key] = JSON.elementValueReference(ElementValueReference(valueMethod: {
-                    String(describing: value)
-                }, isComplete: true))
-            }
-        }
-    }
-    
-    private static func traverseJsonArray(array: [Any], json: inout JSON) {
-        for (index, value) in array.enumerated() {
-            if let value = value as? [String: Any] {
-                json[index] = JSON.dictionaryValue([:])
-                
-                traverseJsonDictionary(dictionary: value, json: &json[index]!)
-            } else if let value = value as? [Any] {
-                json[index] = JSON.arrayValue([])
-                
-                traverseJsonArray(array: value, json: &json[index]!)
-            } else {
-                json[index] = JSON.elementValueReference(ElementValueReference(valueMethod: {
-                    String(describing: value)
-                }, isComplete: true))
-            }
-        }
-    }
-    
     static func executeRequest(request: URLRequest, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) {
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let response = response {
@@ -110,7 +74,7 @@ struct ProxyHelpers {
                         let serializedJson = try JSONSerialization.jsonObject(with: data, options: [])
                         
                         var json = JSON.dictionaryValue([:])
-                        traverseJsonDictionary(dictionary: serializedJson as! [String:Any], json: &json)
+                        BasisTheoryElements.traverseJsonDictionary(dictionary: serializedJson as! [String:Any], json: &json)
                         
                         completion(response, json, nil)
                     } catch {

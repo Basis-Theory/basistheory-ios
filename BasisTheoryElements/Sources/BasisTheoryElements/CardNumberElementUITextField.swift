@@ -72,13 +72,14 @@ final public class CardNumberUITextField: TextElementUITextField, CardElementPro
     private func getCardElementEvent(text: String?, event: ElementEvent) -> ElementEvent {
         let maskSatisfied = cardBrand?.maskSatisfied ?? false
         let complete = maskSatisfied && event.valid
+        self.isComplete = complete
         let brand = cardBrand?.bestMatchCardBrand?.cardBrandName != nil ? String(describing: cardBrand!.bestMatchCardBrand!.cardBrandName) : "unknown"
         var details = [ElementEventDetails(type: "cardBrand", message: brand)]
         cardMetadata.cardBrand = brand
         
         if complete {
-            var last4 = String(text!.suffix(4))
-            var bin = String(text!.prefix(6))
+            let last4 = String(text!.suffix(4))
+            let bin = String(text!.prefix(6))
             details.append(ElementEventDetails(type: "cardLast4", message: last4))
             details.append(ElementEventDetails(type: "cardBin", message: bin))
             cardMetadata.cardLast4 = last4

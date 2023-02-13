@@ -90,6 +90,16 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
         return ""
     }
     
+    public func setValue(month: ElementValueReference?, year: ElementValueReference?) {
+        let month = month?.getValue() ?? ""
+        let formattedMonth = "00\(month)".suffix(2)
+        
+        let year = year?.getValue() ?? ""
+        let formattedYear = year.suffix(2)
+        
+        self.text = "\(formattedMonth)/\(formattedYear)"
+    }
+    
     override func textFieldDidChange() {
         if (super.getValue()!.count > 0) {
             let firstChar = super.getValue()?.first
