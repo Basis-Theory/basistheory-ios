@@ -91,7 +91,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         self.valueRef = element
         self.valueRef!.subject.sink { completion in } receiveValue: { message in
             if (message.type == "textChange") {
-                self.text = self.valueRef?.getValue()
+                self.text = self.valueRef?.getMaskedValue()
             }
         }.store(in: &cancellables)
     }
@@ -241,5 +241,9 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     
     func getValue() -> String? {
         return transform(text: super.text)
+    }
+    
+    func getMaskedValue() -> String? {
+        return super.text
     }
 }

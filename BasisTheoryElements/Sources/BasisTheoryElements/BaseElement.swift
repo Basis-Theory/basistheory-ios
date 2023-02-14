@@ -24,6 +24,7 @@ internal protocol InternalElementProtocol {
     var inputMask: [Any]? { get set }
     var getElementEvent: ((_ text: String?, _ currentElementEvent: ElementEvent) -> ElementEvent)? { get set }
     var inputTransform: ElementTransform? { get set }
+    func getMaskedValue() -> String?
 }
 
 internal protocol ElementReferenceProtocol {

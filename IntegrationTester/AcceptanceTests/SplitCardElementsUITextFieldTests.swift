@@ -142,4 +142,14 @@ final class SplitCardElementsIntegrationTesterUITests: XCTestCase {
         
         XCTAssertEqual(cvcTextField.value as! String, "432") // mask is applied and truncates input after user action
     }
+    
+    func testMaskedElementSetValueRef() throws {
+        let cardNumberTextField = app.textFields["Card Number"]
+        let readOnlyTextField = app.textFields["Read Only"]
+        
+        cardNumberTextField.tap()
+        cardNumberTextField.typeText("4242424242")
+        
+        XCTAssertEqual(readOnlyTextField.value as! String, "4242 4242 42")
+    }
 }

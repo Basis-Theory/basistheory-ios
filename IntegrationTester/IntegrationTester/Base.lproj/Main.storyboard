@@ -233,6 +233,12 @@
                                     <action selector="printToConsoleLog:" destination="1yo-MQ-bQK" eventType="touchUpInside" id="83M-Z9-nEk"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fRO-gm-zCT" customClass="TextElementUITextField" customModule="BasisTheoryElements">
+                                <rect key="frame" x="41" y="281" width="309" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="627-3o-X4v"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -244,11 +250,12 @@
                         <outlet property="cvcTextField" destination="vqA-gB-ZZB" id="q6X-4X-aam"/>
                         <outlet property="expirationDateTextField" destination="9OB-9S-4ob" id="oqo-vA-Zar"/>
                         <outlet property="output" destination="qKC-eP-oxh" id="fCS-lD-m61"/>
+                        <outlet property="readOnlyTextField" destination="fRO-gm-zCT" id="o1s-RD-bog"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WAN-47-by4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1585" y="-1186"/>
+            <point key="canvasLocation" x="1561.0687022900763" y="-911.26760563380287"/>
         </scene>
     </scenes>
     <resources>
