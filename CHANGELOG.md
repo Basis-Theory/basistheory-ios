@@ -1,3 +1,11 @@
+### [1.8.4](https://github.com/Basis-Theory/basistheory-ios/compare/1.8.3...1.8.4) (2023-02-14)
+
+
+### Bug Fixes
+
+* adds mask to readonly text element when using setValueRef ([#33](https://github.com/Basis-Theory/basistheory-ios/issues/33)) ([73ef612](https://github.com/Basis-Theory/basistheory-ios/commit/73ef6124e946e32c1a0a043ee2f28f57c993d706))
+
+
 ### [1.8.3](https://github.com/Basis-Theory/basistheory-ios/compare/1.8.2...1.8.3) (2023-02-09)
 
 
