@@ -1,0 +1,37 @@
+name: Security Scan
+
+on:
+  schedule:
+    - cron: '0 12 * * 1' # 12pm UTC every Monday
+  workflow_dispatch:
+
+jobs:
+  scan:
+    name: Dependency Check Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Dependency Check
+        run: |
+          docker run -v "/home/runner/work/basistheory-ios/basistheory-ios":"/github/workspace" --workdir "/github/workspace" owasp/dependency-check-action:latest --enableExperimental --project "BasisTheoryElements" --failOnCVSS 1 --scan "Package.swift" --out "/github/workspace/reports"
+
+      - name: Upload Test results
+        if: success() || failure()
+        uses: actions/upload-artifact@master
+        with:
+           name: Dependency check report
+           path: ${{github.workspace}}/reports
+
+      - name: Slack Alert on Failure
+        uses: 8398a7/action-slack@v3
+        if: failure()
+        with:
+          author_name: Security Scan
+          status: ${{ job.status }}
+          channel: ${{ secrets.SLACK_SECURITY_SCAN_ALERT_CHANNEL_ID }}
+          fields: 'repo,workflow'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
