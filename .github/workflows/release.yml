@@ -9,6 +9,11 @@ jobs:
     name: Tag and Release
     runs-on: macOS-latest
     steps:
+      - name: Start Deploy Message
+        uses: Basis-Theory/github-actions/deploy-slack-action@master
+        with:
+          slack-api-token: ${{ secrets.SLACK_DUCKBOT_API_KEY }}
+          channel: ${{ vars.SLACK_DUCKBOT_PRODUCT_DEPLOY_CHANNEL }}
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -49,3 +54,10 @@ jobs:
         run: pod trunk push --allow-warnings
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+      - name: Stop Deploy Message
+        if: always()
+        uses: Basis-Theory/github-actions/deploy-slack-action@master
+        with:
+          slack-api-token: ${{ secrets.SLACK_DUCKBOT_API_KEY }}
+          channel: ${{ vars.SLACK_DUCKBOT_PRODUCT_DEPLOY_CHANNEL }}
+          status: 'done'
