@@ -24,6 +24,7 @@ extension RequestBuilder {
         addHeaders([
             "User-Agent": "BasisTheory iOS Elements",
             "BT-API-KEY": apiKey,
+            "BT-TRACE-ID": UUID().uuidString
         ])
         
         return self
@@ -31,6 +32,7 @@ extension RequestBuilder {
 }
 
 final public class BasisTheoryElements {
+    public static let version = "1.8.4" // do not modify. updated through CI
     public static var apiKey: String = ""
     public static var basePath: String = "https://api.basistheory.com"
     

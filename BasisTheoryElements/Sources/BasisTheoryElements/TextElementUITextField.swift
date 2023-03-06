@@ -45,6 +45,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     }
     
     private func setup() {
+        TelemtryLogging.info("Successful init")
         self.smartDashesType = .no
         self.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         subject.send(ElementEvent(type: "ready", complete: true, empty: true, valid: true, maskSatisfied: false, details: []))
