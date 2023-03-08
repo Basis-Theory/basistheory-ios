@@ -10,7 +10,7 @@ import BasisTheory
 
 struct ProxyHelpers {
     static func getUrlRequest(proxyHttpRequest: ProxyHttpRequest?) throws -> URLRequest {
-        var url = proxyHttpRequest?.url ?? "\(BasisTheoryElements.basePath)/proxy"
+        var url = proxyHttpRequest?.url ?? "\(BasisTheoryElements.basePath)/proxy" // allows for whitelabeled proxy calls
         
         if proxyHttpRequest?.path != nil {
             url += proxyHttpRequest!.path!
@@ -36,9 +36,15 @@ struct ProxyHelpers {
         request.httpMethod = proxyHttpRequest?.method?.rawValue ?? HttpMethod.get.rawValue
     }
     
-    static func setHeadersOnRequest(apiKey: String?, proxyKey: String?, proxyUrl: String?, proxyHttpRequest: ProxyHttpRequest?, request: inout URLRequest) {
+    static func setHeadersOnRequest(btTraceId: String, apiKey: String?, proxyKey: String?, proxyUrl: String?, proxyHttpRequest: ProxyHttpRequest?, request: inout URLRequest) {
         var modifiedHeaders = proxyHttpRequest?.headers ?? [:]
+        
+        for header in modifiedHeaders {
+            request.setValue(header.value, forHTTPHeaderField: header.key)
+        }
+        
         modifiedHeaders["Content-Type"] = "Application/json"
+        modifiedHeaders["BT-TRACE-ID"] = btTraceId
         
         if apiKey != nil {
             modifiedHeaders["BT-API-KEY"] = apiKey
@@ -53,10 +59,6 @@ struct ProxyHelpers {
             modifiedHeaders["BT-PROXY-URL"] = proxyUrl
             modifiedHeaders.removeValue(forKey: "BT-PROXY-KEY")
         }
-        
-        for header in modifiedHeaders {
-            request.setValue(header.value, forHTTPHeaderField: header.key)
-        }
     }
     
     static func setBodyOnRequest(proxyHttpRequest: ProxyHttpRequest?, request: inout URLRequest) {
@@ -66,7 +68,7 @@ struct ProxyHelpers {
         }
     }
     
-    static func executeRequest(request: URLRequest, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) {
+    static func executeRequest(endpoint: String, btTraceId: String, request: URLRequest, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) {
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let response = response {
                 if let data = data {
@@ -77,14 +79,32 @@ struct ProxyHelpers {
                         BasisTheoryElements.traverseJsonDictionary(dictionary: serializedJson as! [String:Any], json: &json)
                         
                         completion(response, json, nil)
+                        TelemtryLogging.info("Successful API response", attributes: [
+                            "endpoint": endpoint,
+                            "BT-TRACE-ID": btTraceId,
+                            "apiSuccess": true
+                        ])
                     } catch {
                         completion(response, nil, error)
+                        TelemtryLogging.error("Unsuccessful API response", error: error, attributes: [
+                            "endpoint": endpoint,
+                            "BT-TRACE-ID": btTraceId,
+                            "apiSuccess": false
+                        ])
                     }
                 } else {
                     completion(response, nil, error)
+                    TelemtryLogging.error("Unexpected destination URL response: response does not have a body", error: error, attributes: [
+                        "endpoint": endpoint,
+                        "BT-TRACE-ID": btTraceId,
+                    ])
                 }
             } else {
                 completion(nil, nil, ProxyError.invalidRequest)
+                TelemtryLogging.warn("Invalid proxy request", error: error, attributes: [
+                    "endpoint": endpoint,
+                    "BT-TRACE-ID": btTraceId,
+                ])
             }
         }.resume()
     }

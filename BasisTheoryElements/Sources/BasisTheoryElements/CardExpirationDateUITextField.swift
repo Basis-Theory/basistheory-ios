@@ -63,12 +63,12 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
     }
     
     public func month() -> ElementValueReference {
-        let monthReference = ElementValueReference(valueMethod: getMonthValue, isComplete: self.isComplete)
+        let monthReference = ElementValueReference(elementId: self.elementId, valueMethod: getMonthValue, isComplete: self.isComplete)
         return monthReference
     }
     
     public func year() -> ElementValueReference {
-        let yearReference = ElementValueReference(valueMethod: getYearValue, isComplete: self.isComplete)
+        let yearReference = ElementValueReference(elementId: self.elementId, valueMethod: getYearValue, isComplete: self.isComplete)
         return yearReference
     }
     
@@ -115,11 +115,18 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.keyboardType = .asciiCapableNumberPad
+        setup()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        setup()
+    }
+    
+    private func setup() {
         self.keyboardType = .asciiCapableNumberPad
+        TelemtryLogging.info("CardExpirationDateUITextField init", attributes: [
+            "elementId": self.elementId
+        ])
     }
 }

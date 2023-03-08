@@ -5,12 +5,12 @@
 //  Created by Brian Gonzalez on 10/26/22.
 //
 
-public struct ElementEventDetails {
+public struct ElementEventDetails: Encodable {
     public var type: String
     public var message: String
 }
 
-public struct ElementEvent {
+public struct ElementEvent: Encodable {
     public var type: String
     public var complete: Bool
     public var empty: Bool
