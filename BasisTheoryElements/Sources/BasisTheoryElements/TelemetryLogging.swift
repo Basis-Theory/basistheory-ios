@@ -5,7 +5,8 @@
 //  Created by Brian Gonzalez on 3/6/23.
 //
 
-import Datadog
+// TODO: PR reviewer please evaluate this solution with me
+@_implementationOnly import Datadog
 import UIKit
 
 struct TelemtryLogging {
