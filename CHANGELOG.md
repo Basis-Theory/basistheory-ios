@@ -1,3 +1,11 @@
+### [1.8.5](https://github.com/Basis-Theory/basistheory-ios/compare/1.8.4...1.8.5) (2023-03-09)
+
+
+### Bug Fixes
+
+* adds DataDog logging ([#43](https://github.com/Basis-Theory/basistheory-ios/issues/43)) ([b43ce75](https://github.com/Basis-Theory/basistheory-ios/commit/b43ce756bc84d35af39b9dc0b7697cb335e58324))
+
+
 ### [1.8.4](https://github.com/Basis-Theory/basistheory-ios/compare/1.8.3...1.8.4) (2023-02-14)
 
 
