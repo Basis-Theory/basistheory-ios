@@ -33,16 +33,14 @@ struct TelemtryLogging {
             
             logger!.addAttribute(forKey: "env", value: env)
             logger!.addAttribute(forKey: "application", value: "BasisTheory iOS Elements")
-            logger!.addAttribute(forKey: "vendorId", value: UIDevice.current.identifierForVendor?.uuidString ?? UUID(uuid: UUID_NULL).uuidString)
-            logger!.addAttribute(forKey: "bundleId", value: Bundle.main.bundleIdentifier ?? "Unknown Vendor")
+            logger!.addAttribute(forKey: "vendorId", value: UIDevice.current.identifierForVendor?.uuidString ?? "Unknown vendorId")
+            logger!.addAttribute(forKey: "bundleId", value: Bundle.main.bundleIdentifier ?? "Unknown vendor")
             logger!.addAttribute(forKey: "device", value: UIDevice.current.name)
             logger!.addAttribute(forKey: "btElementsVersion", value: BasisTheoryElements.version)
         }
         
         hasInitialized = true
     }
-    
-    // TODO: investigate console errors
     
     static func info(_ message: String, error: Error? = nil, attributes: [String: Encodable]? = nil) {
         initLogger()
