@@ -39,10 +39,6 @@ struct ProxyHelpers {
     static func setHeadersOnRequest(btTraceId: String, apiKey: String?, proxyKey: String?, proxyUrl: String?, proxyHttpRequest: ProxyHttpRequest?, request: inout URLRequest) {
         var modifiedHeaders = proxyHttpRequest?.headers ?? [:]
         
-        for header in modifiedHeaders {
-            request.setValue(header.value, forHTTPHeaderField: header.key)
-        }
-        
         modifiedHeaders["Content-Type"] = "Application/json"
         modifiedHeaders["BT-TRACE-ID"] = btTraceId
         
@@ -58,6 +54,10 @@ struct ProxyHelpers {
         } else if proxyUrl != nil {
             modifiedHeaders["BT-PROXY-URL"] = proxyUrl
             modifiedHeaders.removeValue(forKey: "BT-PROXY-KEY")
+        }
+        
+        for header in modifiedHeaders {
+            request.setValue(header.value, forHTTPHeaderField: header.key)
         }
     }
     
