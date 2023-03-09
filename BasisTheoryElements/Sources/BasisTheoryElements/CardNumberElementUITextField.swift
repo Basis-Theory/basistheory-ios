@@ -91,6 +91,11 @@ final public class CardNumberUITextField: TextElementUITextField, CardElementPro
         
         let elementEvent = ElementEvent(type: "textChange", complete: complete, empty: event.empty, valid: event.valid, maskSatisfied: maskSatisfied, details: details)
         
+        TelemtryLogging.info("CardNumberUITextField textChange event", attributes: [
+            "elementId": self.elementId,
+            "event": elementEvent
+        ])
+        
         return elementEvent
     }
     
@@ -161,12 +166,18 @@ final public class CardNumberUITextField: TextElementUITextField, CardElementPro
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.keyboardType = .asciiCapableNumberPad
-        
+        setup()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        setup()
+    }
+    
+    private func setup() {
         self.keyboardType = .asciiCapableNumberPad
+        TelemtryLogging.info("CardNumberUITextField init", attributes: [
+            "elementId": self.elementId
+        ])
     }
 }
