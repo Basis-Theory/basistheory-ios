@@ -35,6 +35,8 @@ struct TelemtryLogging {
             logger!.addAttribute(forKey: "application", value: "BasisTheory iOS Elements")
             logger!.addAttribute(forKey: "vendorId", value: UIDevice.current.identifierForVendor?.uuidString ?? "Unknown vendorId")
             logger!.addAttribute(forKey: "bundleId", value: Bundle.main.bundleIdentifier ?? "Unknown vendor")
+            logger!.addAttribute(forKey: "bundleVersion", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown vendor version")
+            logger!.addAttribute(forKey: "bundleBuildVersion", value: Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown vendor build version")
             logger!.addAttribute(forKey: "device", value: UIDevice.current.name)
             logger!.addAttribute(forKey: "btElementsVersion", value: BasisTheoryElements.version)
         }
