@@ -36,7 +36,7 @@ jobs:
 
           sed -i "" "s/\(s.version = \)'[^']*'/\1'${{ steps.tag-version.outputs.new_tag }}'/g" BasisTheoryElements.podspec
           sed -i "" "s/\(:tag => \)'[^']*'/\1'${{ steps.tag-version.outputs.new_tag }}'/g" BasisTheoryElements.podspec
-          sed -i "" 's/\(public static let version = \)"[^"]*"/\1"${{ steps.tag-version.outputs.new_tag }}"/g' BasisTheoryElements/Sources/BasisTheoryElements/BasisTheoryElements.swift
+          sed -i "" "s/\(public static let version = \)\"[^\"]*\"/\1\"${{ steps.tag-version.outputs.new_tag }}\"/g" BasisTheoryElements/Sources/BasisTheoryElements/BasisTheoryElements.swift
 
           echo "${{ steps.tag-version.outputs.changelog }}" | cat - CHANGELOG.md > temp && mv temp CHANGELOG.md
 
