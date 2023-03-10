@@ -1,3 +1,11 @@
+### [1.8.7](https://github.com/Basis-Theory/basistheory-ios/compare/1.8.6...1.8.7) (2023-03-10)
+
+
+### Bug Fixes
+
+* adds BasisTheoryElements as a part of release commit ([#45](https://github.com/Basis-Theory/basistheory-ios/issues/45)) ([df3581f](https://github.com/Basis-Theory/basistheory-ios/commit/df3581f37650428a7e8cb9b175a38d11000e8b01))
+
+
 ### [1.8.6](https://github.com/Basis-Theory/basistheory-ios/compare/1.8.5...1.8.6) (2023-03-10)
 
 
