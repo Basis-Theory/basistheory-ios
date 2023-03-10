@@ -6,61 +6,48 @@ on:
     - master
 
 jobs:
-    testing-script:
-      name: Testing Script
-      runs-on: macOS-latest
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v3
+  test:
+    name: Testing BasisTheoryElements Package
+    runs-on: macOS-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-        - name: Running sed script
-          run: |
-            sed -i "" "s/\(public static let version = \)\"[^\"]*\"/\1\"replacement\"/g" BasisTheoryElements/Sources/BasisTheoryElements/BasisTheoryElements.swift  ; echo $?
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '14.1.0'
 
+      - name: Testing with IntegrationTester app
+        run: exec .github/scripts/integration-test.sh
+        env:
+          DEV_BT_API_KEY: ${{ secrets.DEV_BT_API_KEY }}
+          DEV_PRIVATE_BT_API_KEY: ${{ secrets.DEV_PRIVATE_BT_API_KEY }}
 
-
-  # test:
-  #   name: Testing BasisTheoryElements Package
-  #   runs-on: macOS-latest
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
-
-  #     - uses: maxim-lobanov/setup-xcode@v1
-  #       with:
-  #         xcode-version: '14.1.0'
-
-  #     - name: Testing with IntegrationTester app
-  #       run: exec .github/scripts/integration-test.sh
-  #       env:
-  #         DEV_BT_API_KEY: ${{ secrets.DEV_BT_API_KEY }}
-  #         DEV_PRIVATE_BT_API_KEY: ${{ secrets.DEV_PRIVATE_BT_API_KEY }}
-
-  # pod-linting:
-  #   name: Pod Linting
-  #   runs-on: macOS-latest
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
+  pod-linting:
+    name: Pod Linting
+    runs-on: macOS-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
       
-  #     - name: Pod Linting
-  #       run: pod lib lint --allow-warnings
+      - name: Pod Linting
+        run: pod lib lint --allow-warnings
 
-  # dependency-check-test:
-  #   name: Dependency Check Test
-  #   runs-on: ubuntu-latest
+  dependency-check-test:
+    name: Dependency Check Test
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-  #     - name: Dependency Check
-  #       run: |
-  #         docker run -v "/home/runner/work/basistheory-ios/basistheory-ios":"/github/workspace" --workdir "/github/workspace" owasp/dependency-check-action:latest --enableExperimental --project "BasisTheoryElements" --failOnCVSS 1 --scan "Package.swift" --out "/github/workspace/reports"
+      - name: Dependency Check
+        run: |
+          docker run -v "/home/runner/work/basistheory-ios/basistheory-ios":"/github/workspace" --workdir "/github/workspace" owasp/dependency-check-action:latest --enableExperimental --project "BasisTheoryElements" --failOnCVSS 1 --scan "Package.swift" --out "/github/workspace/reports"
 
-  #     - name: Upload Test results
-  #       if: success() || failure()
-  #       uses: actions/upload-artifact@master
-  #       with:
-  #          name: Dependency check report
-  #          path: ${{github.workspace}}/reports
+      - name: Upload Test results
+        if: success() || failure()
+        uses: actions/upload-artifact@master
+        with:
+           name: Dependency check report
+           path: ${{github.workspace}}/reports
