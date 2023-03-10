@@ -1,3 +1,11 @@
+### [1.8.6](https://github.com/Basis-Theory/basistheory-ios/compare/1.8.5...1.8.6) (2023-03-10)
+
+
+### Bug Fixes
+
+* fixes script to update version number ([#44](https://github.com/Basis-Theory/basistheory-ios/issues/44)) ([eb92f06](https://github.com/Basis-Theory/basistheory-ios/commit/eb92f06a2bd30e43bc4c3dcbf19ad1dfcc6eb34e))
+
+
 ### [1.8.5](https://github.com/Basis-Theory/basistheory-ios/compare/1.8.4...1.8.5) (2023-03-09)
 
 
