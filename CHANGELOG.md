@@ -1,3 +1,11 @@
+## [1.9.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.8.7...1.9.0) (2023-03-14)
+
+
+### Features
+
+* prevent insertion of months > 12 for card exp date ([#46](https://github.com/Basis-Theory/basistheory-ios/issues/46)) ([8110595](https://github.com/Basis-Theory/basistheory-ios/commit/8110595bcab077ad3e62bde81002d99693b7bd16))
+
+
 ### [1.8.7](https://github.com/Basis-Theory/basistheory-ios/compare/1.8.6...1.8.7) (2023-03-10)
 
 
