@@ -166,9 +166,16 @@ final class SplitCardElementsIntegrationTesterUITests: XCTestCase {
         expirationDateTextField.typeText("10")
         XCTAssertEqual(expirationDateTextField.value as! String, "10")
         
+        // invalid month w/ letter in first/second chars
+        expirationDateTextField.doubleTap()
+        expirationDateTextField.typeText("ab")
+        XCTAssertEqual(expirationDateTextField.value as! String, "MM/YY") // placeholder stays
+        
         // invalid month (w/ month starting w/ 2)
         expirationDateTextField.doubleTap()
         expirationDateTextField.typeText("20")
         XCTAssertEqual(expirationDateTextField.value as! String, "02/0")
+        
+
     }
 }
