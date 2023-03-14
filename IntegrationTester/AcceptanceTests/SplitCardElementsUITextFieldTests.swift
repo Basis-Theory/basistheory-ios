@@ -152,4 +152,30 @@ final class SplitCardElementsIntegrationTesterUITests: XCTestCase {
         
         XCTAssertEqual(readOnlyTextField.value as! String, "4242 4242 42")
     }
+    
+    func testDoNotAllowInvalidMonths() throws {
+        let expirationDateTextField = app.textFields["MM/YY"]
+        
+        // invalid month
+        expirationDateTextField.tap()
+        expirationDateTextField.typeText("13")
+        XCTAssertEqual(expirationDateTextField.value as! String, "1")
+        
+        // valid month
+        expirationDateTextField.doubleTap()
+        expirationDateTextField.typeText("10")
+        XCTAssertEqual(expirationDateTextField.value as! String, "10")
+        
+        // invalid month w/ letter in first/second chars
+        expirationDateTextField.doubleTap()
+        expirationDateTextField.typeText("ab")
+        XCTAssertEqual(expirationDateTextField.value as! String, "MM/YY") // placeholder stays
+        
+        // invalid month (w/ month starting w/ 2)
+        expirationDateTextField.doubleTap()
+        expirationDateTextField.typeText("20")
+        XCTAssertEqual(expirationDateTextField.value as! String, "02/0")
+        
+
+    }
 }
