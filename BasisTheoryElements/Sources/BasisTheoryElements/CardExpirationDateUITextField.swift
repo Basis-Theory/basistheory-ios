@@ -104,16 +104,18 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
         if (super.getValue()!.count > 0) {
             let firstChar = super.getValue()?.first
             
-            // check first char, if > 1 add 0 in front
-            if (firstChar?.wholeNumberValue!)! > 1  {
-                super.text = "0" + super.getValue()!
-            }
-            
-            // check second char - if first char 1, number cant be > 2
-            if (super.getValue()!.count > 1) {
-                let secondChar = super.getValue()?.dropFirst().first
-                if ((firstChar?.wholeNumberValue!)!  == 1 && (secondChar?.wholeNumberValue!)! > 2) {
-                    super.text = "1"
+            if (firstChar?.isNumber == true) {
+                // check first char, if > 1 add 0 in front
+                if (firstChar?.wholeNumberValue!)! > 1  {
+                    super.text = "0" + super.getValue()!
+                }
+                
+                // check second char - if first char 1, number cant be > 2
+                if (super.getValue()!.count > 1) {
+                    let secondChar = super.getValue()?.dropFirst().first
+                    if ((firstChar?.wholeNumberValue!)!  == 1 && (secondChar?.isNumber == true && (secondChar?.wholeNumberValue!)! > 2)) {
+                        super.text = "1"
+                    }
                 }
             }
         }
