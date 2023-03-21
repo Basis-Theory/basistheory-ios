@@ -22,13 +22,17 @@ final class ProxyServiceTests: XCTestCase {
         let privateBtApiKey = Configuration.getConfiguration().privateBtApiKey!
         let publicApiKey = Configuration.getConfiguration().btApiKey!
         let proxyKey = Configuration.getConfiguration().proxyKey!
+        let textField = TextElementUITextField()
+        textField.insertText("testElementValue")
         
         let proxyExpectation = self.expectation(description: "Proxy")
         var proxyResponseData: JSON = JSON.dictionaryValue([:])
         let proxyHttpRequest = ProxyHttpRequest(method: .post, body: [
             "testProp": "testValue",
+            "testElement": textField,
             "objProp": [
-                "nestedTestProp": "nestedTestValue"
+                "nestedTestProp": "nestedTestValue",
+                "nestedElement": textField
             ]
         ])
         BasisTheoryElements.proxy(
@@ -53,7 +57,9 @@ final class ProxyServiceTests: XCTestCase {
         var createdToken: CreateTokenResponse? = nil
         let body = CreateToken(type: "token", data: [
             "proxyProperty": proxyResponseData.json?.testProp?.elementValueReference,
-            "nestedProxyProperty": proxyResponseData.json?.objProp?.nestedTestProp?.elementValueReference
+            "nestedProxyProperty": proxyResponseData.json?.objProp?.nestedTestProp?.elementValueReference,
+            "proxyElementProperty": proxyResponseData.json?.testElement?.elementValueReference,
+            "nestedProxyElementProperty": proxyResponseData.json?.objProp?.nestedElement?.elementValueReference,
         ])
         BasisTheoryElements.createToken(body: body, apiKey: publicApiKey) { data, error in
             XCTAssertNil(error)
@@ -74,6 +80,8 @@ final class ProxyServiceTests: XCTestCase {
             
             XCTAssertEqual(token["proxyProperty"] as! String, "testValue")
             XCTAssertEqual(token["nestedProxyProperty"] as! String, "nestedTestValue")
+            XCTAssertEqual(token["proxyElementProperty"] as! String, "testElementValue")
+            XCTAssertEqual(token["nestedProxyElementProperty"] as! String, "testElementValue")
 
             idQueryExpectation.fulfill()
         }

@@ -17,6 +17,7 @@ public enum TokenizingError: Error {
 
 public enum ProxyError: Error {
     case invalidRequest
+    case invalidInput
 }
 
 extension RequestBuilder {
@@ -184,7 +185,21 @@ final public class BasisTheoryElements {
         
         ProxyHelpers.setHeadersOnRequest(btTraceId: btTraceId, apiKey: apiKey, proxyKey: proxyKey, proxyUrl: proxyUrl, proxyHttpRequest: proxyHttpRequest, request: &request)
         
-        ProxyHelpers.setBodyOnRequest(proxyHttpRequest: proxyHttpRequest, request: &request)
+        var mutableProxyHttpRequest = proxyHttpRequest
+        if(proxyHttpRequest != nil && proxyHttpRequest?.body != nil) {
+            var mutableBody = proxyHttpRequest?.body
+            
+            do {
+                try replaceElementRefs(endpoint: endpoint, btTraceId: btTraceId, body: &(mutableBody)!)
+            } catch {
+                completion(nil, nil, ProxyError.invalidInput) // error logged with more detail in replaceElementRefs
+                return
+            }
+            
+            mutableProxyHttpRequest?.body = mutableBody
+        }
+        
+        ProxyHelpers.setBodyOnRequest(proxyHttpRequest: mutableProxyHttpRequest, request: &request)
         
         ProxyHelpers.executeRequest(endpoint: endpoint, btTraceId: btTraceId, request: request, completion: completion)
     }
