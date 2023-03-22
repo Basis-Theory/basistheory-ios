@@ -42,7 +42,7 @@ final class CardNumberUITextFieldTests: XCTestCase {
             XCTAssertEqual(cardNumberTextField.cardMetadata.cardBrand, "visa")
             
             if (!incompleteNumberExpectationHasBeenFulfilled) {
-                XCTAssertEqual(message.complete, false) // mask incomplete and number is invalid
+                XCTAssertEqual(message.complete, false) // mask incomplete but number is luhn valid
                 XCTAssertEqual(eventDetails.count, 1)
                 incompleteNumberExpectation.fulfill()
                 incompleteNumberExpectationHasBeenFulfilled = true
@@ -54,7 +54,7 @@ final class CardNumberUITextFieldTests: XCTestCase {
             }
         }.store(in: &cancellables)
         
-        cardNumberTextField.insertText("4129")
+        cardNumberTextField.insertText("4242") // luhn valid
         cardNumberTextField.text = ""
         cardNumberTextField.insertText("4129939187355598") // luhn invalid
         cardNumberTextField.text = ""

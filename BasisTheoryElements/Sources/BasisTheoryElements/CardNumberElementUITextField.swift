@@ -89,7 +89,7 @@ final public class CardNumberUITextField: TextElementUITextField, CardElementPro
             cardMetadata.cardBin = nil
         }
         
-        let elementEvent = ElementEvent(type: "textChange", complete: complete, empty: event.empty, valid: event.valid, maskSatisfied: maskSatisfied, details: details)
+        let elementEvent = ElementEvent(type: "textChange", complete: complete, empty: event.empty, valid: event.valid && maskSatisfied, maskSatisfied: maskSatisfied, details: details)
         
         TelemtryLogging.info("CardNumberUITextField textChange event", attributes: [
             "elementId": self.elementId,
