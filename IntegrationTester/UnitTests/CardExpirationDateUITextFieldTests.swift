@@ -232,6 +232,22 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
             tokenizeExpectation.fulfill()
         }
         
+        let privateBtApiKey = Configuration.getConfiguration().privateBtApiKey!
+        let proxyKey = Configuration.getConfiguration().proxyKey!
+        let proxyExpectation = self.expectation(description: "Throws before proxy")
+        let proxyHttpRequest = ProxyHttpRequest(method: .post, body: body)
+
+        BasisTheoryElements.proxy(
+            apiKey: privateBtApiKey,
+            proxyKey: proxyKey,
+            proxyHttpRequest: proxyHttpRequest)
+        { response, data, error in
+            XCTAssertNil(data)
+            XCTAssertEqual(error as? ProxyError, ProxyError.invalidInput)
+            
+            proxyExpectation.fulfill()
+        }
+        
         waitForExpectations(timeout: 30, handler: nil)
     }
 }
