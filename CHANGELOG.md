@@ -1,3 +1,11 @@
+## [1.10.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.9.0...1.10.0) (2023-03-22)
+
+
+### Features
+
+* allow elements to be passed in proxy body ([4674a5c](https://github.com/Basis-Theory/basistheory-ios/commit/4674a5c557001fa1db0b49b4260c3ea361bd4380))
+
+
 ## [1.9.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.8.7...1.9.0) (2023-03-14)
 
 
