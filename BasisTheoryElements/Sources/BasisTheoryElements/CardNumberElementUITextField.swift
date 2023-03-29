@@ -79,7 +79,7 @@ final public class CardNumberUITextField: TextElementUITextField, CardElementPro
         
         if complete {
             let last4 = String(text!.suffix(4))
-            let bin = String(text!.prefix(6))
+            let bin = text!.count < 16 ? String(text!.prefix(6)) : String(text!.prefix(8))
             details.append(ElementEventDetails(type: "cardLast4", message: last4))
             details.append(ElementEventDetails(type: "cardBin", message: bin))
             cardMetadata.cardLast4 = last4
