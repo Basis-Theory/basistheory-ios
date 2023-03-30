@@ -1,3 +1,11 @@
+## [1.11.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.10.0...1.11.0) (2023-03-30)
+
+
+### Features
+
+* support 8 digit bins ([#49](https://github.com/Basis-Theory/basistheory-ios/issues/49)) ([7181bac](https://github.com/Basis-Theory/basistheory-ios/commit/7181bace7974e7c492be343a3d2c6d23f28af565))
+
+
 ## [1.10.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.9.0...1.10.0) (2023-03-22)
 
 
