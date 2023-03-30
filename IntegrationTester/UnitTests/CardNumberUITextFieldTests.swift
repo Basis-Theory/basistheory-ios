@@ -97,13 +97,13 @@ final class CardNumberUITextFieldTests: XCTestCase {
                 XCTAssertEqual(message.complete, true)
                 XCTAssertEqual(brandDetails.message, "visa")
                 XCTAssertEqual(last4Details.message, "4242")
-                XCTAssertEqual(binDetails.message, "424242")
+                XCTAssertEqual(binDetails.message, "42424242")
                 
                 // assert metadata
                 XCTAssertEqual(cardNumberTextField.metadata.complete, true)
                 XCTAssertEqual(cardNumberTextField.cardMetadata.cardBrand, "visa")
                 XCTAssertEqual(cardNumberTextField.cardMetadata.cardLast4, "4242")
-                XCTAssertEqual(cardNumberTextField.cardMetadata.cardBin, "424242")
+                XCTAssertEqual(cardNumberTextField.cardMetadata.cardBin, "42424242")
                 
                 validVisaCardNumberExpectation.fulfill()
                 visaExpectationHasBeenFulfilled = true
@@ -111,13 +111,13 @@ final class CardNumberUITextFieldTests: XCTestCase {
                 XCTAssertEqual(message.complete, true)
                 XCTAssertEqual(brandDetails.message, "mastercard")
                 XCTAssertEqual(last4Details.message, "5717")
-                XCTAssertEqual(binDetails.message, "545442")
+                XCTAssertEqual(binDetails.message, "54544229")
                 
                 // assert metadata
                 XCTAssertEqual(cardNumberTextField.metadata.complete, true)
                 XCTAssertEqual(cardNumberTextField.cardMetadata.cardBrand, "mastercard")
                 XCTAssertEqual(cardNumberTextField.cardMetadata.cardLast4, "5717")
-                XCTAssertEqual(cardNumberTextField.cardMetadata.cardBin, "545442")
+                XCTAssertEqual(cardNumberTextField.cardMetadata.cardBin, "54544229")
                 validMasterCardNumberExpectation.fulfill()
                 mastercardExpectationHasBeenFulfilled = true
             } else {
