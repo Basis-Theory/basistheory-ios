@@ -187,4 +187,27 @@ final class TextElementUITextFieldTests: XCTestCase {
         readOnlyField.isUserInteractionEnabled = true
         XCTAssertEqual(readOnlyField.isUserInteractionEnabled, false)
     }
+    
+    func testCustomRegexValidation() throws {
+        let textField = TextElementUITextField()
+        let customPasswordRegex = try! NSRegularExpression(pattern: "^[A-Z]{5}_[A-Z0-9]{4}([0-9]{3})?$")
+        
+        try! textField.setConfig(options: TextElementOptions(validation: customPasswordRegex))
+        
+        textField.insertText("password!")
+        
+        XCTAssertFalse(textField.metadata.valid)
+        
+        textField.text = ""
+        textField.insertText("DAFFY_DUCK500")
+        
+        XCTAssertTrue(textField.metadata.valid)
+        
+        try! textField.setConfig(options: TextElementOptions(validation: nil))
+        
+        textField.text = ""
+        textField.insertText("password!")
+        
+        XCTAssertTrue(textField.metadata.valid)
+    }
 }

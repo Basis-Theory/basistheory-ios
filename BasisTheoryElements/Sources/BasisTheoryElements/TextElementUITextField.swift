@@ -12,10 +12,12 @@ import Combine
 public struct TextElementOptions {
     let mask: [Any]?
     let transform: ElementTransform?
+    let validation: NSRegularExpression?
     
-    public init(mask: [Any]? = nil, transform: ElementTransform? = nil) {
+    public init(mask: [Any]? = nil, transform: ElementTransform? = nil, validation: NSRegularExpression? = nil) {
         self.mask = mask
         self.transform = transform
+        self.validation = validation
     }
 }
 
@@ -23,10 +25,10 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     public var elementId: String = UUID().uuidString
     var isComplete: Bool? = true
     var getElementEvent: ((String?, ElementEvent) -> ElementEvent)?
-    var validation: ((String?) -> Bool)?
     var backspacePressed: Bool = false
     var inputMask: [Any]?
     var inputTransform: ElementTransform?
+    var inputValidation: NSRegularExpression?
     var previousValue: String = ""
     var readOnly: Bool = false
     var valueRef: TextElementUITextField?
@@ -34,6 +36,25 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     
     public var subject = PassthroughSubject<ElementEvent, Error>()
     public var metadata: ElementMetadata = ElementMetadata(complete: true, empty: true, valid: true, maskSatisfied: false)
+    
+    var validation: ((String?) -> Bool)? {
+        get {
+            if inputValidation != nil {
+                return validateText
+            }
+            
+            return nil
+        }
+        set { }
+    }
+    
+    private func validateText(text: String?) -> Bool {
+        guard text != nil else {
+            return false
+        }
+        
+        return inputValidation!.firstMatch(in: text!, range: NSRange(location: 0, length: text!.utf16.count)) != nil
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -113,10 +134,20 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
             }
             
             self.inputMask = options?.mask
+        } else {
+            self.inputMask = nil
         }
         
         if (options?.transform != nil) {
             self.inputTransform = options?.transform
+        } else {
+            self.inputTransform = nil
+        }
+        
+        if (options?.validation != nil) {
+            self.inputValidation = options?.validation
+        } else {
+            self.inputValidation = nil
         }
     }
     
