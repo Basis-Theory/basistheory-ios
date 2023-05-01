@@ -146,7 +146,7 @@ final class TextElementUITextFieldTests: XCTestCase {
         let transformExpectation = self.expectation(description: "Transform textfield")
 
         var createdToken: CreateTokenResponse? = nil
-        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
+        BasisTheoryElements.basePath = "https://api.flock-dev.com"
         BasisTheoryElements.createToken(body: body, apiKey: apiKey) { data, error in
             createdToken = data
 

@@ -18,7 +18,7 @@ final class GetTokenByIdServiceTests: XCTestCase {
     private final var TIMEOUT_EXPECTATION = 3.0
     
     override func setUpWithError() throws {
-        BasisTheoryAPI.basePath = "https://api-dev.basistheory.com"
+        BasisTheoryAPI.basePath = "https://api.flock-dev.com"
         
         let btApiKey = Configuration.getConfiguration().btApiKey!
         

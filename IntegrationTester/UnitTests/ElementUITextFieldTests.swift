@@ -100,7 +100,7 @@ class ElementUITextFieldTests: XCTestCase {
         let publicApiKey = Configuration.getConfiguration().btApiKey!
         let tokenizeExpectation = self.expectation(description: "Tokenize")
         var createdToken: [String: Any] = [:]
-        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
+        BasisTheoryElements.basePath = "https://api.flock-dev.com"
         BasisTheoryElements.tokenize(body: body, apiKey: publicApiKey) { data, error in
             createdToken = data!.value as! [String: Any]
 
@@ -156,7 +156,7 @@ class ElementUITextFieldTests: XCTestCase {
         let apiKey = Configuration.getConfiguration().btApiKey!
         let tokenizeExpectation = self.expectation(description: "Create Token")
         var createdToken: CreateTokenResponse? = nil
-        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
+        BasisTheoryElements.basePath = "https://api.flock-dev.com"
         BasisTheoryElements.createToken(body: body, apiKey: apiKey) { data, error in
             createdToken = data
 
