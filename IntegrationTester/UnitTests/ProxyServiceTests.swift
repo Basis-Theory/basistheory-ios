@@ -13,7 +13,7 @@ final class ProxyServiceTests: XCTestCase {
     private final var TIMEOUT_EXPECTATION = 5.0
     
     override func setUpWithError() throws {
-        BasisTheoryAPI.basePath = "https://api-dev.basistheory.com"
+        BasisTheoryAPI.basePath = "https://api.flock-dev.com"
     }
     
     override func tearDownWithError() throws { }
@@ -41,7 +41,7 @@ final class ProxyServiceTests: XCTestCase {
             proxyHttpRequest: proxyHttpRequest)
         { response, data, error in
             XCTAssertNil(error)
-            XCTAssertEqual(response?.url?.absoluteString, "https://api-dev.basistheory.com/proxy")
+            XCTAssertEqual(response?.url?.absoluteString, "https://api.flock-dev.com/proxy")
             
             let httpResponse = response as! HTTPURLResponse
             
@@ -107,7 +107,7 @@ final class ProxyServiceTests: XCTestCase {
             proxyHttpRequest: proxyHttpRequest)
         { response, data, error in
             XCTAssertNil(error)
-            XCTAssertEqual(response?.url?.absoluteString, "https://api-dev.basistheory.com/proxy")
+            XCTAssertEqual(response?.url?.absoluteString, "https://api.flock-dev.com/proxy")
             
             let httpResponse = response as! HTTPURLResponse
             
@@ -141,7 +141,7 @@ final class ProxyServiceTests: XCTestCase {
             proxyHttpRequest: proxyHttpRequest)
         { response, data, error in
             XCTAssertNil(error)
-            XCTAssertEqual(response?.url?.absoluteString, "https://api-dev.basistheory.com/proxy")
+            XCTAssertEqual(response?.url?.absoluteString, "https://api.flock-dev.com/proxy")
             
             let httpResponse = response as! HTTPURLResponse
             
@@ -199,7 +199,7 @@ final class ProxyServiceTests: XCTestCase {
             proxyHttpRequest: proxyHttpRequest)
         { response, data, error in
             XCTAssertNil(error)
-            XCTAssertEqual(response?.url?.absoluteString, "https://api-dev.basistheory.com/proxy")
+            XCTAssertEqual(response?.url?.absoluteString, "https://api.flock-dev.com/proxy")
             
             let httpResponse = response as! HTTPURLResponse
             
@@ -227,7 +227,7 @@ final class ProxyServiceTests: XCTestCase {
             proxyHttpRequest: proxyHttpRequest)
         { response, data, error in
             XCTAssertNil(error)
-            XCTAssertEqual(response?.url?.absoluteString, "https://api-dev.basistheory.com/proxy")
+            XCTAssertEqual(response?.url?.absoluteString, "https://api.flock-dev.com/proxy")
             
             let httpResponse = response as! HTTPURLResponse
             
@@ -244,7 +244,7 @@ final class ProxyServiceTests: XCTestCase {
         let proxyKey = Configuration.getConfiguration().proxyKey!
         
         let proxyExpectation = self.expectation(description: "Proxy")
-        let proxyHttpRequest = ProxyHttpRequest(url: "https://api-dev.basistheory.com/proxy", method: .post, body: [
+        let proxyHttpRequest = ProxyHttpRequest(url: "https://api.flock-dev.com/proxy", method: .post, body: [
             "testProp": "testValue",
             "objProp": [
                 "nestedTestProp": "nestedTestValue"
@@ -256,7 +256,7 @@ final class ProxyServiceTests: XCTestCase {
             proxyHttpRequest: proxyHttpRequest)
         { response, data, error in
             XCTAssertNil(error)
-            XCTAssertEqual(response?.url?.absoluteString, "https://api-dev.basistheory.com/proxy")
+            XCTAssertEqual(response?.url?.absoluteString, "https://api.flock-dev.com/proxy")
             
             let httpResponse = response as! HTTPURLResponse
             
@@ -310,7 +310,7 @@ final class ProxyServiceTests: XCTestCase {
             proxyHttpRequest: proxyHttpRequest)
         { response, data, error in
             XCTAssertNil(error)
-            XCTAssertEqual(response?.url?.absoluteString, "https://api-dev.basistheory.com/proxy")
+            XCTAssertEqual(response?.url?.absoluteString, "https://api.flock-dev.com/proxy")
             
             let httpResponse = response as! HTTPURLResponse
             
@@ -362,7 +362,7 @@ final class ProxyServiceTests: XCTestCase {
             proxyHttpRequest: proxyHttpRequest)
         { response, data, error in
             XCTAssertNil(error)
-            XCTAssertEqual(response?.url?.absoluteString, "https://api-dev.basistheory.com/proxy")
+            XCTAssertEqual(response?.url?.absoluteString, "https://api.flock-dev.com/proxy")
             
             let httpResponse = response as! HTTPURLResponse
             
@@ -387,7 +387,7 @@ final class ProxyServiceTests: XCTestCase {
             proxyHttpRequest: proxyHttpRequest)
         { response, data, error in
             XCTAssertNil(error)
-            XCTAssertEqual(response?.url?.absoluteString, "https://api-dev.basistheory.com/proxy")
+            XCTAssertEqual(response?.url?.absoluteString, "https://api.flock-dev.com/proxy")
             
             let httpResponse = response as! HTTPURLResponse
             
@@ -408,7 +408,7 @@ final class ProxyServiceTests: XCTestCase {
         ]
         let tokenizeExpectation = self.expectation(description: "Tokenize")
         var createdToken: [String: Any] = [:]
-        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
+        BasisTheoryElements.basePath = "https://api.flock-dev.com"
         BasisTheoryElements.tokenize(body: body, apiKey: publicApiKey) { data, error in
             createdToken = data!.value as! [String: Any]
             

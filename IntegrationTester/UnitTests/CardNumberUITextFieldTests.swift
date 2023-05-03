@@ -199,7 +199,7 @@ final class CardNumberUITextFieldTests: XCTestCase {
         
         let publicApiKey = Configuration.getConfiguration().btApiKey!
         let tokenizeExpectation = self.expectation(description: "Throws before tokenize")
-        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
+        BasisTheoryElements.basePath = "https://api.flock-dev.com"
         BasisTheoryElements.tokenize(body: body, apiKey: publicApiKey) { data, error in
             XCTAssertNil(data)
             XCTAssertEqual(error as? TokenizingError, TokenizingError.invalidInput)

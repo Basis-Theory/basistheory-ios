@@ -146,7 +146,7 @@ final class TextElementUITextFieldTests: XCTestCase {
         let transformExpectation = self.expectation(description: "Transform textfield")
 
         var createdToken: CreateTokenResponse? = nil
-        BasisTheoryElements.basePath = "https://api-dev.basistheory.com"
+        BasisTheoryElements.basePath = "https://api.flock-dev.com"
         BasisTheoryElements.createToken(body: body, apiKey: apiKey) { data, error in
             createdToken = data
 
@@ -186,5 +186,28 @@ final class TextElementUITextFieldTests: XCTestCase {
         XCTAssertEqual(readOnlyField.isUserInteractionEnabled, false)
         readOnlyField.isUserInteractionEnabled = true
         XCTAssertEqual(readOnlyField.isUserInteractionEnabled, false)
+    }
+    
+    func testCustomRegexValidation() throws {
+        let textField = TextElementUITextField()
+        let customPasswordRegex = try! NSRegularExpression(pattern: "^[A-Z]{5}_[A-Z0-9]{4}([0-9]{3})?$")
+        
+        try! textField.setConfig(options: TextElementOptions(validation: customPasswordRegex))
+        
+        textField.insertText("password!")
+        
+        XCTAssertFalse(textField.metadata.valid)
+        
+        textField.text = ""
+        textField.insertText("DAFFY_DUCK500")
+        
+        XCTAssertTrue(textField.metadata.valid)
+        
+        try! textField.setConfig(options: TextElementOptions(validation: nil))
+        
+        textField.text = ""
+        textField.insertText("password!")
+        
+        XCTAssertTrue(textField.metadata.valid)
     }
 }
