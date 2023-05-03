@@ -1,3 +1,11 @@
+## [1.12.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.11.0...1.12.0) (2023-05-03)
+
+
+### Features
+
+* adds regex validation on text element ([#50](https://github.com/Basis-Theory/basistheory-ios/issues/50)) ([dd26566](https://github.com/Basis-Theory/basistheory-ios/commit/dd26566a31c83d2e5362392ef4026bb223e59a7a))
+
+
 ## [1.11.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.10.0...1.11.0) (2023-03-30)
 
 
