@@ -62,7 +62,7 @@ class TextElementUITextFieldViewController: UIViewController {
         super.viewDidLoad()
         
         let regexDigit = try! NSRegularExpression(pattern: "\\d")
-        let phoneMask = [ //(123)456-7890
+        let phoneMask = [ // (123)456-7890
             "(",
             regexDigit,
             regexDigit,
@@ -78,8 +78,10 @@ class TextElementUITextFieldViewController: UIViewController {
             regexDigit
         ] as [Any]
        
-        let transformMatcher = try! NSRegularExpression(pattern: "[()-]") //Regex to remove parentheses & dashes
-        let phoneOptions = TextElementOptions(mask: phoneMask, transform: ElementTransform(matcher: transformMatcher, stringReplacement: ""))
+        let transformMatcher = try! NSRegularExpression(pattern: "[()-]") // Regex to remove parentheses & dashes
+        let phoneNumberRegex = try! NSRegularExpression(pattern: "^\\d{10}$") // Regex to validate phone number after transform
+        
+        let phoneOptions = TextElementOptions(mask: phoneMask, transform: ElementTransform(matcher: transformMatcher), validation: phoneNumberRegex)
         
         try! phoneNumberTextField.setConfig(options: phoneOptions)
         
@@ -90,6 +92,12 @@ class TextElementUITextFieldViewController: UIViewController {
         setStyles(textField: readOnlyTextField, placeholder: "Read Only")
 
         nameTextField.subject.sink { completion in
+            print(completion)
+        } receiveValue: { message in
+            print(message)
+        }.store(in: &cancellables)
+        
+        phoneNumberTextField.subject.sink { completion in
             print(completion)
         } receiveValue: { message in
             print(message)
