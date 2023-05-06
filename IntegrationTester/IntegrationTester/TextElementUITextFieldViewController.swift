@@ -79,6 +79,7 @@ class TextElementUITextFieldViewController: UIViewController {
         ] as [Any]
        
         let transformMatcher = try! NSRegularExpression(pattern: "[()-]") // Regex to remove parentheses & dashes
+        // "^\\(\\d{3}\\)\\d{3}-\\d{4}$" regex for validation without a transform
         let phoneNumberRegex = try! NSRegularExpression(pattern: "^\\d{10}$") // Regex to validate phone number after transform
         
         let phoneOptions = TextElementOptions(mask: phoneMask, transform: ElementTransform(matcher: transformMatcher), validation: phoneNumberRegex)

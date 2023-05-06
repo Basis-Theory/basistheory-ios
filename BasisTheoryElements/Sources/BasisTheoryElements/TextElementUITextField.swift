@@ -219,6 +219,17 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         return maskedText
     }
     
+    override public var delegate: UITextFieldDelegate? {
+        get {
+            return super.delegate
+        }
+        set {
+            if newValue is BasisTheoryUIViewController {
+                super.delegate = newValue
+            }
+        }
+    }
+    
     public override func insertText(_ text: String) {
         if inputMask != nil {
             super.insertText(conformToMask(text: text))
