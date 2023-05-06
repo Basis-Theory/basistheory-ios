@@ -12,6 +12,9 @@
 		6286CEC129523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6286CEC029523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift */; };
 		62BEB1442953A1C600E5A0CE /* BasisTheoryElements in Frameworks */ = {isa = PBXBuildFile; productRef = 62BEB1432953A1C600E5A0CE /* BasisTheoryElements */; };
 		9206601D2922813C00A92A81 /* CardVerificationCodeUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9206601C2922813C00A92A81 /* CardVerificationCodeUITextFieldTests.swift */; };
+		921217F12A05C3E6008272E3 /* FailingDelegateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921217F02A05C3E6008272E3 /* FailingDelegateViewController.swift */; };
+		921217F32A05C6E2008272E3 /* SucceedingDelegateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921217F22A05C6E2008272E3 /* SucceedingDelegateViewController.swift */; };
+		921217F52A05C9F0008272E3 /* UITextFieldDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921217F42A05C9F0008272E3 /* UITextFieldDelegateTests.swift */; };
 		92278B862979CBF700168E25 /* GetTokenByIdServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92278B852979CBF700168E25 /* GetTokenByIdServiceTests.swift */; };
 		92352C8229805E63004E12C2 /* CardRevealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92352C8129805E63004E12C2 /* CardRevealViewController.swift */; };
 		9245768928FF46C100A01E70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9245768828FF46C100A01E70 /* AppDelegate.swift */; };
@@ -60,6 +63,9 @@
 		428CB109293E398B00C8220E /* CardNumberUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNumberUITextFieldTests.swift; sourceTree = "<group>"; };
 		6286CEC029523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitCardElementsUITextFieldTests.swift; sourceTree = "<group>"; };
 		9206601C2922813C00A92A81 /* CardVerificationCodeUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardVerificationCodeUITextFieldTests.swift; sourceTree = "<group>"; };
+		921217F02A05C3E6008272E3 /* FailingDelegateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailingDelegateViewController.swift; sourceTree = "<group>"; };
+		921217F22A05C6E2008272E3 /* SucceedingDelegateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SucceedingDelegateViewController.swift; sourceTree = "<group>"; };
+		921217F42A05C9F0008272E3 /* UITextFieldDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldDelegateTests.swift; sourceTree = "<group>"; };
 		92278B852979CBF700168E25 /* GetTokenByIdServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTokenByIdServiceTests.swift; sourceTree = "<group>"; };
 		92352C8129805E63004E12C2 /* CardRevealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardRevealViewController.swift; sourceTree = "<group>"; };
 		9245768528FF46C100A01E70 /* IntegrationTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IntegrationTester.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,6 +156,8 @@
 				9245769328FF46C200A01E70 /* LaunchScreen.storyboard */,
 				9245769628FF46C200A01E70 /* Info.plist */,
 				92352C8129805E63004E12C2 /* CardRevealViewController.swift */,
+				921217F02A05C3E6008272E3 /* FailingDelegateViewController.swift */,
+				921217F22A05C6E2008272E3 /* SucceedingDelegateViewController.swift */,
 			);
 			path = IntegrationTester;
 			sourceTree = "<group>";
@@ -175,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				924576A928FF46C200A01E70 /* TextElementUITextFieldTests.swift */,
+				921217F42A05C9F0008272E3 /* UITextFieldDelegateTests.swift */,
 				6286CEC029523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift */,
 			);
 			path = AcceptanceTests;
@@ -333,9 +342,11 @@
 				9245768D28FF46C100A01E70 /* TextElementUITextFieldViewController.swift in Sources */,
 				92A24DE7291DA1F0005DD4D2 /* SplitCardElementsViewController.swift in Sources */,
 				9245768928FF46C100A01E70 /* AppDelegate.swift in Sources */,
+				921217F32A05C6E2008272E3 /* SucceedingDelegateViewController.swift in Sources */,
 				924576CC2900519900A01E70 /* Configuration.swift in Sources */,
 				9245768B28FF46C100A01E70 /* SceneDelegate.swift in Sources */,
 				92352C8229805E63004E12C2 /* CardRevealViewController.swift in Sources */,
+				921217F12A05C3E6008272E3 /* FailingDelegateViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,6 +374,7 @@
 			files = (
 				6286CEC129523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift in Sources */,
 				928869A229118DC4004E75E3 /* Configuration.swift in Sources */,
+				921217F52A05C9F0008272E3 /* UITextFieldDelegateTests.swift in Sources */,
 				924576AA28FF46C200A01E70 /* TextElementUITextFieldTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

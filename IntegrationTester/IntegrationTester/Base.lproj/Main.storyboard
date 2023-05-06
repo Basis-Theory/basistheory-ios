@@ -9,6 +9,72 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Succeeding Delegate View Controller-->
+        <scene sceneID="XU3-d5-a8g">
+            <objects>
+                <viewController id="Qzj-X4-Rdy" customClass="SucceedingDelegateViewController" customModule="IntegrationTester" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="P87-1z-DMv">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="D6l-vn-O05" customClass="TextElementUITextField" customModule="BasisTheoryElements">
+                                <rect key="frame" x="82" y="76" width="229" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" restorationIdentifier="successSwitch" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lWV-Xx-xwi">
+                                <rect key="frame" x="172" y="135" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="successSwitch" label="successSwitch"/>
+                            </switch>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="zcp-xl-opI"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Pcd-da-F8A"/>
+                    <connections>
+                        <outlet property="nameTextField" destination="D6l-vn-O05" id="h3b-oy-EVL"/>
+                        <outlet property="successSwitch" destination="lWV-Xx-xwi" id="TH5-wO-Hcx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZmI-u4-i9a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-14.503816793893129" y="259.85915492957747"/>
+        </scene>
+        <!--Failing Delegate View Controller-->
+        <scene sceneID="Ntg-EZ-EGG">
+            <objects>
+                <viewController id="ZUE-md-cNe" customClass="FailingDelegateViewController" customModule="IntegrationTester" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pHK-fp-cP2">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="huU-BC-5cm" customClass="TextElementUITextField" customModule="BasisTheoryElements">
+                                <rect key="frame" x="71" y="74" width="250" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" restorationIdentifier="successSwitch" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tmW-XZ-Rlh">
+                                <rect key="frame" x="172" y="140" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="successSwitch" label="successSwitch"/>
+                            </switch>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="LSw-Rv-sae"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="XNE-D8-xmT"/>
+                    <connections>
+                        <outlet property="nameTextField" destination="huU-BC-5cm" id="RwK-Rb-r4d"/>
+                        <outlet property="successSwitch" destination="tmW-XZ-Rlh" id="zPw-mA-O80"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vGJ-Wt-J9A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="916.79389312977094" y="363.38028169014086"/>
+        </scene>
         <!--Card Reveal View Controller-->
         <scene sceneID="SPV-M2-Kim">
             <objects>
@@ -162,6 +228,24 @@
                                 <buttonConfiguration key="configuration" style="filled" title="Split Card Elements Example"/>
                                 <connections>
                                     <segue destination="1yo-MQ-bQK" kind="show" id="6yC-eW-bS1"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6T5-dH-h3g">
+                                <rect key="frame" x="60" y="305" width="271" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Failing Delegate Example"/>
+                                <connections>
+                                    <segue destination="ZUE-md-cNe" kind="show" id="2Zm-vy-KP4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4g5-Y9-gcp">
+                                <rect key="frame" x="60" y="374" width="271" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Succeeding Delegate Example"/>
+                                <connections>
+                                    <segue destination="Qzj-X4-Rdy" kind="show" id="gmr-Y5-gLG"/>
                                 </connections>
                             </button>
                         </subviews>
