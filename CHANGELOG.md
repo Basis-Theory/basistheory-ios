@@ -1,3 +1,15 @@
+## [2.0.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.12.0...2.0.0) (2023-05-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* UITextFieldDelegate inheritance on UIViewControllers no longer work with our elements. UIViewControllers must inherit our BasisTheoryUIViewController class for access to UITextFieldDelegate functions
+
+### Features
+
+* adds BasisTheoryUIViewController class ([#51](https://github.com/Basis-Theory/basistheory-ios/issues/51)) ([6866804](https://github.com/Basis-Theory/basistheory-ios/commit/686680478e89f364b5a0c837bc2b0736fb02389d))
+
+
 ## [1.12.0](https://github.com/Basis-Theory/basistheory-ios/compare/1.11.0...1.12.0) (2023-05-03)
 
 
