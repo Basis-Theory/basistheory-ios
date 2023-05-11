@@ -73,6 +73,7 @@ final public class CardVerificationCodeUITextField: TextElementUITextField {
         let valid = validateCvc(text: text)
         let maskSatisfied = validateMaskLength(text: text)
         let complete = valid && maskSatisfied
+        self.isComplete = complete
         
         let elementEvent = ElementEvent(type: "textChange", complete: complete, empty: event.empty, valid: event.valid, maskSatisfied: maskSatisfied, details: [])
         
