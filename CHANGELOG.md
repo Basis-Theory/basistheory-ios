@@ -1,3 +1,11 @@
+### [2.0.2](https://github.com/Basis-Theory/basistheory-ios/compare/2.0.1...2.0.2) (2023-05-11)
+
+
+### Bug Fixes
+
+* add isComplete calculation to cvc event ([#53](https://github.com/Basis-Theory/basistheory-ios/issues/53)) ([8acc6c4](https://github.com/Basis-Theory/basistheory-ios/commit/8acc6c4366ded26da57f665f1d36dfa5f9448228))
+
+
 ### [2.0.1](https://github.com/Basis-Theory/basistheory-ios/compare/2.0.0...2.0.1) (2023-05-08)
 
 
