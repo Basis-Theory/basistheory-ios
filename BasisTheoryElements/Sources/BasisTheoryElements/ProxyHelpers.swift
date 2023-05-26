@@ -70,13 +70,25 @@ struct ProxyHelpers {
     
     static func executeRequest(endpoint: String, btTraceId: String, request: URLRequest, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) {
         URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let httpResponse = response as? HTTPURLResponse else {
+                completion(nil, nil, error)
+                return
+            }
+            
+            let shouldExposeRawProxyResponse = httpResponse.allHeaderFields["bt-expose-raw-proxy-response"] != nil
+            
+            
             if let response = response {
                 if let data = data {
                     do {
                         let serializedJson = try JSONSerialization.jsonObject(with: data, options: [])
                         
                         var json = JSON.dictionaryValue([:])
-                        BasisTheoryElements.traverseJsonDictionary(dictionary: serializedJson as! [String:Any], json: &json)
+                        if(shouldExposeRawProxyResponse) {
+                            BasisTheoryElements.traverseJsonDictionary(dictionary: serializedJson as! [String:Any], json: &json, transformValue: JSON.rawValue)
+                        } else {
+                            BasisTheoryElements.traverseJsonDictionary(dictionary: serializedJson as! [String:Any], json: &json, transformValue: JSON.createElementReference)
+                        }
                         
                         completion(response, json, nil)
                         TelemtryLogging.info("Successful API response", attributes: [
