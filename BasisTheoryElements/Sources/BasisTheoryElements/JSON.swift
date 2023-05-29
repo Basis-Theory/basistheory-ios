@@ -12,13 +12,21 @@ public enum JSON {
     case elementValueReference(ElementValueReference)
     case arrayValue(Array<JSON?>)
     case dictionaryValue(Dictionary<String, JSON>)
+    case rawValue(Any)
     
     public var elementValueReference: ElementValueReference? {
-      if case .elementValueReference(let elementValueRef) = self {
-         return elementValueRef
-      }
-      return nil
-   }
+        if case .elementValueReference(let elementValueRef) = self {
+            return elementValueRef
+        }
+        return nil
+    }
+    
+    public var rawValue: Any? {
+        if case .rawValue(let rawValue) = self {
+            return rawValue
+        }
+        return nil
+    }
     
     public subscript(index: Int) -> JSON? {
         get {
@@ -62,5 +70,11 @@ public enum JSON {
             return dict[member]
         }
         return nil
+    }
+    
+    static func createElementValueReference(_ value: Any) -> JSON {
+        return JSON.elementValueReference(ElementValueReference(valueMethod: {
+            String(describing: value)
+        }, isComplete: true))
     }
 }

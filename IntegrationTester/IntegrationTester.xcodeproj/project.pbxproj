@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A363AF22A1D74AE00DA5E69 /* RawProxyResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A363AF12A1D74AE00DA5E69 /* RawProxyResponseViewController.swift */; };
 		428CB1062937C53000C8220E /* CardExpirationDateUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428CB1052937C53000C8220E /* CardExpirationDateUITextFieldTests.swift */; };
 		428CB10A293E398B00C8220E /* CardNumberUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428CB109293E398B00C8220E /* CardNumberUITextFieldTests.swift */; };
 		6286CEC129523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6286CEC029523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift */; };
@@ -59,6 +60,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A363AF12A1D74AE00DA5E69 /* RawProxyResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawProxyResponseViewController.swift; sourceTree = "<group>"; };
 		428CB1052937C53000C8220E /* CardExpirationDateUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardExpirationDateUITextFieldTests.swift; sourceTree = "<group>"; };
 		428CB109293E398B00C8220E /* CardNumberUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNumberUITextFieldTests.swift; sourceTree = "<group>"; };
 		6286CEC029523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitCardElementsUITextFieldTests.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				92352C8129805E63004E12C2 /* CardRevealViewController.swift */,
 				921217F02A05C3E6008272E3 /* FailingDelegateViewController.swift */,
 				921217F22A05C6E2008272E3 /* SucceedingDelegateViewController.swift */,
+				0A363AF12A1D74AE00DA5E69 /* RawProxyResponseViewController.swift */,
 			);
 			path = IntegrationTester;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 			files = (
 				9245768D28FF46C100A01E70 /* TextElementUITextFieldViewController.swift in Sources */,
 				92A24DE7291DA1F0005DD4D2 /* SplitCardElementsViewController.swift in Sources */,
+				0A363AF22A1D74AE00DA5E69 /* RawProxyResponseViewController.swift in Sources */,
 				9245768928FF46C100A01E70 /* AppDelegate.swift in Sources */,
 				921217F32A05C6E2008272E3 /* SucceedingDelegateViewController.swift in Sources */,
 				924576CC2900519900A01E70 /* Configuration.swift in Sources */,

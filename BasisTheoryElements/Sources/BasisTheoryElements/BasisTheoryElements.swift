@@ -271,38 +271,34 @@ final public class BasisTheoryElements {
         }
     }
     
-    internal static func traverseJsonDictionary(dictionary: [String: Any], json: inout JSON) {
+    internal static func traverseJsonDictionary(dictionary: [String: Any], json: inout JSON, transformValue: ((_ val: Any) -> JSON)? = JSON.createElementValueReference) {
         for (key, value) in dictionary {
             if let value = value as? [String: Any] {
                 json[key] = JSON.dictionaryValue([:])
                 
-                traverseJsonDictionary(dictionary: value, json: &json[key]!)
+                traverseJsonDictionary(dictionary: value, json: &json[key]!, transformValue: transformValue)
             } else if let value = value as? [Any] {
                 json[key] = JSON.arrayValue([])
                 
-                traverseJsonArray(array: value, json: &json[key]!)
+                traverseJsonArray(array: value, json: &json[key]!, transformValue: transformValue)
             } else {
-                json[key] = JSON.elementValueReference(ElementValueReference(valueMethod: {
-                    String(describing: value)
-                }, isComplete: true))
+                json[key] = transformValue!(value)
             }
         }
     }
     
-    internal static func traverseJsonArray(array: [Any], json: inout JSON) {
+    internal static func traverseJsonArray(array: [Any], json: inout JSON, transformValue: ((_ val: Any) -> JSON)? = JSON.createElementValueReference) {
         for (index, value) in array.enumerated() {
             if let value = value as? [String: Any] {
                 json[index] = JSON.dictionaryValue([:])
                 
-                traverseJsonDictionary(dictionary: value, json: &json[index]!)
+                traverseJsonDictionary(dictionary: value, json: &json[index]!, transformValue: transformValue)
             } else if let value = value as? [Any] {
                 json[index] = JSON.arrayValue([])
                 
-                traverseJsonArray(array: value, json: &json[index]!)
+                traverseJsonArray(array: value, json: &json[index]!, transformValue: transformValue)
             } else {
-                json[index] = JSON.elementValueReference(ElementValueReference(valueMethod: {
-                    String(describing: value)
-                }, isComplete: true))
+                json[index] = transformValue!(value)
             }
         }
     }

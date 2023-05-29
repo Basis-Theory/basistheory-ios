@@ -82,10 +82,10 @@ final class ProxyServiceTests: XCTestCase {
             XCTAssertEqual(token["nestedProxyProperty"] as! String, "nestedTestValue")
             XCTAssertEqual(token["proxyElementProperty"] as! String, "testElementValue")
             XCTAssertEqual(token["nestedProxyElementProperty"] as! String, "testElementValue")
-
+            
             idQueryExpectation.fulfill()
         }
-
+        
         waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
@@ -180,10 +180,10 @@ final class ProxyServiceTests: XCTestCase {
             XCTAssertEqual(token["proxyProperty1"] as! String, "1")
             XCTAssertEqual(token["proxyProperty2"] as! String, "2")
             XCTAssertEqual(token["proxyProperty3"] as! String, "3")
-
+            
             idQueryExpectation.fulfill()
         }
-
+        
         waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
@@ -345,10 +345,10 @@ final class ProxyServiceTests: XCTestCase {
             let token = try! result.get().body.data!.value as! [String: Any]
             
             XCTAssertEqual(token["customHeader"] as! String, "headerValue")
-
+            
             idQueryExpectation.fulfill()
         }
-
+        
         waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
@@ -367,6 +367,29 @@ final class ProxyServiceTests: XCTestCase {
             let httpResponse = response as! HTTPURLResponse
             
             XCTAssertEqual(httpResponse.statusCode, 200)
+            
+            proxyExpectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
+    }
+    
+    func testProxyWithRawResponse() {
+        let privateBtApiKey = Configuration.getConfiguration().privateBtApiKey!
+        let proxyKeyWithRawResponse = "Dxh8Wutij8hNwsxxkFd9Jc"
+        
+        let proxyExpectation = self.expectation(description: "Proxy")
+        let proxyHttpRequest = ProxyHttpRequest(method: .post, body: [
+            "testProp": "testValue",
+        ])
+        BasisTheoryElements.proxy(
+            apiKey: privateBtApiKey,
+            proxyKey: proxyKeyWithRawResponse,
+            proxyHttpRequest: proxyHttpRequest)
+        { response, data, error in
+            
+            XCTAssertEqual(data?.json?.testProp?.rawValue as! String, "testValue")
+            XCTAssertNil(error)
             
             proxyExpectation.fulfill()
         }
@@ -432,7 +455,7 @@ final class ProxyServiceTests: XCTestCase {
                 print(error)
             }
         }
-
+        
         waitForExpectations(timeout: 3)
     }
 }
