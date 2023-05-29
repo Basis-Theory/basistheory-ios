@@ -16,7 +16,7 @@ class RawProxyResponseController: UIViewController {
     @IBOutlet weak var error: UITextView!
     
     @IBAction func proxy(_ sender: Any) {
-        BasisTheoryElements.basePath = Configuration.getConfiguration().basePath!
+        BasisTheoryElements.basePath = "https://api.basistheory.com"
         
         let prodBtApiKey = Configuration.getConfiguration().prodBtApiKey!
         BasisTheoryElements.createSession(apiKey: prodBtApiKey) { data, error in
