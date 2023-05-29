@@ -1,3 +1,11 @@
+## [2.1.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.0.2...2.1.0) (2023-05-29)
+
+
+### Features
+
+* exposes raw proxy response ([#54](https://github.com/Basis-Theory/basistheory-ios/issues/54)) ([63bb3b8](https://github.com/Basis-Theory/basistheory-ios/commit/63bb3b863428aa0d2a41a1a8965cb514ad5d944e))
+
+
 ### [2.0.2](https://github.com/Basis-Theory/basistheory-ios/compare/2.0.1...2.0.2) (2023-05-11)
 
 
