@@ -21,6 +21,13 @@ public enum JSON {
         return nil
     }
     
+    public var rawValue: Any? {
+        if case .rawValue(let rawValue) = self {
+            return rawValue
+        }
+        return nil
+    }
+    
     public subscript(index: Int) -> JSON? {
         get {
             if case .arrayValue(let arr) = self {
