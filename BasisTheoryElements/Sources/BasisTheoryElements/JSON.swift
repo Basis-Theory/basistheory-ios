@@ -65,10 +65,9 @@ public enum JSON {
         return nil
     }
     
-    static func createElementReference(_ value: Any) -> JSON {
+    static func createElementValueReference(_ value: Any) -> JSON {
         return JSON.elementValueReference(ElementValueReference(valueMethod: {
             String(describing: value)
         }, isComplete: true))
     }
-    
 }

@@ -271,7 +271,7 @@ final public class BasisTheoryElements {
         }
     }
     
-    internal static func traverseJsonDictionary(dictionary: [String: Any], json: inout JSON, transformValue: ((_ val: Any) -> JSON)? = JSON.createElementReference) {
+    internal static func traverseJsonDictionary(dictionary: [String: Any], json: inout JSON, transformValue: ((_ val: Any) -> JSON)? = JSON.createElementValueReference) {
         for (key, value) in dictionary {
             if let value = value as? [String: Any] {
                 json[key] = JSON.dictionaryValue([:])
@@ -287,7 +287,7 @@ final public class BasisTheoryElements {
         }
     }
     
-    internal static func traverseJsonArray(array: [Any], json: inout JSON, transformValue: ((_ val: Any) -> JSON)? = JSON.createElementReference) {
+    internal static func traverseJsonArray(array: [Any], json: inout JSON, transformValue: ((_ val: Any) -> JSON)? = JSON.createElementValueReference) {
         for (index, value) in array.enumerated() {
             if let value = value as? [String: Any] {
                 json[index] = JSON.dictionaryValue([:])

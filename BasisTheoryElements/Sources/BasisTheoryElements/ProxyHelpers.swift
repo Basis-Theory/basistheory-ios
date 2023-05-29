@@ -87,7 +87,7 @@ struct ProxyHelpers {
                         if(shouldExposeRawProxyResponse) {
                             BasisTheoryElements.traverseJsonDictionary(dictionary: serializedJson as! [String:Any], json: &json, transformValue: JSON.rawValue)
                         } else {
-                            BasisTheoryElements.traverseJsonDictionary(dictionary: serializedJson as! [String:Any], json: &json, transformValue: JSON.createElementReference)
+                            BasisTheoryElements.traverseJsonDictionary(dictionary: serializedJson as! [String:Any], json: &json, transformValue: JSON.createElementValueReference)
                         }
                         
                         completion(response, json, nil)
