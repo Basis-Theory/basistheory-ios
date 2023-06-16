@@ -20,6 +20,11 @@ public enum ProxyError: Error {
     case invalidInput
 }
 
+public enum HttpClientError: Error {
+    case invalidURL
+    case invalidRequest
+}
+
 extension RequestBuilder {
     func addBasisTheoryElementHeaders(apiKey: String, btTraceId: String) -> Self {
         addHeaders([
@@ -241,6 +246,36 @@ final public class BasisTheoryElements {
                 ])
             }
         }
+    }
+    
+    public static func post(url: String, payload: [String: Any]?, config: Config?, completion: @escaping ((_ request: URLResponse?, _ data: Any?, _ error: Error?) -> Void)) -> Void {
+        TelemtryLogging.info("Making POST request to \(url)")
+        
+        HttpClientHelpers.executeRequest(method: HttpMethod.post, url: url, payload: payload, config: config, completion: completion)
+    }
+    
+    public static func put(url: String, payload: [String: Any]?, config: Config?, completion: @escaping ((_ request: URLResponse?, _ data: Any?, _ error: Error?) -> Void)) -> Void {
+        TelemtryLogging.info("Making PUT request to \(url)")
+        
+        HttpClientHelpers.executeRequest(method: HttpMethod.put, url: url, payload: payload, config: config, completion: completion)
+    }
+    
+    public static func patch(url: String, payload: [String: Any]?, config: Config?, completion: @escaping ((_ request: URLResponse?, _ data: Any?, _ error: Error?) -> Void)) -> Void {
+        TelemtryLogging.info("Making PATCH request to \(url)")
+        
+        HttpClientHelpers.executeRequest(method: HttpMethod.patch, url: url, payload: payload, config: config, completion: completion)
+    }
+    
+    public static func get(url: String, config: Config?, completion: @escaping ((_ request: URLResponse?, _ data: Any?, _ error: Error?) -> Void)) -> Void {
+        TelemtryLogging.info("Making GET request to \(url)")
+        
+        HttpClientHelpers.executeRequest(method: HttpMethod.get, url: url, payload: nil, config: config, completion: completion)
+    }
+    
+    public static func delete(url: String, config: Config?, completion: @escaping ((_ request: URLResponse?, _ data: Any?, _ error: Error?) -> Void)) -> Void {
+        TelemtryLogging.info("Making DELETE request to \(url)")
+        
+        HttpClientHelpers.executeRequest(method: HttpMethod.delete, url: url, payload: nil, config: config, completion: completion)
     }
     
     private static func replaceElementRefs(endpoint: String, btTraceId: String, body: inout [String: Any]) throws -> Void {
