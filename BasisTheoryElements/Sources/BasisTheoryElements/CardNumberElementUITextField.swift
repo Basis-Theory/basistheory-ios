@@ -91,7 +91,7 @@ final public class CardNumberUITextField: TextElementUITextField, CardElementPro
         
         let elementEvent = ElementEvent(type: "textChange", complete: complete, empty: event.empty, valid: event.valid, maskSatisfied: maskSatisfied, details: details)
         
-        TelemtryLogging.info("CardNumberUITextField textChange event", attributes: [
+        TelemetryLogging.info("CardNumberUITextField textChange event", attributes: [
             "elementId": self.elementId,
             "event": elementEvent
         ])
@@ -176,7 +176,7 @@ final public class CardNumberUITextField: TextElementUITextField, CardElementPro
     
     private func setup() {
         self.keyboardType = .asciiCapableNumberPad
-        TelemtryLogging.info("CardNumberUITextField init", attributes: [
+        TelemetryLogging.info("CardNumberUITextField init", attributes: [
             "elementId": self.elementId
         ])
     }

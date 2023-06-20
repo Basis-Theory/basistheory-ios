@@ -8,11 +8,15 @@
 import Foundation
 
 public struct Config {
-    var headers: [String: String]
+    public var headers: [String: String]
+    
+    public init(headers: [String: String]) {
+        self.headers = headers
+    }
 }
 
 struct HttpClientHelpers {
-    static func executeRequest(method: HttpMethod, url: String, payload: [String: Any]?, config: Config?, completion: @escaping ((_ request: URLResponse?, _ data: Any?, _ error: Error?) -> Void)) -> Void {
+    static func executeRequest(method: HttpMethod, url: String, payload: [String: Any]?, config: Config?, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) -> Void {
         guard let url = URL(string: url) else {
             completion(nil, nil, HttpClientError.invalidURL)
             return
@@ -45,20 +49,23 @@ struct HttpClientHelpers {
             if let response = response {
                 if let data = data {
                     do {
-                        let json = try JSONSerialization.jsonObject(with: data, options: [])
+                        let serializedJson = try JSONSerialization.jsonObject(with: data, options: [])
                         
-                        TelemtryLogging.info("Successful \(method) response from \(url)")
+                        var json = JSON.dictionaryValue([:])
+                        BasisTheoryElements.traverseJsonDictionary(dictionary: serializedJson as! [String:Any], json: &json, transformValue: JSON.rawValue)
+                        
+                        TelemetryLogging.info("Successful \(method) response from \(url)")
                         completion(response, json, nil)
                     } catch {
-                        TelemtryLogging.warn("Unsuccessful \(method) response from \(url)", error: error)
+                        TelemetryLogging.warn("Unsuccessful \(method) response from \(url)", error: error)
                         completion(response, nil, error)
                     }
                 } else {
-                    TelemtryLogging.warn("Unexpected \(method) response from \(url): response does not have a body", error: error)
+                    TelemetryLogging.warn("Unexpected \(method) response from \(url): response does not have a body", error: error)
                     completion(response, nil, error)
                 }
             } else {
-                TelemtryLogging.warn("Invalid \(method) request to \(url)", error: error)
+                TelemetryLogging.warn("Invalid \(method) request to \(url)", error: error)
                 completion(nil, nil, HttpClientError.invalidRequest)
             }
         }

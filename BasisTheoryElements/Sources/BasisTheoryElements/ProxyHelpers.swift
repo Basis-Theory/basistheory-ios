@@ -85,14 +85,14 @@ struct ProxyHelpers {
                         }
                         
                         completion(response, json, nil)
-                        TelemtryLogging.info("Successful API response", attributes: [
+                        TelemetryLogging.info("Successful API response", attributes: [
                             "endpoint": endpoint,
                             "BT-TRACE-ID": btTraceId,
                             "apiSuccess": true
                         ])
                     } catch {
                         completion(response, nil, error)
-                        TelemtryLogging.warn("Unsuccessful API response", error: error, attributes: [
+                        TelemetryLogging.warn("Unsuccessful API response", error: error, attributes: [
                             "endpoint": endpoint,
                             "BT-TRACE-ID": btTraceId,
                             "apiSuccess": false
@@ -100,14 +100,14 @@ struct ProxyHelpers {
                     }
                 } else {
                     completion(response, nil, error)
-                    TelemtryLogging.warn("Unexpected destination URL response: response does not have a body", error: error, attributes: [
+                    TelemetryLogging.warn("Unexpected destination URL response: response does not have a body", error: error, attributes: [
                         "endpoint": endpoint,
                         "BT-TRACE-ID": btTraceId,
                     ])
                 }
             } else {
                 completion(nil, nil, ProxyError.invalidRequest)
-                TelemtryLogging.warn("Invalid proxy request", error: error, attributes: [
+                TelemetryLogging.warn("Invalid proxy request", error: error, attributes: [
                     "endpoint": endpoint,
                     "BT-TRACE-ID": btTraceId,
                 ])
