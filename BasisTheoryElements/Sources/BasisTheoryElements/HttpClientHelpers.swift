@@ -22,7 +22,15 @@ struct HttpClientHelpers {
         request.httpMethod = method.rawValue
         
         if let payload = payload {
-            let httpBody = try! JSONSerialization.data(withJSONObject: payload, options: [])
+            var mutablePayload = payload
+            do {
+                try BasisTheoryElements.replaceElementRefs(body: &(mutablePayload), endpoint: url.absoluteString)
+            } catch {
+                completion(nil, nil, HttpClientError.invalidRequest) // error logged with more detail in replaceElementRefs
+                return
+            }
+            
+            let httpBody = try! JSONSerialization.data(withJSONObject: mutablePayload, options: [])
             request.httpBody = httpBody
         }
         

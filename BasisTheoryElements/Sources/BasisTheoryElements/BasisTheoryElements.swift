@@ -90,7 +90,7 @@ final public class BasisTheoryElements {
         
         var mutableBody = body
         do {
-            try replaceElementRefs(endpoint: endpoint, btTraceId: btTraceId, body: &mutableBody)
+            try replaceElementRefs(body: &mutableBody, endpoint: endpoint, btTraceId: btTraceId)
         } catch {
             completion(nil, TokenizingError.invalidInput) // error logged with more detail in replaceElementRefs
             return
@@ -135,7 +135,7 @@ final public class BasisTheoryElements {
         var mutableBody = body
         var mutableData = body.data
         do {
-            try replaceElementRefs(endpoint: endpoint, btTraceId: btTraceId, body: &mutableData)
+            try replaceElementRefs(body: &mutableData, endpoint: endpoint, btTraceId: btTraceId)
         } catch {
             completion(nil, TokenizingError.invalidInput) // error logged with more detail in replaceElementRefs
             return
@@ -195,7 +195,7 @@ final public class BasisTheoryElements {
             var mutableBody = proxyHttpRequest?.body
             
             do {
-                try replaceElementRefs(endpoint: endpoint, btTraceId: btTraceId, body: &(mutableBody)!)
+                try replaceElementRefs(body: &(mutableBody)!, endpoint: endpoint, btTraceId: btTraceId)
             } catch {
                 completion(nil, nil, ProxyError.invalidInput) // error logged with more detail in replaceElementRefs
                 return
@@ -278,10 +278,10 @@ final public class BasisTheoryElements {
         HttpClientHelpers.executeRequest(method: HttpMethod.delete, url: url, payload: nil, config: config, completion: completion)
     }
     
-    private static func replaceElementRefs(endpoint: String, btTraceId: String, body: inout [String: Any]) throws -> Void {
+    internal static func replaceElementRefs(body: inout [String: Any], endpoint: String, btTraceId: String? = nil) throws -> Void {
         for (key, val) in body {
             if var v = val as? [String: Any] {
-                try replaceElementRefs(endpoint: endpoint, btTraceId: btTraceId, body: &v)
+                try replaceElementRefs(body: &v, endpoint: endpoint, btTraceId: btTraceId)
                 body[key] = v
             } else if let v = val as? ElementReferenceProtocol {
                 let textValue = v.getValue()
