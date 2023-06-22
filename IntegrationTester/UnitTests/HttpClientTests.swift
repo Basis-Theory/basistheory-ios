@@ -125,9 +125,6 @@ final class HttpClientTests: XCTestCase {
     }
     
     func testGetRequest() throws {
-        let textElement = TextElementUITextField()
-        textElement.insertText("test element value")
-        
         let config = Config(headers: [
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -147,9 +144,6 @@ final class HttpClientTests: XCTestCase {
     }
     
     func testDeleteRequest() throws {
-        let textElement = TextElementUITextField()
-        textElement.insertText("test element value")
-        
         let config = Config(headers: [
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -168,7 +162,41 @@ final class HttpClientTests: XCTestCase {
         waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
-    func testPostRequestWithAnInvalidUrl() throws {
+    func testPostRequestWithAnInvalidRequest() throws {
+        let config = Config(headers: [
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "X-Test-Header": "test header value"
+        ])
         
+        let getHttpClientExpectation = self.expectation(description: "GET HTTP client")
+        BasisTheoryElements.get(url: "badproto://baddomain", config: config) { request, data, error in
+            XCTAssertEqual(error as! HttpClientError, HttpClientError.invalidRequest)
+            XCTAssertNil(request)
+            XCTAssertNil(data)
+            
+            getHttpClientExpectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
+    }
+    
+    func testPostRequestWithAnInvalidURL() throws {
+        let config = Config(headers: [
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "X-Test-Header": "test header value"
+        ])
+        
+        let getHttpClientExpectation = self.expectation(description: "GET HTTP client")
+        BasisTheoryElements.get(url: "#$@$#!@#^*&*(()-=0__+badurl?!?!", config: config) { request, data, error in
+            XCTAssertEqual(error as! HttpClientError, HttpClientError.invalidURL)
+            XCTAssertNil(request)
+            XCTAssertNil(data)
+            
+            getHttpClientExpectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
 }
