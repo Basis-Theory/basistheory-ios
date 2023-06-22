@@ -20,14 +20,15 @@ final class HttpClientTests: XCTestCase {
         let textElement = TextElementUITextField()
         textElement.insertText("test element value")
         
-        var payload = [
+        let payload = [
             "textElementProp": textElement,
             "plainTextProp": "plaintext value",
             "object" : [
                 "nestedProp": "nested value"
-            ]
+            ],
+            "array": [1, 2, 3]
         ] as [String : Any]
-        var config = Config(headers: [
+        let config = Config(headers: [
             "Content-Type": "application/json",
             "Accept": "application/json",
             "X-Test-Header": "test header value"
@@ -39,6 +40,11 @@ final class HttpClientTests: XCTestCase {
             XCTAssertEqual(data?.json?.textElementProp?.rawValue as! String, "test element value")
             XCTAssertEqual(data?.json?.plainTextProp?.rawValue as! String, "plaintext value")
             XCTAssertEqual(data?.json?.object?.nestedProp?.rawValue as! String, "nested value")
+            XCTAssertEqual(data?.json?.array?[0]?.rawValue as! Int, 1)
+            XCTAssertEqual(data?.json?.array?[1]?.rawValue as! Int, 2)
+            XCTAssertEqual(data?.json?.array?[2]?.rawValue as! Int, 3)
+            XCTAssertEqual(data?.method?.rawValue as! String, "POST")
+            XCTAssertEqual(data?.headers?["X-Test-Header"]?.rawValue as! String, "test header value")
             
             postHttpClientExpectation.fulfill()
         }
@@ -46,11 +52,123 @@ final class HttpClientTests: XCTestCase {
         waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
-    func testPutRequest() throws {}
+    func testPutRequest() throws {
+        let textElement = TextElementUITextField()
+        textElement.insertText("test element value")
+        
+        let payload = [
+            "textElementProp": textElement,
+            "plainTextProp": "plaintext value",
+            "object" : [
+                "nestedProp": "nested value"
+            ],
+            "array": [1, 2, 3]
+        ] as [String : Any]
+        let config = Config(headers: [
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "X-Test-Header": "test header value"
+        ])
+        
+        let putHttpClientExpectation = self.expectation(description: "PUT HTTP client")
+        BasisTheoryElements.put(url: "https://echo.basistheory.com/anything", payload: payload, config: config) { request, data, error in
+            XCTAssertNil(error)
+            XCTAssertEqual(data?.json?.textElementProp?.rawValue as! String, "test element value")
+            XCTAssertEqual(data?.json?.plainTextProp?.rawValue as! String, "plaintext value")
+            XCTAssertEqual(data?.json?.object?.nestedProp?.rawValue as! String, "nested value")
+            XCTAssertEqual(data?.json?.array?[0]?.rawValue as! Int, 1)
+            XCTAssertEqual(data?.json?.array?[1]?.rawValue as! Int, 2)
+            XCTAssertEqual(data?.json?.array?[2]?.rawValue as! Int, 3)
+            XCTAssertEqual(data?.method?.rawValue as! String, "PUT")
+            XCTAssertEqual(data?.headers?["X-Test-Header"]?.rawValue as! String, "test header value")
+            
+            putHttpClientExpectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
+    }
     
-    func testPatchRequest() throws {}
+    func testPatchRequest() throws {
+        let textElement = TextElementUITextField()
+        textElement.insertText("test element value")
+        
+        let payload = [
+            "textElementProp": textElement,
+            "plainTextProp": "plaintext value",
+            "object" : [
+                "nestedProp": "nested value"
+            ],
+            "array": [1, 2, 3]
+        ] as [String : Any]
+        let config = Config(headers: [
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "X-Test-Header": "test header value"
+        ])
+        
+        let patchHttpClientExpectation = self.expectation(description: "PATCH HTTP client")
+        BasisTheoryElements.patch(url: "https://echo.basistheory.com/anything", payload: payload, config: config) { request, data, error in
+            XCTAssertNil(error)
+            XCTAssertEqual(data?.json?.textElementProp?.rawValue as! String, "test element value")
+            XCTAssertEqual(data?.json?.plainTextProp?.rawValue as! String, "plaintext value")
+            XCTAssertEqual(data?.json?.object?.nestedProp?.rawValue as! String, "nested value")
+            XCTAssertEqual(data?.json?.array?[0]?.rawValue as! Int, 1)
+            XCTAssertEqual(data?.json?.array?[1]?.rawValue as! Int, 2)
+            XCTAssertEqual(data?.json?.array?[2]?.rawValue as! Int, 3)
+            XCTAssertEqual(data?.method?.rawValue as! String, "PATCH")
+            XCTAssertEqual(data?.headers?["X-Test-Header"]?.rawValue as! String, "test header value")
+            
+            patchHttpClientExpectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
+    }
     
-    func testGetRequest() throws {}
+    func testGetRequest() throws {
+        let textElement = TextElementUITextField()
+        textElement.insertText("test element value")
+        
+        let config = Config(headers: [
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "X-Test-Header": "test header value"
+        ])
+        
+        let getHttpClientExpectation = self.expectation(description: "GET HTTP client")
+        BasisTheoryElements.get(url: "https://echo.basistheory.com/anything", config: config) { request, data, error in
+            XCTAssertNil(error)
+            XCTAssertEqual(data?.method?.rawValue as! String, "GET")
+            XCTAssertEqual(data?.headers?["X-Test-Header"]?.rawValue as! String, "test header value")
+            
+            getHttpClientExpectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
+    }
     
-    func testDeleteRequest() throws {}
+    func testDeleteRequest() throws {
+        let textElement = TextElementUITextField()
+        textElement.insertText("test element value")
+        
+        let config = Config(headers: [
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "X-Test-Header": "test header value"
+        ])
+        
+        let deleteHttpClientExpectation = self.expectation(description: "DELETE HTTP client")
+        BasisTheoryElements.delete(url: "https://echo.basistheory.com/anything", config: config) { request, data, error in
+            XCTAssertNil(error)
+            XCTAssertEqual(data?.method?.rawValue as! String, "DELETE")
+            XCTAssertEqual(data?.headers?["X-Test-Header"]?.rawValue as! String, "test header value")
+            
+            deleteHttpClientExpectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
+    }
+    
+    func testPostRequestWithAnInvalidUrl() throws {
+        
+    }
 }
