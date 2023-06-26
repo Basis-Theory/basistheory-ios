@@ -1,3 +1,11 @@
+## [2.2.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.1.0...2.2.0) (2023-06-26)
+
+
+### Features
+
+* adds http client for sending element values to third parties ([#55](https://github.com/Basis-Theory/basistheory-ios/issues/55)) ([1ba48dd](https://github.com/Basis-Theory/basistheory-ios/commit/1ba48dd7aab94dbebf3c3032f1417e50861fb14f))
+
+
 ## [2.1.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.0.2...2.1.0) (2023-05-29)
 
 
