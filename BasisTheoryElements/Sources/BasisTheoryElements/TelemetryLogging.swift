@@ -8,7 +8,7 @@
 @_implementationOnly import Datadog
 import UIKit
 
-struct TelemtryLogging {
+struct TelemetryLogging {
     private static var hasInitialized = false
     private static var logger: Logger? = nil
     

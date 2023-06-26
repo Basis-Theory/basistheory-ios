@@ -135,7 +135,7 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
     
     private func setup() {
         self.keyboardType = .asciiCapableNumberPad
-        TelemtryLogging.info("CardExpirationDateUITextField init", attributes: [
+        TelemetryLogging.info("CardExpirationDateUITextField init", attributes: [
             "elementId": self.elementId
         ])
     }

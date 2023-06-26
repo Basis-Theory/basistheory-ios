@@ -16,6 +16,7 @@
 		921217F12A05C3E6008272E3 /* FailingDelegateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921217F02A05C3E6008272E3 /* FailingDelegateViewController.swift */; };
 		921217F32A05C6E2008272E3 /* SucceedingDelegateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921217F22A05C6E2008272E3 /* SucceedingDelegateViewController.swift */; };
 		921217F52A05C9F0008272E3 /* UITextFieldDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921217F42A05C9F0008272E3 /* UITextFieldDelegateTests.swift */; };
+		921E47CC2A4237F20051355D /* HttpClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921E47CB2A4237F20051355D /* HttpClientTests.swift */; };
 		92278B862979CBF700168E25 /* GetTokenByIdServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92278B852979CBF700168E25 /* GetTokenByIdServiceTests.swift */; };
 		92352C8229805E63004E12C2 /* CardRevealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92352C8129805E63004E12C2 /* CardRevealViewController.swift */; };
 		9245768928FF46C100A01E70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9245768828FF46C100A01E70 /* AppDelegate.swift */; };
@@ -68,6 +69,7 @@
 		921217F02A05C3E6008272E3 /* FailingDelegateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailingDelegateViewController.swift; sourceTree = "<group>"; };
 		921217F22A05C6E2008272E3 /* SucceedingDelegateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SucceedingDelegateViewController.swift; sourceTree = "<group>"; };
 		921217F42A05C9F0008272E3 /* UITextFieldDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldDelegateTests.swift; sourceTree = "<group>"; };
+		921E47CB2A4237F20051355D /* HttpClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClientTests.swift; sourceTree = "<group>"; };
 		92278B852979CBF700168E25 /* GetTokenByIdServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTokenByIdServiceTests.swift; sourceTree = "<group>"; };
 		92352C8129805E63004E12C2 /* CardRevealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardRevealViewController.swift; sourceTree = "<group>"; };
 		9245768528FF46C100A01E70 /* IntegrationTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IntegrationTester.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -178,6 +180,7 @@
 				929E30CB295C9A0100A01A56 /* ProxyServiceTests.swift */,
 				9262E290296E050F00A77B83 /* SessionServiceTests.swift */,
 				92278B852979CBF700168E25 /* GetTokenByIdServiceTests.swift */,
+				921E47CB2A4237F20051355D /* HttpClientTests.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				428CB1062937C53000C8220E /* CardExpirationDateUITextFieldTests.swift in Sources */,
 				924576A028FF46C200A01E70 /* TextElementUITextFieldTests.swift in Sources */,
 				9253E8E2291EB66E00FDF1A9 /* ElementUITextFieldTests.swift in Sources */,
+				921E47CC2A4237F20051355D /* HttpClientTests.swift in Sources */,
 				9206601D2922813C00A92A81 /* CardVerificationCodeUITextFieldTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

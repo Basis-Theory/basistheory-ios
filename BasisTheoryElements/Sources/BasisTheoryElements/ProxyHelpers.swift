@@ -70,9 +70,7 @@ struct ProxyHelpers {
     
     static func executeRequest(endpoint: String, btTraceId: String, request: URLRequest, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) {
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-            
             let shouldExposeRawProxyResponse = (response as? HTTPURLResponse)?.allHeaderFields["bt-expose-raw-proxy-response"] as? String != nil
-            
             
             if let response = response {
                 if let data = data {
@@ -87,14 +85,14 @@ struct ProxyHelpers {
                         }
                         
                         completion(response, json, nil)
-                        TelemtryLogging.info("Successful API response", attributes: [
+                        TelemetryLogging.info("Successful API response", attributes: [
                             "endpoint": endpoint,
                             "BT-TRACE-ID": btTraceId,
                             "apiSuccess": true
                         ])
                     } catch {
                         completion(response, nil, error)
-                        TelemtryLogging.error("Unsuccessful API response", error: error, attributes: [
+                        TelemetryLogging.warn("Unsuccessful API response", error: error, attributes: [
                             "endpoint": endpoint,
                             "BT-TRACE-ID": btTraceId,
                             "apiSuccess": false
@@ -102,14 +100,14 @@ struct ProxyHelpers {
                     }
                 } else {
                     completion(response, nil, error)
-                    TelemtryLogging.error("Unexpected destination URL response: response does not have a body", error: error, attributes: [
+                    TelemetryLogging.warn("Unexpected destination URL response: response does not have a body", error: error, attributes: [
                         "endpoint": endpoint,
                         "BT-TRACE-ID": btTraceId,
                     ])
                 }
             } else {
                 completion(nil, nil, ProxyError.invalidRequest)
-                TelemtryLogging.warn("Invalid proxy request", error: error, attributes: [
+                TelemetryLogging.warn("Invalid proxy request", error: error, attributes: [
                     "endpoint": endpoint,
                     "BT-TRACE-ID": btTraceId,
                 ])
