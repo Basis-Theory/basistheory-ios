@@ -72,6 +72,36 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
         return yearReference
     }
     
+    public func format(dateFormat: String) -> ElementValueReference {
+        let dateReference = ElementValueReference(elementId: self.elementId, valueMethod: getFormattedValue(dateFormat: dateFormat), isComplete: self.isComplete)
+        return dateReference
+    }
+    
+    private func getFormattedValue(dateFormat: String) -> (() -> String)? {
+        guard let value = super.getValue(),
+              let year = Int(getYearValue()),
+              let month = Int(getMonthValue()) else {
+            return nil
+        }
+
+        var components = DateComponents(year: year, month: month)
+        let calendar = Calendar.current
+
+        guard let lastDayDate = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: (calendar.date(from: components)?.addingTimeInterval(86399))!),
+              let lastDayOfMonth = calendar.dateComponents([.day], from: lastDayDate).day else {
+            return nil
+        }
+
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = dateFormat
+        let formattedDate = dateFormatter.string(from: lastDayDate)
+
+        return {
+            return formattedDate
+        }
+    }
+    
     private func getMonthValue() -> String {
         if (super.getValue() != nil){
             let dateArray = super.getValue()?.components(separatedBy: "/")
