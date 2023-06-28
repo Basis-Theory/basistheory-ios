@@ -1,3 +1,11 @@
+## [2.3.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.2.0...2.3.0) (2023-06-28)
+
+
+### Features
+
+* adds extension function to format expiration date ([#56](https://github.com/Basis-Theory/basistheory-ios/issues/56)) ([38c924b](https://github.com/Basis-Theory/basistheory-ios/commit/38c924ba0d80fe7ad1adf3a52f7d567f914040e5))
+
+
 ## [2.2.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.1.0...2.2.0) (2023-06-26)
 
 
