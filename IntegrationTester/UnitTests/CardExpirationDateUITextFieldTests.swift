@@ -212,7 +212,7 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         let expirationDateTextField = CardExpirationDateUITextField()
         let expectedYear = "2030"
         let expectedMonth = "06"
-        expirationDateTextField.text = "06/30"
+        expirationDateTextField.text = "\(expectedMonth)/\(expectedYear.suffix(2))"
         
         let body: [String: Any] = [
             "data": [
@@ -248,13 +248,13 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         TokensAPI.getByIdWithRequestBuilder(id: createdToken["id"] as! String).addHeader(name: "BT-API-KEY", value: privateApiKey).execute { result in
             do {
                 let token = try result.get().body.data!.value as! [String: Any]
-                XCTAssertEqual(token["fullYear"] as! String, expectedYear)
-                XCTAssertEqual(token["singleDigitMonth"] as! String, "\(expectedMonth.suffix(1))")
-                XCTAssertEqual(token["dubleDigitMonth"] as! String, expectedMonth)
-                XCTAssertEqual(token["fullYearMonth"] as! String, "\(expectedYear)\(expectedMonth)")
-                XCTAssertEqual(token["monthDashFullYear"] as! String, "\(expectedMonth)-\(expectedYear)")
-                XCTAssertEqual(token["monthForwardSlashTwoDigitYear"] as! String, "\(expectedMonth)/\(expectedYear.suffix(2))")
-                XCTAssertEqual(token["fullYearDashMonth"] as! String, "\(expectedYear)-\(expectedMonth)")
+                 XCTAssertEqual(token["fullYear"] as! String, expectedYear)
+                 XCTAssertEqual(token["singleDigitMonth"] as! String, "\(expectedMonth.suffix(1))")
+                 XCTAssertEqual(token["dubleDigitMonth"] as! String, expectedMonth)
+                 XCTAssertEqual(token["fullYearMonth"] as! String, "\(expectedYear)\(expectedMonth)")
+                 XCTAssertEqual(token["monthDashFullYear"] as! String, "\(expectedMonth)-\(expectedYear)")
+                 XCTAssertEqual(token["monthForwardSlashTwoDigitYear"] as! String, "\(expectedMonth)/\(expectedYear.suffix(2))")
+                 XCTAssertEqual(token["fullYearDashMonth"] as! String, "\(expectedYear)-\(expectedMonth)")
                 
                 
                 idQueryExpectation.fulfill()

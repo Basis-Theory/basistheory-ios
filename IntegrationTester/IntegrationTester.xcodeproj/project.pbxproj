@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0A363AF22A1D74AE00DA5E69 /* RawProxyResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A363AF12A1D74AE00DA5E69 /* RawProxyResponseViewController.swift */; };
+		0AB437902A4C9FB4000099CD /* HttpClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB4378F2A4C9FB4000099CD /* HttpClientViewController.swift */; };
 		428CB1062937C53000C8220E /* CardExpirationDateUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428CB1052937C53000C8220E /* CardExpirationDateUITextFieldTests.swift */; };
 		428CB10A293E398B00C8220E /* CardNumberUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428CB109293E398B00C8220E /* CardNumberUITextFieldTests.swift */; };
 		6286CEC129523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6286CEC029523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift */; };
@@ -62,6 +63,7 @@
 
 /* Begin PBXFileReference section */
 		0A363AF12A1D74AE00DA5E69 /* RawProxyResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawProxyResponseViewController.swift; sourceTree = "<group>"; };
+		0AB4378F2A4C9FB4000099CD /* HttpClientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClientViewController.swift; sourceTree = "<group>"; };
 		428CB1052937C53000C8220E /* CardExpirationDateUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardExpirationDateUITextFieldTests.swift; sourceTree = "<group>"; };
 		428CB109293E398B00C8220E /* CardNumberUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNumberUITextFieldTests.swift; sourceTree = "<group>"; };
 		6286CEC029523C8200F7E8BD /* SplitCardElementsUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitCardElementsUITextFieldTests.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				921217F02A05C3E6008272E3 /* FailingDelegateViewController.swift */,
 				921217F22A05C6E2008272E3 /* SucceedingDelegateViewController.swift */,
 				0A363AF12A1D74AE00DA5E69 /* RawProxyResponseViewController.swift */,
+				0AB4378F2A4C9FB4000099CD /* HttpClientViewController.swift */,
 			);
 			path = IntegrationTester;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				921217F32A05C6E2008272E3 /* SucceedingDelegateViewController.swift in Sources */,
 				924576CC2900519900A01E70 /* Configuration.swift in Sources */,
 				9245768B28FF46C100A01E70 /* SceneDelegate.swift in Sources */,
+				0AB437902A4C9FB4000099CD /* HttpClientViewController.swift in Sources */,
 				92352C8229805E63004E12C2 /* CardRevealViewController.swift in Sources */,
 				921217F12A05C3E6008272E3 /* FailingDelegateViewController.swift in Sources */,
 			);

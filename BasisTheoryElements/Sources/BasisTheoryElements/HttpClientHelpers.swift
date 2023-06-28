@@ -15,12 +15,69 @@ public struct Config {
     }
 }
 
+private func mapObjToRequestBody(contentType: String, obj: Any) -> Data? {
+    switch contentType {
+    case "application/json":
+        return try? JSONSerialization.data(withJSONObject: obj, options: [])
+    case "application/x-www-form-urlencoded":
+        if let formParams = convertObjectToFormUrlEncoded(obj) {
+            let encodedParams = encodeParamsToFormUrlEncoded(formParams)
+            return encodedParams.data(using: .utf8)
+        }
+    default:
+        fatalError("Content-Type not supported")
+    }
+    return nil
+}
+
+private func convertObjectToFormUrlEncoded(_ obj: Any?, prefix: String = "") -> [String: Any]? {
+    guard let obj = obj else {
+        return nil
+    }
+    
+    var formParams: [String: Any] = [:]
+
+    if let dictionary = obj as? [String: Any] {
+        for (key, value) in dictionary {
+            let newPrefix = prefix.isEmpty ? key : "\(prefix)[\(key)]"
+            if let subFormParams = convertObjectToFormUrlEncoded(value, prefix: newPrefix) {
+                formParams.merge(subFormParams) { (_, new) in new }
+            }
+        }
+    } else if let array = obj as? [Any] {
+        for (index, value) in array.enumerated() {
+            let newPrefix = prefix.isEmpty ? "\(index)" : "\(prefix)[\(index)]"
+            if let subFormParams = convertObjectToFormUrlEncoded(value, prefix: newPrefix) {
+                formParams.merge(subFormParams) { (_, new) in new }
+            }
+        }
+    } else {
+        formParams[prefix] = obj
+    }
+    
+    return formParams.isEmpty ? nil : formParams
+}
+
+private func encodeParamsToFormUrlEncoded(_ formParams: [String: Any]) -> String {
+    return formParams
+        .compactMap { (key, value) in
+            guard let encodedKey = key.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+                  let encodedValue = "\(value)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+                return nil
+            }
+            return "\(encodedKey)=\(encodedValue)"
+        }
+        .joined(separator: "&")
+}
+
+
 struct HttpClientHelpers {
     static func executeRequest(method: HttpMethod, url: String, payload: [String: Any]?, config: Config?, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) -> Void {
         guard let url = URL(string: url) else {
             completion(nil, nil, HttpClientError.invalidURL)
             return
         }
+        
         
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
@@ -34,7 +91,10 @@ struct HttpClientHelpers {
                 return
             }
             
-            let httpBody = try! JSONSerialization.data(withJSONObject: mutablePayload, options: [])
+            let contentType = config?.headers["Content-Type"] ?? "application/json"
+            
+            let httpBody = mapObjToRequestBody(contentType: contentType, obj: mutablePayload)
+            
             request.httpBody = httpBody
         }
         
