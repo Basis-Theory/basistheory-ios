@@ -208,6 +208,64 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         waitForExpectations(timeout: 3)
     }
     
+    func testExpirationDateCustomFormatter() throws {
+        let expirationDateTextField = CardExpirationDateUITextField()
+        let expectedYear = "2030"
+        let expectedMonth = "06"
+        expirationDateTextField.text = "06/30"
+        
+        let body: [String: Any] = [
+            "data": [
+                "fullYear": expirationDateTextField.format(dateFormat: "yyyy"),
+                "fullYearMonth": expirationDateTextField.format(dateFormat: "yyyyMM"),
+                "monthDashFullYear": expirationDateTextField.format(dateFormat: "MM-yyyy"),
+                "monthForwardSlashTwoDigitYear": expirationDateTextField.format(dateFormat: "MM/yy"),
+                "fullYearDashMonth": expirationDateTextField.format(dateFormat: "yyyy-MM"),
+                "singleDigitMonth": expirationDateTextField.format(dateFormat: "M"),
+                "dubleDigitMonth": expirationDateTextField.format(dateFormat: "MM"),
+            ],
+            "type": "token"
+        ]
+        
+        let publicApiKey = Configuration.getConfiguration().btApiKey!
+        let tokenizeExpectation = self.expectation(description: "Tokenize")
+        var createdToken: [String: Any] = [:]
+        BasisTheoryElements.basePath = "https://api.flock-dev.com"
+        BasisTheoryElements.tokenize(body: body, apiKey: publicApiKey) { data, error in
+            createdToken = data!.value as! [String: Any]
+            
+            XCTAssertNotNil(createdToken["id"])
+            XCTAssertEqual(createdToken["type"] as! String, "token")
+            
+            tokenizeExpectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 30, handler: nil)
+        
+        let privateApiKey = Configuration.getConfiguration().privateBtApiKey!
+        let idQueryExpectation = self.expectation(description: "Token ID Query")
+        
+        TokensAPI.getByIdWithRequestBuilder(id: createdToken["id"] as! String).addHeader(name: "BT-API-KEY", value: privateApiKey).execute { result in
+            do {
+                let token = try result.get().body.data!.value as! [String: Any]
+                XCTAssertEqual(token["fullYear"] as! String, expectedYear)
+                XCTAssertEqual(token["singleDigitMonth"] as! String, "\(expectedMonth.suffix(1))")
+                XCTAssertEqual(token["dubleDigitMonth"] as! String, expectedMonth)
+                XCTAssertEqual(token["fullYearMonth"] as! String, "\(expectedYear)\(expectedMonth)")
+                XCTAssertEqual(token["monthDashFullYear"] as! String, "\(expectedMonth)-\(expectedYear)")
+                XCTAssertEqual(token["monthForwardSlashTwoDigitYear"] as! String, "\(expectedMonth)/\(expectedYear.suffix(2))")
+                XCTAssertEqual(token["fullYearDashMonth"] as! String, "\(expectedYear)-\(expectedMonth)")
+                
+                
+                idQueryExpectation.fulfill()
+            } catch {
+                print(error)
+            }
+        }
+        
+        waitForExpectations(timeout: 3)
+    }
+    
     func testThrowsWithInvalidCardExpirationDateInput() {
         let expirationDateTextField = CardExpirationDateUITextField()
         let pastYear = getCurrentYear() - 2
@@ -236,7 +294,7 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         let proxyKey = Configuration.getConfiguration().proxyKey!
         let proxyExpectation = self.expectation(description: "Throws before proxy")
         let proxyHttpRequest = ProxyHttpRequest(method: .post, body: body)
-
+        
         BasisTheoryElements.proxy(
             apiKey: privateBtApiKey,
             proxyKey: proxyKey,
