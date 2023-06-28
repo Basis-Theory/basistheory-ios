@@ -105,7 +105,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     
     public func setValue(elementValueReference: ElementValueReference?) {
         if let elementValueReference = elementValueReference {
-            self.text = elementValueReference.getValue()
+            self.text = "\(elementValueReference.getValue())"
         }
     }
     
@@ -290,7 +290,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         subject.send(elementEvent)
     }
     
-    func getValue() -> String? {
+    func getValue() -> Any? {
         return transform(text: super.text)
     }
     

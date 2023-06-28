@@ -33,9 +33,9 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
     }
     
     private func validateFutureDate(text: String) -> Bool {
-        let inputDateArray = super.getValue()?.components(separatedBy: "/")
-        let inputMonth = Int(String(inputDateArray![0]))!
-        let inputYear = Int(String("20" + inputDateArray![1]))!
+        let inputDateArray = "\(super.getValue())".components(separatedBy: "/")
+        let inputMonth = Int(String(inputDateArray[0]))!
+        let inputYear = Int(String("20" + inputDateArray[1]))!
         
         let now = Date()
         let dateFormatter = DateFormatter()
@@ -72,12 +72,17 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
         return yearReference
     }
     
-    public func format(dateFormat: String) -> ElementValueReference {
-        let dateReference = ElementValueReference(elementId: self.elementId, valueMethod: getFormattedValue(dateFormat: dateFormat), isComplete: self.isComplete)
+    public enum FormatTypes {
+        case number
+        case string
+    }
+    
+    public func format(dateFormat: String, type: FormatTypes = FormatTypes.string) -> ElementValueReference {
+        let dateReference = ElementValueReference(elementId: self.elementId, valueMethod: getFormattedValue(dateFormat: dateFormat, type: type), isComplete: self.isComplete)
         return dateReference
     }
     
-    private func getFormattedValue(dateFormat: String) -> (() -> String)? {
+    private func getFormattedValue(dateFormat: String, type: FormatTypes = FormatTypes.string) -> (() -> Any)? {
         guard let value = super.getValue(),
               let year = Int(getYearValue()),
               let month = Int(getMonthValue()) else {
@@ -98,14 +103,21 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
         let formattedDate = dateFormatter.string(from: lastDayDate)
 
         return {
-            return formattedDate
+            switch(type){
+            case FormatTypes.number:
+                return Int(formattedDate)
+            case FormatTypes.string:
+                return formattedDate
+            default:
+                return formattedDate
+            }
         }
     }
     
     private func getMonthValue() -> String {
         if (super.getValue() != nil){
-            let dateArray = super.getValue()?.components(separatedBy: "/")
-            return String(dateArray![0])
+            let dateArray = "\(super.getValue())".components(separatedBy: "/")
+            return String(dateArray[0])
         }
         
         return ""
@@ -113,8 +125,8 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
     
     private func getYearValue() -> String {
         if (super.getValue() != nil) {
-            let dateArray = super.getValue()?.components(separatedBy: "/")
-            return String("20" + dateArray![1])
+            let dateArray = "\(super.getValue())".components(separatedBy: "/")
+            return String("20" + dateArray[1])
         }
         
         return ""
@@ -124,25 +136,25 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
         let month = month?.getValue() ?? ""
         let formattedMonth = "00\(month)".suffix(2)
         
-        let year = year?.getValue() ?? ""
+        let year = "\(year?.getValue())"
         let formattedYear = year.suffix(2)
         
         self.text = "\(formattedMonth)/\(formattedYear)"
     }
     
     override func textFieldDidChange() {
-        if (super.getValue()!.count > 0) {
-            let firstChar = super.getValue()?.first
+        if ("\(super.getValue())".count > 0) {
+            let firstChar = "\(super.getValue())".first
             
             if (firstChar?.isNumber == true) {
                 // check first char, if > 1 add 0 in front
                 if (firstChar?.wholeNumberValue!)! > 1  {
-                    super.text = "0" + super.getValue()!
+                    super.text = "0" + "\(super.getValue())"
                 }
                 
                 // check second char - if first char 1, number cant be > 2
-                if (super.getValue()!.count > 1) {
-                    let secondChar = super.getValue()?.dropFirst().first
+                if ("\(super.getValue())".count > 1) {
+                    let secondChar = "\(super.getValue())".dropFirst().first
                     if ((firstChar?.wholeNumberValue!)!  == 1 && (secondChar?.isNumber == true && (secondChar?.wholeNumberValue!)! > 2)) {
                         super.text = "1"
                     }

@@ -148,13 +148,13 @@ final public class CardNumberUITextField: TextElementUITextField, CardElementPro
     
     override func textFieldDidChange() {
         if (super.getValue() != nil) {
-            guard Int(super.getValue()!) != nil else {
+            guard Int("\(super.getValue())") != nil else {
                 cardBrand = nil
                 super.textFieldDidChange()
                 return
             }
             
-            cardBrand = CardBrand.getCardBrand(text: super.getValue())
+            cardBrand = CardBrand.getCardBrand(text: "\(super.getValue())")
             
             if (cardBrand?.bestMatchCardBrand != nil) {
                 updateCardMask(mask: cardBrand?.bestMatchCardBrand?.cardNumberMaskInput)

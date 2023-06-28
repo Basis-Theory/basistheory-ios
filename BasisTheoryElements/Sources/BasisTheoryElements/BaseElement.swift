@@ -29,7 +29,7 @@ internal protocol InternalElementProtocol {
 }
 
 internal protocol ElementReferenceProtocol {
-    func getValue() -> String?
+    func getValue() -> Any?
     var isComplete: Bool? { get set }
     var elementId: String { get set }
 }
@@ -41,16 +41,16 @@ public enum ElementConfigError: Error {
 
 public class ElementValueReference: ElementReferenceProtocol {
     var elementId: String
-    var valueMethod: (() -> String)?
+    var valueMethod: (() -> Any)?
     var isComplete: Bool? = true
     
-    init(elementId: String = UUID(uuid: UUID_NULL).uuidString, valueMethod: (() -> String)?, isComplete: Bool?) {
+    init(elementId: String = UUID(uuid: UUID_NULL).uuidString, valueMethod: (() -> Any)?, isComplete: Bool?) {
         self.valueMethod = valueMethod
         self.isComplete = isComplete
         self.elementId = elementId
     }
 
-    func getValue() -> String? {
+    func getValue() -> Any? {
         return valueMethod!()
     }
 }
