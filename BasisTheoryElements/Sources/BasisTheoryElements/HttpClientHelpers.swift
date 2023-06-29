@@ -99,6 +99,10 @@ struct HttpClientHelpers {
         }
         
         if let config = config {
+            if(config.headers["Content-Type"] == nil) {
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            }
+            
             for header in config.headers {
                 request.setValue(header.value, forHTTPHeaderField: header.key)
             }
