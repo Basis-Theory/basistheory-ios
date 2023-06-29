@@ -458,14 +458,6 @@
                                     <action selector="printToConsoleLog:" destination="TzD-Wj-3hS" eventType="touchUpInside" id="SGU-cf-8th"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="GYT-9U-pNk">
-                                <rect key="frame" x="88" y="351" width="240" height="324"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YSS-tg-G4j">
                                 <rect key="frame" x="111" y="45" width="240" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -484,7 +476,6 @@
                         <outlet property="cardNumberTextField" destination="BG6-w5-MRM" id="JCu-ac-6mO"/>
                         <outlet property="cvcTextField" destination="sik-1Y-feY" id="rkQ-Lm-Q8U"/>
                         <outlet property="expirationDateTextField" destination="SKh-fh-1Sl" id="8mo-zJ-Edv"/>
-                        <outlet property="output" destination="GYT-9U-pNk" id="Th1-Iu-tDX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pje-zP-gZR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

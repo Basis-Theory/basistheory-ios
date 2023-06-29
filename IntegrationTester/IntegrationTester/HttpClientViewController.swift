@@ -19,17 +19,12 @@ class HttpClientViewController: UIViewController {
     @IBOutlet weak var cardNumberTextField: CardNumberUITextField!
     @IBOutlet weak var expirationDateTextField: CardExpirationDateUITextField!
     @IBOutlet weak var cvcTextField: CardVerificationCodeUITextField!
-    @IBOutlet weak var output: UITextView!
     @IBOutlet weak var cardBrand: UITextView!
     
     @IBAction func printToConsoleLog(_ sender: Any) {
         cardNumberTextField.text = "4242424242424242"
         expirationDateTextField.text = "10/26"
         cvcTextField.text = "909"
-        
-        print("cardNumberTextField.text: \(cardNumberTextField.text)")
-        print("expirationDateTextField.text: \(expirationDateTextField.text)")
-        print("cvcTextField.text: \(cvcTextField.text)")
     }
     
     @IBAction func createPaymentMethod(_ sender: Any) {
@@ -46,21 +41,16 @@ class HttpClientViewController: UIViewController {
             ]
         ]
         
-         BasisTheoryElements.post(
+        BasisTheoryElements.post(
             url: "https://api.stripe.com/v1/payment_methods",
             payload: body,
             config: Config.init(headers: ["Authorization" : "Bearer {{ Stripe's API Key }}", "Content-Type": "application/x-www-form-urlencoded"])) { data, error, completion  in
                 DispatchQueue.main.async {
                     guard error == nil else {
-                        self.output.text = "There was an error!"
                         print(error)
                         return
                     }
-                    
-                    let stringifiedData = String(data: try! JSONSerialization.data(withJSONObject: data as! [String: Any], options: .prettyPrinted), encoding: .utf8)!
-                    
-                    self.output.text = stringifiedData
-                    print(stringifiedData)
+                    print(data)
                 }
             }
     }
