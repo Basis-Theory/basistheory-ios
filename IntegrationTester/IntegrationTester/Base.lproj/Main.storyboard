@@ -455,7 +455,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Set Text"/>
                                 <connections>
-                                    <action selector="printToConsoleLog:" destination="1yo-MQ-bQK" eventType="touchUpInside" id="tNN-Wu-sTf"/>
+                                    <action selector="printToConsoleLog:" destination="TzD-Wj-3hS" eventType="touchUpInside" id="SGU-cf-8th"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="GYT-9U-pNk">
