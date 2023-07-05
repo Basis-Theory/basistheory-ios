@@ -52,6 +52,45 @@ final class HttpClientTests: XCTestCase {
         waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
     
+    func testPostRequest_WithFormUrlEncodedContentType() throws {
+        let textElement = TextElementUITextField()
+        textElement.insertText("test element value")
+        
+        let payload = [
+            "textElementProp": textElement,
+            "object" : [
+                "nestedProp": "nested value"
+            ],
+            "array": [1, 2, 3]
+        ] as [String : Any]
+        
+        let config = Config(headers: [
+            "Content-Type": "application/x-www-form-urlencoded",
+        ])
+        
+        let postHttpClientExpectation = self.expectation(description: "POST HTTP client")
+        BasisTheoryElements.post(url: "https://echo.basistheory.com/anything", payload: payload, config: config) { request, data, error in
+            XCTAssertNil(error)
+            
+            func getRawValueFromForm(field: String) -> String {
+                return data?.form?[field]?.rawValue as! String
+            }
+            
+            XCTAssertNil(error)
+        
+            XCTAssertEqual(getRawValueFromForm(field: "textElementProp"), "test element value")
+            XCTAssertEqual(getRawValueFromForm(field: "object[nestedProp]"), "nested value")
+            XCTAssertEqual(getRawValueFromForm(field: "array[0]"), "1")
+            XCTAssertEqual(getRawValueFromForm(field: "array[1]"), "2")
+            XCTAssertEqual(getRawValueFromForm(field: "array[2]"), "3")
+            
+            postHttpClientExpectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
+    }
+    
+    
     func testPutRequest() throws {
         let textElement = TextElementUITextField()
         textElement.insertText("test element value")
