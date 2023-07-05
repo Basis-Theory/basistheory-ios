@@ -1,3 +1,11 @@
+## [2.4.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.3.0...2.4.0) (2023-07-05)
+
+
+### Features
+
+* adds support for  ([#58](https://github.com/Basis-Theory/basistheory-ios/issues/58)) ([9d6dfc4](https://github.com/Basis-Theory/basistheory-ios/commit/9d6dfc46a5b028eb203df19896f0dd0659fe4b8a))
+
+
 ## [2.3.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.2.0...2.3.0) (2023-06-28)
 
 
