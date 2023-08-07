@@ -1,3 +1,11 @@
+## [2.5.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.4.0...2.5.0) (2023-08-07)
+
+
+### Features
+
+* lower required iOS version ([#59](https://github.com/Basis-Theory/basistheory-ios/issues/59)) ([b781e96](https://github.com/Basis-Theory/basistheory-ios/commit/b781e967503a36496b29c5c73c339c4c0d54f0bc))
+
+
 ## [2.4.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.3.0...2.4.0) (2023-07-05)
 
 
