@@ -1,3 +1,11 @@
+## [2.6.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.5.0...2.6.0) (2023-08-08)
+
+
+### Features
+
+* loose dd version requirement ([#60](https://github.com/Basis-Theory/basistheory-ios/issues/60)) ([e503b53](https://github.com/Basis-Theory/basistheory-ios/commit/e503b53f70ec80238bd4d4d9e8c3f58aef86c67f))
+
+
 ## [2.5.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.4.0...2.5.0) (2023-08-07)
 
 
