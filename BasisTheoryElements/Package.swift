@@ -17,7 +17,7 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
          .package(url: "https://github.com/Basis-Theory/basistheory-swift", .exact("0.7.0")),
-         .package(url: "https://github.com/Datadog/dd-sdk-ios.git", .exact("1.16.0")),
+         .package(url: "https://github.com/Datadog/dd-sdk-ios.git", "1.16.0"..<"2.0.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
