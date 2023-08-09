@@ -47,6 +47,33 @@ final class TextElementUITextFieldTests: XCTestCase {
         waitForExpectations(timeout: 1, handler: nil)
     }
     
+    func testFocusAndBlurEvent() throws {
+        let field = TextElementUITextField()
+        
+        let focusExpectation = self.expectation(description: "Field focus")
+        let blurExpectation = self.expectation(description: "Field blur")
+        var focusExpectationFulfilled = false
+        var cancellables = Set<AnyCancellable>()
+        
+        field.subject.sink { completion in
+            print(completion)
+        } receiveValue: { message in
+            if (!focusExpectationFulfilled) {
+                XCTAssertEqual(message.type, "focus")
+                focusExpectationFulfilled = true
+                focusExpectation.fulfill()
+            } else {
+                XCTAssertEqual(message.type, "blur")
+                blurExpectation.fulfill()
+            }
+        }.store(in: &cancellables)
+        
+        field.sendActions(for: .editingDidBegin)
+        field.sendActions(for: .editingDidEnd)
+        
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+
     func testCompletionEventWithMask() throws {
         let completeField = TextElementUITextField()
         let incompleteField = TextElementUITextField()
@@ -210,4 +237,6 @@ final class TextElementUITextFieldTests: XCTestCase {
         
         XCTAssertTrue(textField.metadata.valid)
     }
+    
+    
 }
