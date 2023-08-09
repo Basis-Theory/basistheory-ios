@@ -1,3 +1,11 @@
+## [2.7.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.6.0...2.7.0) (2023-08-09)
+
+
+### Features
+
+* add focus and blur events ([#61](https://github.com/Basis-Theory/basistheory-ios/issues/61)) ([e4d9a18](https://github.com/Basis-Theory/basistheory-ios/commit/e4d9a18454c91ce4cd71f7571a9e0c2d0bb55d28))
+
+
 ## [2.6.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.5.0...2.6.0) (2023-08-08)
 
 
