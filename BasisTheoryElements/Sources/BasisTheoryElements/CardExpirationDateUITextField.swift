@@ -63,17 +63,17 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
     }
     
     public func month() -> ElementValueReference {
-        let monthReference = ElementValueReference(elementId: self.elementId, valueMethod: getMonthValue, isComplete: self.isComplete)
+        let monthReference = ElementValueReference(valueMethod: getMonthValue, isComplete: self.isComplete)
         return monthReference
     }
     
     public func year() -> ElementValueReference {
-        let yearReference = ElementValueReference(elementId: self.elementId, valueMethod: getYearValue, isComplete: self.isComplete)
+        let yearReference = ElementValueReference(valueMethod: getYearValue, isComplete: self.isComplete)
         return yearReference
     }
     
     public func format(dateFormat: String) -> ElementValueReference {
-        let dateReference = ElementValueReference(elementId: self.elementId, valueMethod: getFormattedValue(dateFormat: dateFormat), isComplete: self.isComplete)
+        let dateReference = ElementValueReference(valueMethod: getFormattedValue(dateFormat: dateFormat), isComplete: self.isComplete)
         return dateReference
     }
     
@@ -165,8 +165,5 @@ final public class CardExpirationDateUITextField: TextElementUITextField {
     
     private func setup() {
         self.keyboardType = .asciiCapableNumberPad
-        TelemetryLogging.info("CardExpirationDateUITextField init", attributes: [
-            "elementId": self.elementId
-        ])
     }
 }

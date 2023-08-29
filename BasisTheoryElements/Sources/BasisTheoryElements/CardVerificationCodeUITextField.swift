@@ -77,11 +77,6 @@ final public class CardVerificationCodeUITextField: TextElementUITextField {
         
         let elementEvent = ElementEvent(type: "textChange", complete: complete, empty: event.empty, valid: event.valid, maskSatisfied: maskSatisfied, details: [])
         
-        TelemetryLogging.info("CardVerificationCodeUITextField textChange event", attributes: [
-            "elementId": self.elementId,
-            "event": elementEvent
-        ])
-        
         return elementEvent
     }
     
@@ -148,8 +143,5 @@ final public class CardVerificationCodeUITextField: TextElementUITextField {
     
     private func setup() {
         self.keyboardType = .asciiCapableNumberPad
-        TelemetryLogging.info("CardVerificationCodeUITextField init", attributes: [
-            "elementId": self.elementId
-        ])
     }
 }
