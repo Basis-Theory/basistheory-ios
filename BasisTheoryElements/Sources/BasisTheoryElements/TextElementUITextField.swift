@@ -22,7 +22,6 @@ public struct TextElementOptions {
 }
 
 public class TextElementUITextField: UITextField, InternalElementProtocol, ElementProtocol, ElementReferenceProtocol {
-    public var elementId: String = UUID().uuidString
     var isComplete: Bool? = true
     var getElementEvent: ((String?, ElementEvent) -> ElementEvent)?
     var backspacePressed: Bool = false
@@ -72,9 +71,6 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         self.addTarget(self, action: #selector(editingStarted), for: .editingDidBegin)
         self.addTarget(self, action: #selector(editingEnded), for: .editingDidEnd)
         subject.send(ElementEvent(type: "ready", complete: true, empty: true, valid: true, maskSatisfied: false, details: []))
-        TelemetryLogging.info("TextElementUITextField init", attributes: [
-            "elementId": self.elementId
-        ])
     }
     
     deinit {
@@ -283,11 +279,6 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         } else {
             previousValue = super.text!
         }
-        
-        TelemetryLogging.info("TextElementUITextField textChange event", attributes: [
-            "elementId": self.elementId,
-            "event": elementEvent
-        ])
         
         subject.send(elementEvent)
     }

@@ -51,31 +51,13 @@ final public class BasisTheoryElements {
             let app = try result.get()
             
             completion(app.body, nil)
-            TelemetryLogging.info("Successful API response", attributes: [
-                "endpoint": endpoint,
-                "BT-TRACE-ID": btTraceId,
-                "apiSuccess": true
-            ])
         } catch {
             completion(nil, error)
-            TelemetryLogging.error("Unsuccessful API response", error: error, attributes: [
-                "endpoint": endpoint,
-                "BT-TRACE-ID": btTraceId,
-                "apiSuccess": false
-            ])
         }
-    }
-    
-    private static func logBeginningOfApiCall(endpoint: String, btTraceId: String, extraAttributes: [String: Encodable] = [:]) {
-        TelemetryLogging.info("Starting API request", attributes: [
-            "endpoint": endpoint,
-            "BT-TRACE-ID": btTraceId
-        ].merging(extraAttributes, uniquingKeysWith: { (_, new) in new }))
     }
     
     private static func getApplicationKey(apiKey: String, btTraceId: String, completion: @escaping ((_ data: Application?, _ error: Error?) -> Void)) {
         let endpoint = "GET /applications/key"
-        logBeginningOfApiCall(endpoint: endpoint, btTraceId: btTraceId)
         
         BasisTheoryAPI.basePath = basePath
         ApplicationsAPI.getByKeyWithRequestBuilder().addBasisTheoryElementHeaders(apiKey: getApiKey(apiKey), btTraceId: btTraceId).execute { result in
@@ -86,7 +68,6 @@ final public class BasisTheoryElements {
     public static func tokenize(body: [String: Any], apiKey: String? = nil, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> Void {
         let endpoint = "POST /tokenize"
         let btTraceId = UUID().uuidString
-        logBeginningOfApiCall(endpoint: endpoint, btTraceId: btTraceId)
         
         var mutableBody = body
         do {
@@ -101,23 +82,14 @@ final public class BasisTheoryElements {
         getApplicationKey(apiKey: getApiKey(apiKey), btTraceId: btTraceId) { data, error in
             guard error == nil else {
                 completion(nil, error)
-                TelemetryLogging.error("Failed to get Application by key", attributes: [
-                    "endpoint": "GET /applications/key",
-                    "BT-TRACE-ID": btTraceId,
-                    "apiSuccess": false
-                ])
+            
                 
                 return
             }
             
             guard data?.type == "public" else {
                 completion(nil, TokenizingError.applicationTypeNotPublic)
-                TelemetryLogging.warn("Tried to tokenize with a non-public API key with tokenize function", attributes: [
-                    "endpoint": "POST /tokenize",
-                    "BT-TRACE-ID": btTraceId,
-                    "apiSuccess": false
-                ])
-                
+       
                 return
             }
             
@@ -130,7 +102,6 @@ final public class BasisTheoryElements {
     public static func createToken(body: CreateToken, apiKey: String? = nil, completion: @escaping ((_ data: CreateTokenResponse?, _ error: Error?) -> Void)) -> Void {
         let endpoint = "POST /tokens"
         let btTraceId = UUID().uuidString
-        logBeginningOfApiCall(endpoint: endpoint, btTraceId: btTraceId)
         
         var mutableBody = body
         var mutableData = body.data
@@ -147,22 +118,13 @@ final public class BasisTheoryElements {
         getApplicationKey(apiKey: getApiKey(apiKey), btTraceId: btTraceId) {data, error in
             guard error == nil else {
                 completion(nil, error)
-                TelemetryLogging.error("Failed to get Application by key", attributes: [
-                    "endpoint": "GET /applications/key",
-                    "BT-TRACE-ID": btTraceId,
-                    "apiSuccess": false
-                ])
                 
                 return
             }
             
             guard data?.type == "public" else {
                 completion(nil, TokenizingError.applicationTypeNotPublic)
-                TelemetryLogging.warn("Tried to tokenize with a non-public API key", attributes: [
-                    "endpoint": "/tokens",
-                    "BT-TRACE-ID": btTraceId
-                ])
-                
+     
                 return
             }
             
@@ -177,10 +139,6 @@ final public class BasisTheoryElements {
     public static func proxy(apiKey: String? = nil, proxyKey: String? = nil, proxyUrl: String? = nil, proxyHttpRequest: ProxyHttpRequest? = nil, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) -> Void {
         let endpoint = "\(proxyHttpRequest?.method?.rawValue ?? HttpMethod.get.rawValue) \(proxyHttpRequest?.url ?? "\(BasisTheoryElements.basePath)/proxy")"
         let btTraceId = UUID().uuidString
-        logBeginningOfApiCall(endpoint: endpoint, btTraceId: btTraceId, extraAttributes: [
-            "proxyHttpRequestPath": proxyHttpRequest?.path ?? "nil",
-            "proxyHttpRequestQuery": proxyHttpRequest?.query ?? "nil"
-        ])
         
         BasisTheoryAPI.basePath = basePath
         
@@ -212,7 +170,6 @@ final public class BasisTheoryElements {
     public static func createSession(apiKey: String? = nil, completion: @escaping ((_ data: CreateSessionResponse?, _ error: Error?) -> Void)) -> Void {
         let endpoint = "POST /sessions"
         let btTraceId = UUID().uuidString
-        logBeginningOfApiCall(endpoint: endpoint, btTraceId: btTraceId)
         
         SessionsAPI.createWithRequestBuilder().addBasisTheoryElementHeaders(apiKey: getApiKey(apiKey), btTraceId: btTraceId).execute { result in
             completeApiRequest(endpoint: endpoint, btTraceId: btTraceId, result: result, completion: completion)
@@ -222,7 +179,6 @@ final public class BasisTheoryElements {
     public static func getTokenById(id: String, apiKey: String? = nil, completion: @escaping ((_ data: GetTokenByIdResponse?, _ error: Error?) -> Void)) -> Void {
         let endpoint = "GET /tokens/id"
         let btTraceId = UUID().uuidString
-        logBeginningOfApiCall(endpoint: endpoint, btTraceId: btTraceId)
         
         TokensAPI.getByIdWithRequestBuilder(id: id).addBasisTheoryElementHeaders(apiKey: getApiKey(apiKey), btTraceId: btTraceId).execute { result in
             do {
@@ -232,48 +188,33 @@ final public class BasisTheoryElements {
                 BasisTheoryElements.traverseJsonDictionary(dictionary: token.data!.value as! [String:Any], json: &json)
                 
                 completion(token.toGetTokenByIdResponse(data: json), nil)
-                TelemetryLogging.info("Successful API response", attributes: [
-                    "endpoint": endpoint,
-                    "BT-TRACE-ID": btTraceId,
-                    "apiSuccess": true
-                ])
             } catch {
                 completion(nil, error)
-                TelemetryLogging.error("Unsuccessful API response", error: error, attributes: [
-                    "endpoint": endpoint,
-                    "BT-TRACE-ID": btTraceId,
-                    "apiSuccess": false
-                ])
             }
         }
     }
     
     public static func post(url: String, payload: [String: Any]?, config: Config?, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) -> Void {
-        TelemetryLogging.info("Making POST request to \(url)")
         
         HttpClientHelpers.executeRequest(method: HttpMethod.post, url: url, payload: payload, config: config, completion: completion)
     }
     
     public static func put(url: String, payload: [String: Any]?, config: Config?, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) -> Void {
-        TelemetryLogging.info("Making PUT request to \(url)")
         
         HttpClientHelpers.executeRequest(method: HttpMethod.put, url: url, payload: payload, config: config, completion: completion)
     }
     
     public static func patch(url: String, payload: [String: Any]?, config: Config?, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) -> Void {
-        TelemetryLogging.info("Making PATCH request to \(url)")
         
         HttpClientHelpers.executeRequest(method: HttpMethod.patch, url: url, payload: payload, config: config, completion: completion)
     }
     
     public static func get(url: String, config: Config?, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) -> Void {
-        TelemetryLogging.info("Making GET request to \(url)")
         
         HttpClientHelpers.executeRequest(method: HttpMethod.get, url: url, payload: nil, config: config, completion: completion)
     }
     
     public static func delete(url: String, config: Config?, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) -> Void {
-        TelemetryLogging.info("Making DELETE request to \(url)")
         
         HttpClientHelpers.executeRequest(method: HttpMethod.delete, url: url, payload: nil, config: config, completion: completion)
     }
@@ -287,21 +228,9 @@ final public class BasisTheoryElements {
                 let textValue = v.getValue()
                 
                 if !v.isComplete! {
-                    TelemetryLogging.warn("Tried to tokenize while element is incomplete", attributes: [
-                        "elementId": v.elementId,
-                        "endpoint": endpoint,
-                        "BT-TRACE-ID": btTraceId,
-                    ])
-                    
                     throw TokenizingError.invalidInput
                 }
                 body[key] = textValue
-                
-                TelemetryLogging.info("Retrieving element value for API call", attributes: [
-                    "elementId": v.elementId,
-                    "endpoint": endpoint,
-                    "BT-TRACE-ID": btTraceId,
-                ])
             }
         }
     }

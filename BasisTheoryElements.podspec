@@ -9,6 +9,5 @@ Pod::Spec.new do |s|
   s.summary = 'BasisTheory SDK for Elements'
   s.source_files = 'BasisTheoryElements/Sources/BasisTheoryElements**/*.swift'
   s.dependency 'BasisTheory', '0.6.1'
-  s.dependency 'DatadogSDK', '~> 1.16'
   s.swift_version = '5.5'
 end

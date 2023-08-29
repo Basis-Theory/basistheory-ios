@@ -18,24 +18,6 @@
           "revision": "0e02cf3d09cf79b30ca130acc112f4be264aa53c",
           "version": "0.7.0"
         }
-      },
-      {
-        "package": "Datadog",
-        "repositoryURL": "https://github.com/Datadog/dd-sdk-ios.git",
-        "state": {
-          "branch": null,
-          "revision": "6418c623b0a91b9ac7a9d91c1c61ccc0aa2bf668",
-          "version": "1.16.0"
-        }
-      },
-      {
-        "package": "PLCrashReporter",
-        "repositoryURL": "https://github.com/microsoft/plcrashreporter.git",
-        "state": {
-          "branch": null,
-          "revision": "b1a342da19ed9b3af61ea2efa7656c2af30aeb7c",
-          "version": "1.11.0"
-        }
       }
     ]
   },
