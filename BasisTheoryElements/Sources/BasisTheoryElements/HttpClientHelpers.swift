@@ -118,18 +118,14 @@ struct HttpClientHelpers {
                         var json = JSON.dictionaryValue([:])
                         BasisTheoryElements.traverseJsonDictionary(dictionary: serializedJson as! [String:Any], json: &json, transformValue: JSON.rawValue)
                         
-                        TelemetryLogging.info("Successful \(method) response from \(url)")
                         completion(response, json, nil)
                     } catch {
-                        TelemetryLogging.warn("Unsuccessful \(method) response from \(url)", error: error)
                         completion(response, nil, error)
                     }
                 } else {
-                    TelemetryLogging.warn("Unexpected \(method) response from \(url): response does not have a body", error: error)
                     completion(response, nil, error)
                 }
             } else {
-                TelemetryLogging.warn("Invalid \(method) request to \(url)", error: error)
                 completion(nil, nil, HttpClientError.invalidRequest)
             }
         }

@@ -1,3 +1,11 @@
+## [2.8.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.7.0...2.8.0) (2023-08-29)
+
+
+### Features
+
+* removes dd ([#62](https://github.com/Basis-Theory/basistheory-ios/issues/62)) ([e58427b](https://github.com/Basis-Theory/basistheory-ios/commit/e58427b87f0349348f038b118fb97af7d94fbcc4))
+
+
 ## [2.7.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.6.0...2.7.0) (2023-08-09)
 
 
