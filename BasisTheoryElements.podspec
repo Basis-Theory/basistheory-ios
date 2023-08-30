@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.swift_version = '5.5'
   s.resource_bundles = { 
     'BasisTheoryElements_BasisTheoryElements' => [
-      'BasisTheoryElements/Sources/BasisTheoryElements/Resources/Assets.xcassets'
+      'Sources/BasisTheoryElements/Resources/Assets.xcassets'
       ] 
   }
 end
