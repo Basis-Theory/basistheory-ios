@@ -67,4 +67,20 @@ final class IntegrationTesterUITests: XCTestCase {
         
         XCTAssertEqual(readOnlyTextField.value as! String, "abcdefg")
     }
+    
+    func testCopy() throws {
+        let nameTextField = app.textFields["Name"]
+        let readOnlyTextField = app.textFields["Read Only"]
+        
+        let nameFieldCopyIcon = nameTextField.otherElements["copy"]
+        let readOnlyCopyIcon = nameTextField.otherElements["copy"]
+        
+        nameTextField.tap()
+        nameTextField.typeText("abcdefg")
+        
+        nameFieldCopyIcon.tap()
+        
+        let clipboardContent = UIPasteboard.general.string
+        XCTAssertEqual(clipboardContent, "abcdefg")
+    }
 }

@@ -61,6 +61,12 @@ class TextElementUITextFieldViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let nameOptions = TextElementOptions(enableCopy: true)
+        try! nameTextField.setConfig(options: nameOptions)
+        
+        let readOnlyOptions = TextElementOptions(enableCopy: true)
+        try! readOnlyTextField.setConfig(options: readOnlyOptions)
+        
         let regexDigit = try! NSRegularExpression(pattern: "\\d")
         let phoneMask = [ // (123)456-7890
             "(",

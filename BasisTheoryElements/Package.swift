@@ -27,7 +27,8 @@ let package = Package(
             dependencies: [
                 .product(name: "BasisTheory", package: "basistheory-swift"),
                 .product(name: "Datadog", package: "dd-sdk-ios"),
-            ]
+            ],
+            resources: [.process("Resources")]
         )
     ]
 )

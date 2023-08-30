@@ -13,11 +13,13 @@ public struct TextElementOptions {
     let mask: [Any]?
     let transform: ElementTransform?
     let validation: NSRegularExpression?
+    let enableCopy: Bool?
     
-    public init(mask: [Any]? = nil, transform: ElementTransform? = nil, validation: NSRegularExpression? = nil) {
+    public init(mask: [Any]? = nil, transform: ElementTransform? = nil, validation: NSRegularExpression? = nil, enableCopy: Bool? = false) {
         self.mask = mask
         self.transform = transform
         self.validation = validation
+        self.enableCopy = enableCopy
     }
 }
 
@@ -33,6 +35,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     var readOnly: Bool = false
     var valueRef: TextElementUITextField?
     private var cancellables = Set<AnyCancellable>()
+    private var copyIconImageView: UIImageView = UIImageView()
     
     public var subject = PassthroughSubject<ElementEvent, Error>()
     public var metadata: ElementMetadata = ElementMetadata(complete: true, empty: true, valid: true, maskSatisfied: false)
@@ -77,6 +80,25 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         ])
     }
     
+    private func setupCopy() {
+        let padding = 4;
+        let outerView = UIView(frame: CGRect(x: 0, y: 0, width: padding * 2 + 24, height: 24))
+        outerView.contentMode = .scaleAspectFit
+        outerView.isUserInteractionEnabled = true
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(copyText))
+        outerView.addGestureRecognizer(tapGestureRecognizer)
+        outerView.accessibilityIdentifier = "copy"
+        
+        copyIconImageView.frame = CGRect(x: padding, y: 0, width: 24, height: 24)
+        let image = UIImage(named: "copy", in: Bundle.module, compatibleWith: nil)
+        copyIconImageView.image = image
+        outerView.addSubview(copyIconImageView)
+        
+        self.rightViewMode = .always
+        self.rightView = outerView
+    }
+    
     deinit {
         subject.send(completion: .finished)
     }
@@ -96,14 +118,6 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         get { nil }
     }
     
-    public override var isUserInteractionEnabled: Bool {
-        set {
-            if (!readOnly) {
-                super.isUserInteractionEnabled = newValue
-            }
-        }
-        get { super.isUserInteractionEnabled }
-    }
     
     public func setValue(elementValueReference: ElementValueReference?) {
         if let elementValueReference = elementValueReference {
@@ -112,7 +126,6 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     }
     
     public func setValueRef(element: TextElementUITextField) {
-        self.isUserInteractionEnabled = false
         self.readOnly = true
             
         self.valueRef = element
@@ -150,6 +163,10 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
             self.inputValidation = options?.validation
         } else {
             self.inputValidation = nil
+        }
+        
+        if ((options?.enableCopy) != nil && options?.enableCopy == true) {
+            setupCopy()
         }
     }
     
@@ -302,6 +319,23 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         let event = ElementEvent(type: "blur", complete: self.metadata.complete, empty: self.metadata.empty, valid: self.metadata.valid, maskSatisfied: self.metadata.maskSatisfied, details: [])
         
         subject.send(event);
+    }
+    
+    @objc func copyText() {
+        UIPasteboard.general.string = super.text
+        
+        let checkImage = UIImage(named: "check", in: Bundle.module, compatibleWith: nil)
+        let copyImage = UIImage(named: "copy", in: Bundle.module, compatibleWith: nil)
+        
+        copyIconImageView.image = checkImage
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.copyIconImageView.image = copyImage
+        }
+    }
+    
+    public override func becomeFirstResponder() -> Bool {
+        return !readOnly ? super.becomeFirstResponder() : false
     }
     
     func getValue() -> String? {
