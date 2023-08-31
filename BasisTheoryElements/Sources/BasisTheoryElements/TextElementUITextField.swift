@@ -70,7 +70,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     
     private func getResourceBundle() -> Bundle {
         #if COCOAPODS
-            return Bundle(for: MyPackageClass.self)
+            return Bundle(for: BasisTheoryElements.self)
         #else
             return Bundle.module
         #endif
