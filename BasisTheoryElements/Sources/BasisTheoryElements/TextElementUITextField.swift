@@ -286,7 +286,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         
         TelemetryLogging.info("TextElementUITextField textChange event", attributes: [
             "elementId": self.elementId,
-            "event": elementEvent
+            "event": try? elementEvent.encode()
         ])
         
         subject.send(elementEvent)

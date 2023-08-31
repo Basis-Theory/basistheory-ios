@@ -79,7 +79,7 @@ final public class CardVerificationCodeUITextField: TextElementUITextField {
         
         TelemetryLogging.info("CardVerificationCodeUITextField textChange event", attributes: [
             "elementId": self.elementId,
-            "event": elementEvent
+            "event": try? elementEvent.encode()
         ])
         
         return elementEvent

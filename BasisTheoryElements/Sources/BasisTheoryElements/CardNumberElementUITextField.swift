@@ -93,7 +93,7 @@ final public class CardNumberUITextField: TextElementUITextField, CardElementPro
         
         TelemetryLogging.info("CardNumberUITextField textChange event", attributes: [
             "elementId": self.elementId,
-            "event": elementEvent
+            "event": try? elementEvent.encode()
         ])
         
         return elementEvent
