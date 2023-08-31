@@ -69,16 +69,11 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     }
     
     private func getResourceBundle() -> Bundle {
-        // Check if the current environment is CocoaPods
-        let isCocoaPods = ProcessInfo.processInfo.environment["COCOAPODS"] != nil
-
-        if isCocoaPods {
-            // For CocoaPods, use bundleForClass to get the appropriate bundle
-            return Bundle(for: BasisTheoryElements.self)
-        } else {
-            // For Swift Package Manager, use Bundle.module
+        #if COCOAPODS
+            return Bundle(for: MyPackageClass.self)
+        #else
             return Bundle.module
-        }
+        #endif
     }
 
     private func setup() {
