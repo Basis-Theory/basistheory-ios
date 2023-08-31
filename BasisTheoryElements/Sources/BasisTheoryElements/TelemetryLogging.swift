@@ -10,12 +10,9 @@ import UIKit
 struct TelemetryLogging {
     private static var hasInitialized = false
     
-    private static var logger: BtDatadogLogger = {
-        let env = Bundle.main.bundleIdentifier?.contains("IntegrationTester") ?? false ? "local" : "prod"
-        
-        let logger = BtDatadogLogger.builder()
+    private static var logger: BtDatadogLogger = BtDatadogLogger.builder()
             .withClientToken("pubfbd371e5695e9b44b66a4940f0e8d2ac")
-            .withAttribute(key: "env", value: env)
+            .withAttribute(key: "env", value: Bundle.main.bundleIdentifier?.contains("IntegrationTester") ?? false ? "local" : "prod")
             .withAttribute(key: "application", value: "BasisTheory iOS Elements")
             .withAttribute(key: "service",  value: "BasisTheory iOS Elements")
             .withAttribute(key: "vendorId",  value: UIDevice.current.identifierForVendor?.uuidString ?? "Unknown vendorId")
@@ -26,9 +23,6 @@ struct TelemetryLogging {
             .withAttribute(key: "btElementsVersion", value: BasisTheoryElements.version)
             .build()
         
-        return logger
-    }()
-    
     static func info(_ message: String, error: Error? = nil, attributes: [String: Encodable]? = nil) {
         logger.log(message: message, level: "info", error: error, attributes: attributes)
     }
