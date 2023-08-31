@@ -14,12 +14,14 @@ public struct TextElementOptions {
     let transform: ElementTransform?
     let validation: NSRegularExpression?
     let enableCopy: Bool?
+    let copyIconColor: UIColor?
     
-    public init(mask: [Any]? = nil, transform: ElementTransform? = nil, validation: NSRegularExpression? = nil, enableCopy: Bool? = false) {
+    public init(mask: [Any]? = nil, transform: ElementTransform? = nil, validation: NSRegularExpression? = nil, enableCopy: Bool? = false, copyIconColor: UIColor? = nil) {
         self.mask = mask
         self.transform = transform
         self.validation = validation
         self.enableCopy = enableCopy
+        self.copyIconColor = copyIconColor
     }
 }
 
@@ -33,6 +35,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     var previousValue: String = ""
     var readOnly: Bool = false
     var valueRef: TextElementUITextField?
+    var copyIconColor: UIColor?
     private var cancellables = Set<AnyCancellable>()
     private var copyIconImageView: UIImageView = UIImageView()
     
@@ -97,6 +100,11 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         copyIconImageView.frame = CGRect(x: padding, y: 0, width: 24, height: 24)
         let image = UIImage(named: "copy", in: getResourceBundle(), compatibleWith: nil)
         copyIconImageView.image = image
+        
+        if (self.copyIconColor != nil) {
+            copyIconImageView.tintColor = copyIconColor
+        }
+
         outerView.addSubview(copyIconImageView)
         
         self.rightViewMode = .always
@@ -167,6 +175,12 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
             self.inputValidation = options?.validation
         } else {
             self.inputValidation = nil
+        }
+        
+        if (options?.copyIconColor != nil) {
+            self.copyIconColor = options?.copyIconColor
+        } else {
+            self.copyIconColor = nil
         }
         
         if ((options?.enableCopy) != nil && options?.enableCopy == true) {
@@ -327,6 +341,10 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         let copyImage = UIImage(named: "copy", in: getResourceBundle(), compatibleWith: nil)
         
         copyIconImageView.image = checkImage
+        
+        if (copyIconColor != nil) {
+            copyIconImageView.tintColor = copyIconColor
+        }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.copyIconImageView.image = copyImage

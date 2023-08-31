@@ -61,7 +61,7 @@ class TextElementUITextFieldViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let nameOptions = TextElementOptions(enableCopy: true)
+        let nameOptions = TextElementOptions(enableCopy: true, copyIconColor: UIColor.red)
         try! nameTextField.setConfig(options: nameOptions)
         
         let readOnlyOptions = TextElementOptions(enableCopy: true)
