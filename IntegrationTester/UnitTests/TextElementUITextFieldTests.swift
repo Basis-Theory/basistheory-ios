@@ -240,6 +240,7 @@ final class TextElementUITextFieldTests: XCTestCase {
     func testEnableCopy() throws {
         let textField = TextElementUITextField()
         try! textField.setConfig(options: TextElementOptions(enableCopy: true))
+        textField.text = "abcdefg"
         
         let rightViewContainer = textField.rightView
         let iconImageView = rightViewContainer?.subviews.compactMap { $0 as? UIImageView }.first
@@ -247,6 +248,5 @@ final class TextElementUITextFieldTests: XCTestCase {
         // assert icon exists
         XCTAssertNotNil(textField.rightView)
         XCTAssertNotNil(iconImageView)
-        
     }
 }

@@ -68,6 +68,19 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         setup()
     }
     
+    private func getResourceBundle() -> Bundle {
+        // Check if the current environment is CocoaPods
+        let isCocoaPods = ProcessInfo.processInfo.environment["COCOAPODS"] != nil
+
+        if isCocoaPods {
+            // For CocoaPods, use bundleForClass to get the appropriate bundle
+            return Bundle(for: BasisTheoryElements.self)
+        } else {
+            // For Swift Package Manager, use Bundle.module
+            return Bundle.module
+        }
+    }
+
     private func setup() {
         self.smartDashesType = .no
         self.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
@@ -87,7 +100,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         outerView.accessibilityIdentifier = "copy"
         
         copyIconImageView.frame = CGRect(x: padding, y: 0, width: 24, height: 24)
-        let image = UIImage(named: "copy", in: Bundle.module, compatibleWith: nil)
+        let image = UIImage(named: "copy", in: getResourceBundle(), compatibleWith: nil)
         copyIconImageView.image = image
         outerView.addSubview(copyIconImageView)
         
@@ -315,8 +328,8 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     @objc func copyText() {
         UIPasteboard.general.string = super.text
         
-        let checkImage = UIImage(named: "check", in: Bundle.module, compatibleWith: nil)
-        let copyImage = UIImage(named: "copy", in: Bundle.module, compatibleWith: nil)
+        let checkImage = UIImage(named: "check", in: getResourceBundle(), compatibleWith: nil)
+        let copyImage = UIImage(named: "copy", in: getResourceBundle(), compatibleWith: nil)
         
         copyIconImageView.image = checkImage
         
