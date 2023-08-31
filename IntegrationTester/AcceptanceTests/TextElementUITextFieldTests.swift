@@ -70,18 +70,54 @@ final class IntegrationTesterUITests: XCTestCase {
     
     func testCopy() throws {
         let nameTextField = app.textFields["Name"]
-        let readOnlyTextField = app.textFields["Read Only"]
+        let phoneNumberTextField = app.textFields["Phone Number"]
         
         let nameFieldCopyIcon = nameTextField.otherElements["copy"]
-        let readOnlyCopyIcon = nameTextField.otherElements["copy"]
         
         nameTextField.tap()
-        nameTextField.typeText("abcdefg")
+        nameTextField.typeText("123")
         
         nameFieldCopyIcon.tap()
         
-        // TODO: Fix
-        // let clipboardContent = UIPasteboard.general.string
-        // XCTAssertEqual(clipboardContent, "abcdefg")
+        // doubleTap doesn't work because it has a certain delay to display the menu
+        phoneNumberTextField.tap()
+        phoneNumberTextField.tap()
+        
+        let pasteOption = app.menuItems["Paste"]
+
+        if pasteOption.waitForExistence(timeout: 5) {
+            pasteOption.tap()
+        } else {
+            XCTFail("Field paste option took to long to display.")
+        }
+        
+        XCTAssertEqual(phoneNumberTextField.value as! String, "(123")
+    }
+    
+    func testCopyFromReadOnly() throws {
+        let nameTextField = app.textFields["Name"]
+        let readOnlyTextField = app.textFields["Read Only"]
+        let phoneNumberTextField = app.textFields["Phone Number"]
+        
+        let readOnlyFieldCopyIcon = readOnlyTextField.otherElements["copy"]
+        
+        nameTextField.tap()
+        nameTextField.typeText("123")
+        
+        readOnlyFieldCopyIcon.tap()
+        
+        // doubleTap doesn't work because it has a certain delay to display the menu
+        phoneNumberTextField.tap()
+        phoneNumberTextField.tap()
+        
+        let pasteOption = app.menuItems["Paste"]
+
+        if pasteOption.waitForExistence(timeout: 5) {
+            pasteOption.tap()
+        } else {
+            XCTFail("Field paste option took to long to display.")
+        }
+        
+        XCTAssertEqual(phoneNumberTextField.value as! String, "(123")
     }
 }
