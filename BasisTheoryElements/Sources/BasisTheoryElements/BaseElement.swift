@@ -13,6 +13,7 @@ public protocol ElementProtocol {
     var metadata: ElementMetadata { get }
     func setValue(elementValueReference: ElementValueReference?) -> Void
     func setValueRef(element: TextElementUITextField) -> Void
+    var elementId: String { get set }
 }
 
 public protocol CardElementProtocol {
@@ -30,6 +31,7 @@ internal protocol InternalElementProtocol {
 internal protocol ElementReferenceProtocol {
     func getValue() -> String?
     var isComplete: Bool? { get set }
+    var elementId: String { get set }
 }
 
 public enum ElementConfigError: Error {
@@ -38,12 +40,14 @@ public enum ElementConfigError: Error {
 }
 
 public class ElementValueReference: ElementReferenceProtocol {
+    var elementId: String
     var valueMethod: (() -> String)?
     var isComplete: Bool? = true
     
-    init(valueMethod: (() -> String)?, isComplete: Bool?) {
+    init(elementId: String = UUID(uuid: UUID_NULL).uuidString, valueMethod: (() -> String)?, isComplete: Bool?) {
         self.valueMethod = valueMethod
         self.isComplete = isComplete
+        self.elementId = elementId
     }
 
     func getValue() -> String? {
