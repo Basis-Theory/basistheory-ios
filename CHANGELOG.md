@@ -1,3 +1,11 @@
+### [2.10.1](https://github.com/Basis-Theory/basistheory-ios/compare/2.10.0...2.10.1) (2023-09-01)
+
+
+### Bug Fixes
+
+* enable copy icons on card elements ([#65](https://github.com/Basis-Theory/basistheory-ios/issues/65)) ([12d39f6](https://github.com/Basis-Theory/basistheory-ios/commit/12d39f6068f9a27a7ed3e746feb2ac8dec664e11))
+
+
 ## [2.10.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.9.0...2.10.0) (2023-09-01)
 
 
