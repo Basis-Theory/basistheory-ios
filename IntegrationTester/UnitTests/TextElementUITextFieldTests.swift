@@ -210,9 +210,8 @@ final class TextElementUITextFieldTests: XCTestCase {
         
         readOnlyField.setValueRef(element: textField)
         
-        XCTAssertEqual(readOnlyField.isUserInteractionEnabled, false)
-        readOnlyField.isUserInteractionEnabled = true
-        XCTAssertEqual(readOnlyField.isUserInteractionEnabled, false)
+        XCTAssertEqual(readOnlyField.isFirstResponder, false)
+        XCTAssertEqual(readOnlyField.becomeFirstResponder(), false)
     }
     
     func testCustomRegexValidation() throws {
@@ -238,5 +237,29 @@ final class TextElementUITextFieldTests: XCTestCase {
         XCTAssertTrue(textField.metadata.valid)
     }
     
+    func testEnableCopy() throws {
+        let textField = TextElementUITextField()
+        try! textField.setConfig(options: TextElementOptions(enableCopy: true))
+        
+        let rightViewContainer = textField.rightView
+        let iconImageView = rightViewContainer?.subviews.compactMap { $0 as? UIImageView }.first
+        
+        // assert icon exists
+        XCTAssertNotNil(textField.rightView)
+        XCTAssertNotNil(iconImageView)
+    }
     
+    func testCopyIconColor() throws {
+        let textField = TextElementUITextField()
+        try! textField.setConfig(options: TextElementOptions(enableCopy: true, copyIconColor: UIColor.red))
+        
+        let rightViewContainer = textField.rightView
+        let iconImageView = rightViewContainer?.subviews.compactMap { $0 as? UIImageView }.first
+        
+        // assert icon exists
+        XCTAssertNotNil(iconImageView)
+        
+        // assert color
+        XCTAssertEqual(iconImageView?.tintColor, UIColor.red)
+    }
 }

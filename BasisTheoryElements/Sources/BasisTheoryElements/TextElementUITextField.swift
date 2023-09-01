@@ -13,11 +13,15 @@ public struct TextElementOptions {
     let mask: [Any]?
     let transform: ElementTransform?
     let validation: NSRegularExpression?
+    let enableCopy: Bool?
+    let copyIconColor: UIColor?
     
-    public init(mask: [Any]? = nil, transform: ElementTransform? = nil, validation: NSRegularExpression? = nil) {
+    public init(mask: [Any]? = nil, transform: ElementTransform? = nil, validation: NSRegularExpression? = nil, enableCopy: Bool? = false, copyIconColor: UIColor? = nil) {
         self.mask = mask
         self.transform = transform
         self.validation = validation
+        self.enableCopy = enableCopy
+        self.copyIconColor = copyIconColor
     }
 }
 
@@ -31,7 +35,9 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     var previousValue: String = ""
     var readOnly: Bool = false
     var valueRef: TextElementUITextField?
+    var copyIconColor: UIColor?
     private var cancellables = Set<AnyCancellable>()
+    private var copyIconImageView: UIImageView = UIImageView()
     
     public var subject = PassthroughSubject<ElementEvent, Error>()
     public var metadata: ElementMetadata = ElementMetadata(complete: true, empty: true, valid: true, maskSatisfied: false)
@@ -65,12 +71,44 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         setup()
     }
     
+    private func getResourceBundle() -> Bundle {
+        #if COCOAPODS
+            return Bundle(for: BasisTheoryElements.self)
+        #else
+            return Bundle.module
+        #endif
+    }
+
     private func setup() {
         self.smartDashesType = .no
         self.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         self.addTarget(self, action: #selector(editingStarted), for: .editingDidBegin)
         self.addTarget(self, action: #selector(editingEnded), for: .editingDidEnd)
         subject.send(ElementEvent(type: "ready", complete: true, empty: true, valid: true, maskSatisfied: false, details: []))
+    }
+    
+    private func setupCopy() {
+        let padding = 4;
+        let outerView = UIView(frame: CGRect(x: 0, y: 0, width: padding * 2 + 24, height: 24))
+        outerView.contentMode = .scaleAspectFit
+        outerView.isUserInteractionEnabled = true
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(copyText))
+        outerView.addGestureRecognizer(tapGestureRecognizer)
+        outerView.accessibilityIdentifier = "copy"
+        
+        copyIconImageView.frame = CGRect(x: padding, y: 0, width: 24, height: 24)
+        let image = UIImage(named: "copy", in: getResourceBundle(), compatibleWith: nil)
+        copyIconImageView.image = image
+        
+        if (self.copyIconColor != nil) {
+            copyIconImageView.tintColor = copyIconColor
+        }
+
+        outerView.addSubview(copyIconImageView)
+        
+        self.rightViewMode = .always
+        self.rightView = outerView
     }
     
     deinit {
@@ -92,14 +130,6 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         get { nil }
     }
     
-    public override var isUserInteractionEnabled: Bool {
-        set {
-            if (!readOnly) {
-                super.isUserInteractionEnabled = newValue
-            }
-        }
-        get { super.isUserInteractionEnabled }
-    }
     
     public func setValue(elementValueReference: ElementValueReference?) {
         if let elementValueReference = elementValueReference {
@@ -108,7 +138,6 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     }
     
     public func setValueRef(element: TextElementUITextField) {
-        self.isUserInteractionEnabled = false
         self.readOnly = true
             
         self.valueRef = element
@@ -146,6 +175,16 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
             self.inputValidation = options?.validation
         } else {
             self.inputValidation = nil
+        }
+        
+        if (options?.copyIconColor != nil) {
+            self.copyIconColor = options?.copyIconColor
+        } else {
+            self.copyIconColor = nil
+        }
+        
+        if ((options?.enableCopy) != nil && options?.enableCopy == true) {
+            setupCopy()
         }
     }
     
@@ -293,6 +332,27 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         let event = ElementEvent(type: "blur", complete: self.metadata.complete, empty: self.metadata.empty, valid: self.metadata.valid, maskSatisfied: self.metadata.maskSatisfied, details: [])
         
         subject.send(event);
+    }
+    
+    @objc func copyText() {
+        UIPasteboard.general.string = super.text
+        
+        let checkImage = UIImage(named: "check", in: getResourceBundle(), compatibleWith: nil)
+        let copyImage = UIImage(named: "copy", in: getResourceBundle(), compatibleWith: nil)
+        
+        copyIconImageView.image = checkImage
+        
+        if (copyIconColor != nil) {
+            copyIconImageView.tintColor = copyIconColor
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.copyIconImageView.image = copyImage
+        }
+    }
+    
+    public override func becomeFirstResponder() -> Bool {
+        return !readOnly ? super.becomeFirstResponder() : false
     }
     
     func getValue() -> String? {

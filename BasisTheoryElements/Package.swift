@@ -25,7 +25,8 @@ let package = Package(
             name: "BasisTheoryElements",
             dependencies: [
                 .product(name: "BasisTheory", package: "basistheory-swift"),
-            ]
+            ],
+            resources: [.process("Resources")]
         )
     ]
 )
