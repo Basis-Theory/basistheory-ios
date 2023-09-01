@@ -155,4 +155,30 @@ final class CardVerificationCodeUITextFieldTests: XCTestCase {
         
         waitForExpectations(timeout: 1, handler: nil)
     }
+    
+    func testEnableCopy() throws {
+        let cvcField = CardVerificationCodeUITextField()
+        cvcField.setConfig(options: CardVerificationCodeOptions(enableCopy: true))
+        
+        let rightViewContainer = cvcField.rightView
+        let iconImageView = rightViewContainer?.subviews.compactMap { $0 as? UIImageView }.first
+        
+        // assert icon exists
+        XCTAssertNotNil(cvcField.rightView)
+        XCTAssertNotNil(iconImageView)
+    }
+    
+    func testCopyIconColor() throws {
+        let cvcField = CardVerificationCodeUITextField()
+        cvcField.setConfig(options: CardVerificationCodeOptions(enableCopy: true, copyIconColor: UIColor.red))
+        
+        let rightViewContainer = cvcField.rightView
+        let iconImageView = rightViewContainer?.subviews.compactMap { $0 as? UIImageView }.first
+        
+        // assert icon exists
+        XCTAssertNotNil(iconImageView)
+        
+        // assert color
+        XCTAssertEqual(iconImageView?.tintColor, UIColor.red)
+    }
 }
