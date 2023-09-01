@@ -1,3 +1,11 @@
+## [2.10.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.9.0...2.10.0) (2023-09-01)
+
+
+### Features
+
+* restores logging ([#64](https://github.com/Basis-Theory/basistheory-ios/issues/64)) ([7a21b64](https://github.com/Basis-Theory/basistheory-ios/commit/7a21b64406004e2aec2db0874e0941d8aafd5e4b))
+
+
 ## [2.9.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.8.0...2.9.0) (2023-09-01)
 
 
