@@ -226,4 +226,30 @@ final class CardNumberUITextFieldTests: XCTestCase {
         waitForExpectations(timeout: 30, handler: nil)
         
     }
+    
+    func testEnableCopy() throws {
+        let cardNumberTextField = CardNumberUITextField()
+        try! cardNumberTextField.setConfig(options: TextElementOptions(enableCopy: true))
+        
+        let rightViewContainer = cardNumberTextField.rightView
+        let iconImageView = rightViewContainer?.subviews.compactMap { $0 as? UIImageView }.first
+        
+        // assert icon exists
+        XCTAssertNotNil(cardNumberTextField.rightView)
+        XCTAssertNotNil(iconImageView)
+    }
+    
+    func testCopyIconColor() throws {
+        let cardNumberTextField = CardExpirationDateUITextField()
+        try! cardNumberTextField.setConfig(options: TextElementOptions(enableCopy: true, copyIconColor: UIColor.red))
+        
+        let rightViewContainer = cardNumberTextField.rightView
+        let iconImageView = rightViewContainer?.subviews.compactMap { $0 as? UIImageView }.first
+        
+        // assert icon exists
+        XCTAssertNotNil(iconImageView)
+        
+        // assert color
+        XCTAssertEqual(iconImageView?.tintColor, UIColor.red)
+    }
 }

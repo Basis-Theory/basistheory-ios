@@ -10,9 +10,13 @@ import Combine
 
 public struct CardVerificationCodeOptions {
     let cardNumberUITextField: CardNumberUITextField?
+    let enableCopy: Bool?
+    let copyIconColor: UIColor?
     
-    public init(cardNumberUITextField: CardNumberUITextField? = nil) {
+    public init(cardNumberUITextField: CardNumberUITextField? = nil, enableCopy: Bool? = false, copyIconColor: UIColor? = nil) {
         self.cardNumberUITextField = cardNumberUITextField
+        self.enableCopy = enableCopy
+        self.copyIconColor = copyIconColor
     }
 }
 
@@ -104,6 +108,10 @@ final public class CardVerificationCodeUITextField: TextElementUITextField {
                     self.updateCvcMask()
                 }
             }.store(in: &cancellables)
+        }
+        
+        if (options.enableCopy != nil || options.copyIconColor != nil) {
+            try! super.setConfig(options: TextElementOptions(enableCopy: options.enableCopy, copyIconColor: options.copyIconColor))
         }
     }
     

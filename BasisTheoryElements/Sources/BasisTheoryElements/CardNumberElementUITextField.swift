@@ -41,7 +41,11 @@ final public class CardNumberUITextField: TextElementUITextField, CardElementPro
     }
     
     public override func setConfig(options: TextElementOptions?) throws {
-        throw ElementConfigError.configNotAllowed
+        if (options?.enableCopy != nil || options?.copyIconColor != nil) {
+            try! super.setConfig(options: TextElementOptions(enableCopy: options?.enableCopy, copyIconColor: options?.copyIconColor))
+        } else {
+            throw ElementConfigError.configNotAllowed
+        }
     }
     
     private func getDefaultCardMask() -> [Any] {

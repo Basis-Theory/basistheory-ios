@@ -308,4 +308,30 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         
         waitForExpectations(timeout: 30, handler: nil)
     }
+    
+    func testEnableCopy() throws {
+        let expirationDateTextField = CardExpirationDateUITextField()
+        try! expirationDateTextField.setConfig(options: TextElementOptions(enableCopy: true))
+        
+        let rightViewContainer = expirationDateTextField.rightView
+        let iconImageView = rightViewContainer?.subviews.compactMap { $0 as? UIImageView }.first
+        
+        // assert icon exists
+        XCTAssertNotNil(expirationDateTextField.rightView)
+        XCTAssertNotNil(iconImageView)
+    }
+    
+    func testCopyIconColor() throws {
+        let expirationDateTextField = CardExpirationDateUITextField()
+        try! expirationDateTextField.setConfig(options: TextElementOptions(enableCopy: true, copyIconColor: UIColor.red))
+        
+        let rightViewContainer = expirationDateTextField.rightView
+        let iconImageView = rightViewContainer?.subviews.compactMap { $0 as? UIImageView }.first
+        
+        // assert icon exists
+        XCTAssertNotNil(iconImageView)
+        
+        // assert color
+        XCTAssertEqual(iconImageView?.tintColor, UIColor.red)
+    }
 }
