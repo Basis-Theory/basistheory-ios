@@ -85,14 +85,32 @@ struct ProxyHelpers {
                         }
                         
                         completion(response, json, nil)
-                      } catch {
+                        TelemetryLogging.info("Successful API response", attributes: [
+                            "endpoint": endpoint,
+                            "BT-TRACE-ID": btTraceId,
+                            "apiSuccess": true
+                        ])
+                    } catch {
                         completion(response, nil, error)
+                        TelemetryLogging.warn("Unsuccessful API response", error: error, attributes: [
+                            "endpoint": endpoint,
+                            "BT-TRACE-ID": btTraceId,
+                            "apiSuccess": false
+                        ])
                     }
                 } else {
                     completion(response, nil, error)
+                    TelemetryLogging.warn("Unexpected destination URL response: response does not have a body", error: error, attributes: [
+                        "endpoint": endpoint,
+                        "BT-TRACE-ID": btTraceId,
+                    ])
                 }
             } else {
                 completion(nil, nil, ProxyError.invalidRequest)
+                TelemetryLogging.warn("Invalid proxy request", error: error, attributes: [
+                    "endpoint": endpoint,
+                    "BT-TRACE-ID": btTraceId,
+                ])
             }
         }.resume()
     }
