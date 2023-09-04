@@ -301,8 +301,6 @@ final public class BasisTheoryElements {
                     body[key] = Int(textValue!)
                 case .double:
                     body[key] = Double(textValue!)
-                case .float:
-                    body[key] = Float(textValue!)
                 case .bool:
                     body[key] = Bool(textValue!)
                 case .string:

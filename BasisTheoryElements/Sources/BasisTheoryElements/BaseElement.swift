@@ -30,7 +30,6 @@ internal protocol InternalElementProtocol {
 
 public enum ElementValueType: String {
     case int = "int"
-    case float = "float"
     case double = "double"
     case bool = "bool"
     case string = "string"
