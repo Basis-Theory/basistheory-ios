@@ -15,13 +15,15 @@ public struct TextElementOptions {
     let validation: NSRegularExpression?
     let enableCopy: Bool?
     let copyIconColor: UIColor?
+    let getValueType: ElementValueType?
     
-    public init(mask: [Any]? = nil, transform: ElementTransform? = nil, validation: NSRegularExpression? = nil, enableCopy: Bool? = false, copyIconColor: UIColor? = nil) {
+    public init(mask: [Any]? = nil, transform: ElementTransform? = nil, validation: NSRegularExpression? = nil, enableCopy: Bool? = false, copyIconColor: UIColor? = nil, getValueType: ElementValueType? = .string) {
         self.mask = mask
         self.transform = transform
         self.validation = validation
         self.enableCopy = enableCopy
         self.copyIconColor = copyIconColor
+        self.getValueType = getValueType
     }
 }
 
@@ -37,6 +39,7 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
     var readOnly: Bool = false
     var valueRef: TextElementUITextField?
     var copyIconColor: UIColor?
+    var getValueType: ElementValueType? = .string
     private var cancellables = Set<AnyCancellable>()
     private var copyIconImageView: UIImageView = UIImageView()
     
@@ -189,6 +192,12 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
         
         if ((options?.enableCopy) != nil && options?.enableCopy == true) {
             setupCopy()
+        }
+        
+        if (options?.getValueType != nil) {
+            self.getValueType = options?.getValueType
+        } else {
+            self.getValueType = .string
         }
     }
     

@@ -295,8 +295,22 @@ final public class BasisTheoryElements {
                     
                     throw TokenizingError.invalidInput
                 }
-                body[key] = textValue
-                
+
+                switch (v.getValueType) {
+                case .int:
+                    body[key] = Int(textValue!)
+                case .double:
+                    body[key] = Double(textValue!)
+                case .float:
+                    body[key] = Float(textValue!)
+                case .bool:
+                    body[key] = Bool(textValue!)
+                case .string:
+                    body[key] = textValue
+                case .none:
+                    body[key] = textValue
+                }
+
                 TelemetryLogging.info("Retrieving element value for API call", attributes: [
                     "elementId": v.elementId,
                     "endpoint": endpoint,
