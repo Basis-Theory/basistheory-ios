@@ -196,8 +196,8 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         TokensAPI.getByIdWithRequestBuilder(id: createdToken["id"] as! String).addHeader(name: "BT-API-KEY", value: privateApiKey).execute { result in
             do {
                 let token = try result.get().body.data!.value as! [String: Any]
-                XCTAssertEqual(token["monthRef"] as! String, String(self.formatMonth(month: self.getCurrentMonth())))
-                XCTAssertEqual(token["yearRef"] as! String, formattedYear)
+                XCTAssertEqual(token["monthRef"] as? Int, Int(self.formatMonth(month: self.getCurrentMonth())))
+                XCTAssertEqual(token["yearRef"] as? Int, Int(formattedYear))
                 
                 idQueryExpectation.fulfill()
             } catch {
