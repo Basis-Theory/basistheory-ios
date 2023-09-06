@@ -262,4 +262,68 @@ final class TextElementUITextFieldTests: XCTestCase {
         // assert color
         XCTAssertEqual(iconImageView?.tintColor, UIColor.red)
     }
+    
+    func testGetValueType() throws {
+        let textField = TextElementUITextField()
+        let intTextField = TextElementUITextField()
+        let doubleTextField = TextElementUITextField()
+        let boolTextField = TextElementUITextField()
+        
+        let string: String = "string"
+        let int: Int = 10
+        let double: Double = 1.5
+        let bool: Bool = true
+        
+        textField.insertText(string)
+        intTextField.insertText(String(int))
+        doubleTextField.insertText(String(double))
+        boolTextField.insertText(String(bool))
+
+        try! intTextField.setConfig(options: TextElementOptions(getValueType: .int))
+        try! doubleTextField.setConfig(options: TextElementOptions(getValueType: .double))
+        try! boolTextField.setConfig(options: TextElementOptions(getValueType: .bool))
+
+        let body: CreateToken = CreateToken(type: "token", data: [
+                "stringTextField": textField,
+                "intTextField": intTextField,
+                "doubleTextField": doubleTextField,
+                "boolTextField": boolTextField,
+                
+        ])
+
+        let apiKey = Configuration.getConfiguration().btApiKey!
+        let transformExpectation = self.expectation(description: "Get Value Types")
+
+        var createdToken: CreateTokenResponse? = nil
+        BasisTheoryElements.basePath = "https://api.flock-dev.com"
+        BasisTheoryElements.createToken(body: body, apiKey: apiKey) { data, error in
+            createdToken = data
+
+            XCTAssertNotNil(createdToken!.id)
+            XCTAssertEqual(createdToken!.type!, "token")
+            transformExpectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 3)
+        
+        let valueTypeQueryExpectation = self.expectation(description: "Query Token By ID to Test Value Types")
+        let privateApiKey = Configuration.getConfiguration().privateBtApiKey!
+        TokensAPI.getByIdWithRequestBuilder(id: createdToken!.id!).addHeader(name: "BT-API-KEY", value: privateApiKey).execute { result in
+            do {
+                let token = try result.get().body.data!.value as! [String: Any]
+
+                XCTAssertEqual(token["stringTextField"] as! String, string)
+                XCTAssertEqual(token["intTextField"] as! Int, int)
+                XCTAssertEqual(token["doubleTextField"] as! Double, double)
+                XCTAssertEqual(token["boolTextField"] as! Bool, bool)
+                
+
+                valueTypeQueryExpectation.fulfill()
+            } catch {
+                print(error)
+            }
+        }
+
+        waitForExpectations(timeout: 3)
+    }
 }

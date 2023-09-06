@@ -28,8 +28,16 @@ internal protocol InternalElementProtocol {
     func getMaskedValue() -> String?
 }
 
+public enum ElementValueType: String {
+    case int = "int"
+    case double = "double"
+    case bool = "bool"
+    case string = "string"
+}
+
 internal protocol ElementReferenceProtocol {
     func getValue() -> String?
+    var getValueType: ElementValueType? { get set }
     var isComplete: Bool? { get set }
     var elementId: String { get set }
 }
@@ -43,11 +51,13 @@ public class ElementValueReference: ElementReferenceProtocol {
     var elementId: String
     var valueMethod: (() -> String)?
     var isComplete: Bool? = true
+    var getValueType: ElementValueType? = .string
     
-    init(elementId: String = UUID(uuid: UUID_NULL).uuidString, valueMethod: (() -> String)?, isComplete: Bool?) {
+    init(elementId: String = UUID(uuid: UUID_NULL).uuidString, valueMethod: (() -> String)?, isComplete: Bool?, getValueType: ElementValueType? = .string) {
         self.valueMethod = valueMethod
         self.isComplete = isComplete
         self.elementId = elementId
+        self.getValueType = getValueType
     }
 
     func getValue() -> String? {
