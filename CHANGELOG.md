@@ -1,3 +1,15 @@
+## [3.0.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.10.1...3.0.0) (2023-09-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* the value for the month() and year() methods of CardExpirationDateUITextField is now converted to Number before sending to the API to match the APIs 'card' contract instead of String as it was before.
+
+### Features
+
+* add type conversion when submitting element values ([#66](https://github.com/Basis-Theory/basistheory-ios/issues/66)) ([74ee517](https://github.com/Basis-Theory/basistheory-ios/commit/74ee51734e274b72c8d3e2c0536364bedc81980c))
+
+
 ### [2.10.1](https://github.com/Basis-Theory/basistheory-ios/compare/2.10.0...2.10.1) (2023-09-01)
 
 

@@ -38,7 +38,7 @@ extension RequestBuilder {
 }
 
 final public class BasisTheoryElements {
-    public static let version = "2.10.1" // do not modify. updated through CI
+    public static let version = "3.0.0" // do not modify. updated through CI
     public static var apiKey: String = ""
     public static var basePath: String = "https://api.basistheory.com"
     
