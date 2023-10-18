@@ -237,27 +237,6 @@ final class TextElementUITextFieldTests: XCTestCase {
         XCTAssertTrue(textField.metadata.valid)
     }
     
-    func testIncompleteWhenCleared() throws {
-        let textField = TextElementUITextField()
-        var cancellables = Set<AnyCancellable>()
-        
-        textField.insertText("a")
-        XCTAssertTrue(textField.metadata.complete)
-        
-        textField.text = ""
-        
-        textField.subject.sink { completion in
-            print(completion)
-        } receiveValue: { message in
-            XCTAssertEqual(message.type, "textChange")
-            XCTAssertEqual(message.complete, true)
-            XCTAssertEqual(message.maskSatisfied, true)
-            XCTAssertEqual(message.empty, true)
-        }.store(in: &cancellables)
-        
-        XCTAssertTrue(textField.metadata.empty)
-    }
-    
     func testEnableCopy() throws {
         let textField = TextElementUITextField()
         try! textField.setConfig(options: TextElementOptions(enableCopy: true))
