@@ -1,3 +1,15 @@
+## [4.0.0](https://github.com/Basis-Theory/basistheory-ios/compare/3.0.0...4.0.0) (2023-10-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* when setting text programmatically on an element, you should now expect a  event and subsequently update of the , ,  and other change flags.
+
+### Bug Fixes
+
+* trigger text change events when setting text programmatically ([#67](https://github.com/Basis-Theory/basistheory-ios/issues/67)) ([7fa76e1](https://github.com/Basis-Theory/basistheory-ios/commit/7fa76e1fe5f5ee0139055627d8e3f8eb54bd5af1))
+
+
 ## [3.0.0](https://github.com/Basis-Theory/basistheory-ios/compare/2.10.1...3.0.0) (2023-09-06)
 
 
