@@ -133,6 +133,8 @@ public class TextElementUITextField: UITextField, InternalElementProtocol, Eleme
             if let validation = validation {
                 self.isComplete = self.isComplete ?? true && validation(transform(text: newValue))
             }
+
+            textFieldDidChange()
         }
         get { nil }
     }

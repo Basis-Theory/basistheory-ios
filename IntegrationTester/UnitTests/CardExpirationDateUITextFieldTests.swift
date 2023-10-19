@@ -50,6 +50,7 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         let invalidDateYearInThePastExpectation = self.expectation(description: "Invalid expiration date with year in the past")
         let invalidDateMonthInThePastExpectation = self.expectation(description: "Invalid expiration date with month in the past")
         
+        var fieldCleared = false
         var incompleteDateExpectationHasBeenFulfilled = false
         var invalidDateYearInThePastExpectationHasBeenFulfilled = false
         
@@ -58,20 +59,27 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
             print(completion)
         } receiveValue: { message in
             XCTAssertEqual(message.type, "textChange")
-            XCTAssertEqual(message.empty, false)
             XCTAssertEqual(message.valid, false)
             
-            if (!incompleteDateExpectationHasBeenFulfilled) {
-                XCTAssertEqual(message.complete, false)
-                incompleteDateExpectation.fulfill()
-                incompleteDateExpectationHasBeenFulfilled = true
-            } else if (!invalidDateYearInThePastExpectationHasBeenFulfilled) {
-                XCTAssertEqual(message.complete, false)
-                invalidDateYearInThePastExpectation.fulfill()
-                invalidDateYearInThePastExpectationHasBeenFulfilled = true
+            if (fieldCleared) {
+                XCTAssertEqual(message.empty, true)
+                fieldCleared = false
             } else {
-                XCTAssertEqual(message.complete, false)
-                invalidDateMonthInThePastExpectation.fulfill()
+                XCTAssertEqual(message.empty, false)
+                
+                if (!incompleteDateExpectationHasBeenFulfilled) {
+                    XCTAssertEqual(message.complete, false)
+                    incompleteDateExpectation.fulfill()
+                    incompleteDateExpectationHasBeenFulfilled = true
+                } else if (!invalidDateYearInThePastExpectationHasBeenFulfilled) {
+                    XCTAssertEqual(message.complete, false)
+                    invalidDateYearInThePastExpectation.fulfill()
+                    invalidDateYearInThePastExpectationHasBeenFulfilled = true
+                } else {
+                    XCTAssertEqual(message.complete, false)
+                    invalidDateMonthInThePastExpectation.fulfill()
+                }
+                
             }
         }.store(in: &cancellables)
         
@@ -79,8 +87,10 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         let pastMonth = getCurrentMonth() - 1
         
         expirationDateTextField.insertText("1") // incomplete
+        fieldCleared = true
         expirationDateTextField.text = ""
         expirationDateTextField.insertText("12/" + String(pastYear)) // year in the past
+        fieldCleared = true
         expirationDateTextField.text = ""
         expirationDateTextField.insertText(formatMonth(month: pastMonth) + "/" + String(getCurrentYear())) // month in past
         
@@ -94,6 +104,7 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         let validExpDateFutureMonthExpectation = self.expectation(description: "Valid expiration date - future month")
         let validExpDateCurrentMonthAndYear = self.expectation(description: "Valid expiration date - current month and year")
         
+        var fieldCleared = false
         var futureYearExpectationHasBeenFulfilled = false
         var futureMonthExpectationHasBeenFulfilled = false
         
@@ -102,20 +113,27 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
             print(completion)
         } receiveValue: { message in
             XCTAssertEqual(message.type, "textChange")
-            XCTAssertEqual(message.empty, false)
-            XCTAssertEqual(message.valid, true)
             
-            if (!futureYearExpectationHasBeenFulfilled) {
-                XCTAssertEqual(message.complete, true)
-                validExpDateFutureYearExpectation.fulfill()
-                futureYearExpectationHasBeenFulfilled = true
-            } else if (!futureMonthExpectationHasBeenFulfilled) {
-                XCTAssertEqual(message.complete, true)
-                validExpDateFutureMonthExpectation.fulfill()
-                futureMonthExpectationHasBeenFulfilled = true
+            if (fieldCleared) {
+                XCTAssertEqual(message.empty, true)
+                XCTAssertEqual(message.valid, false)
+                fieldCleared = false
             } else {
-                XCTAssertEqual(message.complete, true)
-                validExpDateCurrentMonthAndYear.fulfill()
+                XCTAssertEqual(message.empty, false)
+                XCTAssertEqual(message.valid, true)
+                
+                if (!futureYearExpectationHasBeenFulfilled) {
+                    XCTAssertEqual(message.complete, true)
+                    validExpDateFutureYearExpectation.fulfill()
+                    futureYearExpectationHasBeenFulfilled = true
+                } else if (!futureMonthExpectationHasBeenFulfilled) {
+                    XCTAssertEqual(message.complete, true)
+                    validExpDateFutureMonthExpectation.fulfill()
+                    futureMonthExpectationHasBeenFulfilled = true
+                } else {
+                    XCTAssertEqual(message.complete, true)
+                    validExpDateCurrentMonthAndYear.fulfill()
+                }
             }
         }.store(in: &cancellables)
         
@@ -123,8 +141,10 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         let futureMonth = getCurrentMonth() + 1
         
         expirationDateTextField.insertText(formatMonth(month: getCurrentMonth()) + "/" + String(futureYear)) // future year
+        fieldCleared = true
         expirationDateTextField.text = ""
         expirationDateTextField.insertText(formatMonth(month: futureMonth) + "/" + String(getCurrentYear())) // future month
+        fieldCleared = true
         expirationDateTextField.text = ""
         expirationDateTextField.insertText(formatMonth(month: getCurrentMonth()) + "/" + String(getCurrentYear())) // current month/year
         
@@ -248,13 +268,13 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         TokensAPI.getByIdWithRequestBuilder(id: createdToken["id"] as! String).addHeader(name: "BT-API-KEY", value: privateApiKey).execute { result in
             do {
                 let token = try result.get().body.data!.value as! [String: Any]
-                 XCTAssertEqual(token["fullYear"] as! String, expectedYear)
-                 XCTAssertEqual(token["singleDigitMonth"] as! String, "\(expectedMonth.suffix(1))")
-                 XCTAssertEqual(token["dubleDigitMonth"] as! String, expectedMonth)
-                 XCTAssertEqual(token["fullYearMonth"] as! String, "\(expectedYear)\(expectedMonth)")
-                 XCTAssertEqual(token["monthDashFullYear"] as! String, "\(expectedMonth)-\(expectedYear)")
-                 XCTAssertEqual(token["monthForwardSlashTwoDigitYear"] as! String, "\(expectedMonth)/\(expectedYear.suffix(2))")
-                 XCTAssertEqual(token["fullYearDashMonth"] as! String, "\(expectedYear)-\(expectedMonth)")
+                XCTAssertEqual(token["fullYear"] as! String, expectedYear)
+                XCTAssertEqual(token["singleDigitMonth"] as! String, "\(expectedMonth.suffix(1))")
+                XCTAssertEqual(token["dubleDigitMonth"] as! String, expectedMonth)
+                XCTAssertEqual(token["fullYearMonth"] as! String, "\(expectedYear)\(expectedMonth)")
+                XCTAssertEqual(token["monthDashFullYear"] as! String, "\(expectedMonth)-\(expectedYear)")
+                XCTAssertEqual(token["monthForwardSlashTwoDigitYear"] as! String, "\(expectedMonth)/\(expectedYear.suffix(2))")
+                XCTAssertEqual(token["fullYearDashMonth"] as! String, "\(expectedYear)-\(expectedMonth)")
                 
                 
                 idQueryExpectation.fulfill()

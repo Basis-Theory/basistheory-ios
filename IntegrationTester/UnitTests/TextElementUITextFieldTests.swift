@@ -18,8 +18,10 @@ final class TextElementUITextFieldTests: XCTestCase {
     func testEventsWithAndWithoutText() throws {
         let nameTextField = TextElementUITextField()
         
+        var fieldCleared = false
         let nameInputExpectation = self.expectation(description: "Name input")
         let nameDeleteExpectation = self.expectation(description: "Name delete")
+
         var cancellables = Set<AnyCancellable>()
         nameTextField.subject.sink { completion in
             print(completion)
@@ -31,16 +33,20 @@ final class TextElementUITextFieldTests: XCTestCase {
             // assert metadata updated
             XCTAssertEqual(nameTextField.metadata.complete, message.complete)
             XCTAssertEqual(nameTextField.metadata.valid, message.valid)
-
-            if (!message.empty) {
+            XCTAssertEqual(nameTextField.metadata.empty, message.empty)
+            
+            if (fieldCleared) {
+                XCTAssertEqual(message.empty, true)
+                nameDeleteExpectation.fulfill()
+                fieldCleared = false
+            } else {
                 XCTAssertEqual(nameTextField.metadata.empty, false)
                 nameInputExpectation.fulfill()
-            } else {
-                nameDeleteExpectation.fulfill()
             }
         }.store(in: &cancellables)
 
         nameTextField.insertText("Drewsue Webuino")
+        fieldCleared = true
         nameTextField.text = ""
         nameTextField.insertText("")
         
@@ -225,6 +231,9 @@ final class TextElementUITextFieldTests: XCTestCase {
         XCTAssertFalse(textField.metadata.valid)
         
         textField.text = ""
+        
+        XCTAssertTrue(textField.metadata.empty)
+        
         textField.insertText("DAFFY_DUCK500")
         
         XCTAssertTrue(textField.metadata.valid)
@@ -232,6 +241,9 @@ final class TextElementUITextFieldTests: XCTestCase {
         try! textField.setConfig(options: TextElementOptions(validation: nil))
         
         textField.text = ""
+        
+        XCTAssertTrue(textField.metadata.empty)
+
         textField.insertText("password!")
         
         XCTAssertTrue(textField.metadata.valid)
