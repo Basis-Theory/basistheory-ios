@@ -164,7 +164,7 @@ final public class CardNumberUITextField: TextElementUITextField, CardElementPro
                 return
             }
 
-            cardBrand = CardBrand.getCardBrand(text: text)
+            cardBrand = CardBrand.getCardBrand(text: super.getValue())
             
             if (cardBrand?.bestMatchCardBrand != nil) {
                 updateCardMask(mask: cardBrand?.bestMatchCardBrand?.cardNumberMaskInput)
