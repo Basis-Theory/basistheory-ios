@@ -163,8 +163,14 @@ final public class CardNumberUITextField: TextElementUITextField, CardElementPro
                 super.textFieldDidChange()
                 return
             }
+
+            cardBrand = CardBrand.getCardBrand(text: text)
+            
+            if (cardBrand?.bestMatchCardBrand != nil) {
+                updateCardMask(mask: cardBrand?.bestMatchCardBrand?.cardNumberMaskInput)
+            }
         }
-        
+
         super.textFieldDidChange()
     }
     
