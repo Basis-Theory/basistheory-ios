@@ -1,3 +1,11 @@
+### [4.0.1](https://github.com/Basis-Theory/basistheory-ios/compare/4.0.0...4.0.1) (2023-12-12)
+
+
+### Bug Fixes
+
+* fix card validation being applied before masking ([#68](https://github.com/Basis-Theory/basistheory-ios/issues/68)) ([90c3068](https://github.com/Basis-Theory/basistheory-ios/commit/90c30682a66a2e34013bb0500347662e17406193))
+
+
 ## [4.0.0](https://github.com/Basis-Theory/basistheory-ios/compare/3.0.0...4.0.0) (2023-10-19)
 
 
