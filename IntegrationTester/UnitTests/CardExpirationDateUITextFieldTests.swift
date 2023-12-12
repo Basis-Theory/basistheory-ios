@@ -138,7 +138,10 @@ final class CardExpirationDateUITextFieldTests: XCTestCase {
         }.store(in: &cancellables)
         
         let futureYear = getCurrentYear() + 1
-        let futureMonth = getCurrentMonth() + 1
+        var futureMonth = getCurrentMonth() + 1
+        if (futureMonth > 12) {
+            futureMonth = 12
+        }
         
         expirationDateTextField.insertText(formatMonth(month: getCurrentMonth()) + "/" + String(futureYear)) // future year
         fieldCleared = true

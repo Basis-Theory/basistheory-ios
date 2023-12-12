@@ -74,6 +74,12 @@ final public class CardNumberUITextField: TextElementUITextField, CardElementPro
     }
     
     private func getCardElementEvent(text: String?, event: ElementEvent) -> ElementEvent {
+        cardBrand = CardBrand.getCardBrand(text: text)
+        
+        if (cardBrand?.bestMatchCardBrand != nil) {
+            updateCardMask(mask: cardBrand?.bestMatchCardBrand?.cardNumberMaskInput)
+        }
+
         let maskSatisfied = cardBrand?.maskSatisfied ?? false
         let complete = maskSatisfied && event.valid
         self.isComplete = complete
@@ -157,14 +163,14 @@ final public class CardNumberUITextField: TextElementUITextField, CardElementPro
                 super.textFieldDidChange()
                 return
             }
-            
+
             cardBrand = CardBrand.getCardBrand(text: super.getValue())
             
             if (cardBrand?.bestMatchCardBrand != nil) {
                 updateCardMask(mask: cardBrand?.bestMatchCardBrand?.cardNumberMaskInput)
             }
         }
-        
+
         super.textFieldDidChange()
     }
     
