@@ -19,12 +19,12 @@ final class CardBrandTests: XCTestCase {
         
         XCTAssertFalse(cardBrandResults.maskSatisfied)
         
-        XCTAssertEqual(cardBrandResults.bestMatchCardBrand!.cardBrandName, CardBrand.CardBrandName.elo)
+        XCTAssertEqual(cardBrandResults.bestMatchCardBrand!.cardBrandName, CardBrandName.elo)
         XCTAssertEqual(cardBrandResults.bestMatchCardBrand!.cvcMaskInput, threeDigitCvc)
         XCTAssertEqual(cardBrandResults.bestMatchCardBrand!.validLengths, [16])
         XCTAssertEqual(cardBrandResults.bestMatchCardBrand!.cardNumberMaskInput.count, 19)
-
-        XCTAssertEqual(cardBrandResults.matchingCardBrands[0].cardBrandName, CardBrand.CardBrandName.discover)
+        
+        XCTAssertEqual(cardBrandResults.matchingCardBrands[0].cardBrandName, CardBrandName.discover)
         XCTAssertEqual(cardBrandResults.matchingCardBrands[0].cvcMaskInput, threeDigitCvc)
         XCTAssertEqual(cardBrandResults.matchingCardBrands[0].validLengths, [16, 19])
         XCTAssertEqual(cardBrandResults.matchingCardBrands[0].cardNumberMaskInput.count, 22)
@@ -40,9 +40,27 @@ final class CardBrandTests: XCTestCase {
         }
     }
     
+    func testCustomBinValidation() throws {
+        let customCardBrands =  [CardBrandDetails(cardBrandName: "customVisaWithTabapayCards", cardIdentifiers: [4, 8405], cvcMaskInput: [try! NSRegularExpression(pattern: "\\d"), try! NSRegularExpression(pattern: "\\d"), try! NSRegularExpression(pattern: "\\d")], gaps: [4, 8, 12], validLengths: [16, 18, 19])]
+        CardBrand.addCardBrands(cardBrands: customCardBrands)
+        
+        
+        let mastercardResults = CardBrand.getCardBrand(text: "5555555555554444")
+        
+        XCTAssertFalse(mastercardResults.maskSatisfied)
+        XCTAssertNil(mastercardResults.bestMatchCardBrand)
+        XCTAssertEqual(mastercardResults.matchingCardBrands.count, 0)
+        
+        
+        let customBinResults = CardBrand.getCardBrand(text: "8405124124999998")
+        
+        XCTAssertTrue(customBinResults.maskSatisfied)
+        XCTAssertEqual(customBinResults.bestMatchCardBrand?.cardBrandName, "customVisaWithTabapayCards")
+    }
+    
     func testCardBrandCompleteness() throws {
         let sixteenDigitCard = CardBrand.getCardBrand(text: "6582937163058334")
-
+        
         XCTAssertTrue(sixteenDigitCard.maskSatisfied)
         
         let seventeenDigitCard = CardBrand.getCardBrand(text: "65829371630583342")
