@@ -12,6 +12,12 @@ import BasisTheoryElements
 import Combine
 
 final class CardBrandTests: XCTestCase {
+    override func setUpWithError() throws { }
+    override func tearDownWithError() throws {
+        // Reset card brands for subsequent tests
+        CardBrand.addCardBrands(cardBrands: CardBrand.DefaultCardBrands)
+    }
+    
     func testBestMatchAndMatchingCardBrandsReturned() throws {
         let regexDigit = try! NSRegularExpression(pattern: "\\d")
         let threeDigitCvc = [regexDigit, regexDigit, regexDigit]
