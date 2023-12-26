@@ -1,6 +1,6 @@
 //
 //  BaseElement.swift
-//  
+//
 //
 //  Created by Brian Gonzalez on 10/26/22.
 //
@@ -18,6 +18,10 @@ public protocol ElementProtocol {
 
 public protocol CardElementProtocol {
     var cardMetadata: CardMetadata { get }
+}
+
+public protocol CardNumberElementProtocol {
+    var cardTypes: [CardBrandDetails]? { get set }
 }
 
 internal protocol InternalElementProtocol {
@@ -45,6 +49,7 @@ internal protocol ElementReferenceProtocol {
 public enum ElementConfigError: Error {
     case invalidMask
     case configNotAllowed
+    case cardBrandAlreadyExists
 }
 
 public class ElementValueReference: ElementReferenceProtocol {
@@ -59,7 +64,7 @@ public class ElementValueReference: ElementReferenceProtocol {
         self.elementId = elementId
         self.getValueType = getValueType
     }
-
+    
     func getValue() -> String? {
         return valueMethod!()
     }
