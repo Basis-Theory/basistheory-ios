@@ -1,3 +1,11 @@
+## [4.1.0](https://github.com/Basis-Theory/basistheory-ios/compare/4.0.2...4.1.0) (2023-12-27)
+
+
+### Features
+
+* adds custom bin validation ([#69](https://github.com/Basis-Theory/basistheory-ios/issues/69)) ([a54dea5](https://github.com/Basis-Theory/basistheory-ios/commit/a54dea5aac9b00745cd132379c1bce2f4520d6fc))
+
+
 ### [4.0.2](https://github.com/Basis-Theory/basistheory-ios/compare/4.0.1...4.0.2) (2023-12-27)
 
 
