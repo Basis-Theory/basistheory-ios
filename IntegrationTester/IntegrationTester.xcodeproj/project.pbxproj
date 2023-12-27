@@ -28,7 +28,7 @@
 		9245769528FF46C200A01E70 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9245769328FF46C200A01E70 /* LaunchScreen.storyboard */; };
 		924576A028FF46C200A01E70 /* TextElementUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9245769F28FF46C200A01E70 /* TextElementUITextFieldTests.swift */; };
 		924576AA28FF46C200A01E70 /* TextElementUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924576A928FF46C200A01E70 /* TextElementUITextFieldTests.swift */; };
-		924576C829004C4D00A01E70 /* Env.plist.example in Resources */ = {isa = PBXBuildFile; fileRef = 924576C729004C4D00A01E70 /* Env.plist.example */; };
+		924576C829004C4D00A01E70 /* Env.plist in Resources */ = {isa = PBXBuildFile; fileRef = 924576C729004C4D00A01E70 /* Env.plist */; };
 		924576CC2900519900A01E70 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924576CB2900519900A01E70 /* Configuration.swift */; };
 		9253E8E2291EB66E00FDF1A9 /* ElementUITextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9253E8E1291EB66E00FDF1A9 /* ElementUITextFieldTests.swift */; };
 		92566EA6293578B30047BFF2 /* BasisTheoryElements in Frameworks */ = {isa = PBXBuildFile; productRef = 92566EA5293578B30047BFF2 /* BasisTheoryElements */; };
@@ -86,7 +86,7 @@
 		9245769F28FF46C200A01E70 /* TextElementUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextElementUITextFieldTests.swift; sourceTree = "<group>"; };
 		924576A528FF46C200A01E70 /* AcceptanceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AcceptanceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		924576A928FF46C200A01E70 /* TextElementUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextElementUITextFieldTests.swift; sourceTree = "<group>"; };
-		924576C729004C4D00A01E70 /* Env.plist.example */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Env.plist.example; sourceTree = "<group>"; };
+		924576C729004C4D00A01E70 /* Env.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Env.plist; sourceTree = "<group>"; };
 		924576CB2900519900A01E70 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		9253E8E1291EB66E00FDF1A9 /* ElementUITextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementUITextFieldTests.swift; sourceTree = "<group>"; };
 		92566EA4293578AB0047BFF2 /* BasisTheoryElements */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BasisTheoryElements; path = ../BasisTheoryElements; sourceTree = "<group>"; };
@@ -131,7 +131,7 @@
 				92566EA4293578AB0047BFF2 /* BasisTheoryElements */,
 				92C3019529132287009F8D92 /* Env.plist */,
 				924576CB2900519900A01E70 /* Configuration.swift */,
-				924576C729004C4D00A01E70 /* Env.plist.example */,
+				924576C729004C4D00A01E70 /* Env.plist */,
 				9245768728FF46C100A01E70 /* IntegrationTester */,
 				9245769E28FF46C200A01E70 /* UnitTests */,
 				924576A828FF46C200A01E70 /* AcceptanceTests */,
@@ -319,7 +319,7 @@
 			files = (
 				9245769528FF46C200A01E70 /* LaunchScreen.storyboard in Resources */,
 				9245769228FF46C200A01E70 /* Assets.xcassets in Resources */,
-				924576C829004C4D00A01E70 /* Env.plist.example in Resources */,
+				924576C829004C4D00A01E70 /* Env.plist in Resources */,
 				9245769028FF46C100A01E70 /* Main.storyboard in Resources */,
 				92C3019629132287009F8D92 /* Env.plist in Resources */,
 			);

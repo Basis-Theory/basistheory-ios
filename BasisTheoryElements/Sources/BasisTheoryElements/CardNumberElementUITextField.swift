@@ -1,13 +1,13 @@
 //
 //  CardNumberElementUITextField.swift
-//  
+//
 //
 //  Created by Lucas Chociay on 01/12/22.
 //
 
 import UIKit
 
-final public class CardNumberUITextField: TextElementUITextField, CardElementProtocol {
+final public class CardNumberUITextField: TextElementUITextField, CardElementProtocol, CardNumberElementProtocol {
     public var cardMetadata: CardMetadata = CardMetadata(cardBrand: "unknown")
     
     internal var cardBrand: CardBrandResults?
@@ -25,6 +25,18 @@ final public class CardNumberUITextField: TextElementUITextField, CardElementPro
             validateCardNumber
         }
         set { }
+    }
+    
+    public var cardTypes: [CardBrandDetails]? {
+        get {
+            return nil
+        }
+        set(newCardTypes) {
+            guard let cardTypes = newCardTypes else {
+                return
+            }
+            CardBrand.addCardBrands(cardBrands: cardTypes)
+        }
     }
     
     override var inputMask: [Any]? {
@@ -79,7 +91,7 @@ final public class CardNumberUITextField: TextElementUITextField, CardElementPro
         if (cardBrand?.bestMatchCardBrand != nil) {
             updateCardMask(mask: cardBrand?.bestMatchCardBrand?.cardNumberMaskInput)
         }
-
+        
         let maskSatisfied = cardBrand?.maskSatisfied ?? false
         let complete = maskSatisfied && event.valid
         self.isComplete = complete
@@ -163,14 +175,14 @@ final public class CardNumberUITextField: TextElementUITextField, CardElementPro
                 super.textFieldDidChange()
                 return
             }
-
+            
             cardBrand = CardBrand.getCardBrand(text: super.getValue())
             
             if (cardBrand?.bestMatchCardBrand != nil) {
                 updateCardMask(mask: cardBrand?.bestMatchCardBrand?.cardNumberMaskInput)
             }
         }
-
+        
         super.textFieldDidChange()
     }
     

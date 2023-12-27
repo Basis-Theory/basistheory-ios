@@ -57,7 +57,7 @@ final class SplitCardElementsIntegrationTesterUITests: XCTestCase {
         XCTAssertEqual(cardNumberTextField.value as! String, "4242 4242 4242 4242")
         
         let visaCardBrandResults = CardBrand.getCardBrand(text: validVisaCardNumber)
-        XCTAssertEqual(visaCardBrandResults.bestMatchCardBrand!.cardBrandName, CardBrand.CardBrandName.visa)
+        XCTAssertEqual(visaCardBrandResults.bestMatchCardBrand!.cardBrandName, CardBrandName.visa)
         
         cardNumberTextField.doubleTap()
         
@@ -65,7 +65,7 @@ final class SplitCardElementsIntegrationTesterUITests: XCTestCase {
         XCTAssertEqual(cardNumberTextField.value as! String, "4242 4242 4242 42")
         
         let invalidVisaCardBrandResults = CardBrand.getCardBrand(text: invalidVisaCardNumber)
-        XCTAssertEqual(invalidVisaCardBrandResults.bestMatchCardBrand!.cardBrandName, CardBrand.CardBrandName.visa)
+        XCTAssertEqual(invalidVisaCardBrandResults.bestMatchCardBrand!.cardBrandName, CardBrandName.visa)
         
         try testVisaCVC()
         
@@ -77,7 +77,7 @@ final class SplitCardElementsIntegrationTesterUITests: XCTestCase {
         XCTAssertEqual(cardNumberTextField.value as! String, "3485 702508 78868")
         
         let cardBrandResults = CardBrand.getCardBrand(text: validAmericanExpressCardNumber)
-        XCTAssertEqual(cardBrandResults.bestMatchCardBrand!.cardBrandName, CardBrand.CardBrandName.americanExpress)
+        XCTAssertEqual(cardBrandResults.bestMatchCardBrand!.cardBrandName, CardBrandName.americanExpress)
         
         cardNumberTextField.doubleTap()
         
