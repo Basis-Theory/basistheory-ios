@@ -73,7 +73,7 @@ struct ProxyHelpers {
             let shouldExposeRawProxyResponse = (response as? HTTPURLResponse)?.allHeaderFields["bt-expose-raw-proxy-response"] as? String != nil
             
             if let response = response {
-                if let data = data {
+                if let data = data, !data.isEmpty {
                     do {
                         let serializedJson = try JSONSerialization.jsonObject(with: data, options: [])
                         
@@ -99,10 +99,11 @@ struct ProxyHelpers {
                         ])
                     }
                 } else {
-                    completion(response, nil, error)
-                    TelemetryLogging.warn("Unexpected destination URL response: response does not have a body", error: error, attributes: [
+                    completion(response, JSON.dictionaryValue([:]), nil)
+                    TelemetryLogging.info("Successful API response w/ empty/nil body", attributes: [
                         "endpoint": endpoint,
                         "BT-TRACE-ID": btTraceId,
+                        "apiSuccess": true
                     ])
                 }
             } else {
