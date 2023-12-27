@@ -1,3 +1,11 @@
+### [4.0.2](https://github.com/Basis-Theory/basistheory-ios/compare/4.0.1...4.0.2) (2023-12-27)
+
+
+### Bug Fixes
+
+* allow empty body responses from proxy ([#70](https://github.com/Basis-Theory/basistheory-ios/issues/70)) ([05163a8](https://github.com/Basis-Theory/basistheory-ios/commit/05163a8fd005a2905b1c9234d83da9c6d657f4e0))
+
+
 ### [4.0.1](https://github.com/Basis-Theory/basistheory-ios/compare/4.0.0...4.0.1) (2023-12-12)
 
 
