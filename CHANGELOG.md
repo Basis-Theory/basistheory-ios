@@ -1,3 +1,11 @@
+### [4.1.1](https://github.com/Basis-Theory/basistheory-ios/compare/4.1.0...4.1.1) (2024-02-14)
+
+
+### Bug Fixes
+
+* remove the requirement to check API key type when tokenizing ([#71](https://github.com/Basis-Theory/basistheory-ios/issues/71)) ([536c43a](https://github.com/Basis-Theory/basistheory-ios/commit/536c43aead178167b33115ccf6ecf12665b8a6d6))
+
+
 ## [4.1.0](https://github.com/Basis-Theory/basistheory-ios/compare/4.0.2...4.1.0) (2023-12-27)
 
 
