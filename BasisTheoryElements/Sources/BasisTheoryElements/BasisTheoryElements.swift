@@ -11,7 +11,7 @@ import AnyCodable
 import Combine
 
 public enum TokenizingError: Error {
-    case applicationTypeNotPublic
+    case invalidApiKey
     case invalidInput
 }
 
@@ -95,35 +95,21 @@ final public class BasisTheoryElements {
             completion(nil, TokenizingError.invalidInput) // error logged with more detail in replaceElementRefs
             return
         }
+
+        guard (getApiKey(apiKey).contains("pub")) || (getApiKey(apiKey).contains("sess")) else {
+            completion(nil, TokenizingError.invalidApiKey)
+            TelemetryLogging.warn("Tried to tokenize with a non-public or non session key with tokenize function", attributes: [
+                "endpoint": "POST /tokenize",
+                "BT-TRACE-ID": btTraceId,
+                "apiSuccess": false
+            ])
+            
+            return
+        }
         
         BasisTheoryAPI.basePath = basePath
-        // TODO: should this BT-TRACE-ID and the tokenize one be the same???
-        getApplicationKey(apiKey: getApiKey(apiKey), btTraceId: btTraceId) { data, error in
-            guard error == nil else {
-                completion(nil, error)
-                TelemetryLogging.error("Failed to get Application by key", attributes: [
-                    "endpoint": "GET /applications/key",
-                    "BT-TRACE-ID": btTraceId,
-                    "apiSuccess": false
-                ])
-                
-                return
-            }
-            
-            guard data?.type == "public" else {
-                completion(nil, TokenizingError.applicationTypeNotPublic)
-                TelemetryLogging.warn("Tried to tokenize with a non-public API key with tokenize function", attributes: [
-                    "endpoint": "POST /tokenize",
-                    "BT-TRACE-ID": btTraceId,
-                    "apiSuccess": false
-                ])
-                
-                return
-            }
-            
-            TokenizeAPI.tokenizeWithRequestBuilder(body: AnyCodable(mutableBody)).addBasisTheoryElementHeaders(apiKey: getApiKey(apiKey), btTraceId: btTraceId).execute { result in
-                completeApiRequest(endpoint: endpoint, btTraceId: btTraceId, result: result, completion: completion)
-            }
+        TokenizeAPI.tokenizeWithRequestBuilder(body: AnyCodable(mutableBody)).addBasisTheoryElementHeaders(apiKey: getApiKey(apiKey), btTraceId: btTraceId).execute { result in
+            completeApiRequest(endpoint: endpoint, btTraceId: btTraceId, result: result, completion: completion)
         }
     }
     
@@ -143,34 +129,22 @@ final public class BasisTheoryElements {
         
         mutableBody.data = mutableData
         
+        guard (getApiKey(apiKey).contains("pub")) || (getApiKey(apiKey).contains("sess")) else {
+            completion(nil, TokenizingError.invalidApiKey)
+            TelemetryLogging.warn("Tried to tokenize with a non-public or non session key with tokenize function", attributes: [
+                "endpoint": "POST /tokens",
+                "BT-TRACE-ID": btTraceId,
+                "apiSuccess": false
+            ])
+            
+            return
+        }
+        
         BasisTheoryAPI.basePath = basePath
-        getApplicationKey(apiKey: getApiKey(apiKey), btTraceId: btTraceId) {data, error in
-            guard error == nil else {
-                completion(nil, error)
-                TelemetryLogging.error("Failed to get Application by key", attributes: [
-                    "endpoint": "GET /applications/key",
-                    "BT-TRACE-ID": btTraceId,
-                    "apiSuccess": false
-                ])
-                
-                return
-            }
-            
-            guard data?.type == "public" else {
-                completion(nil, TokenizingError.applicationTypeNotPublic)
-                TelemetryLogging.warn("Tried to tokenize with a non-public API key", attributes: [
-                    "endpoint": "/tokens",
-                    "BT-TRACE-ID": btTraceId
-                ])
-                
-                return
-            }
-            
-            let createTokenRequest = mutableBody.toCreateTokenRequest()
-            
-            TokensAPI.createWithRequestBuilder(createTokenRequest: createTokenRequest).addBasisTheoryElementHeaders(apiKey: getApiKey(apiKey), btTraceId: btTraceId).execute { result in
-                completeApiRequest(endpoint: endpoint, btTraceId: btTraceId, result: result, completion: completion)
-            }
+        let createTokenRequest = mutableBody.toCreateTokenRequest()
+        
+        TokensAPI.createWithRequestBuilder(createTokenRequest: createTokenRequest).addBasisTheoryElementHeaders(apiKey: getApiKey(apiKey), btTraceId: btTraceId).execute { result in
+            completeApiRequest(endpoint: endpoint, btTraceId: btTraceId, result: result, completion: completion)
         }
     }
     
