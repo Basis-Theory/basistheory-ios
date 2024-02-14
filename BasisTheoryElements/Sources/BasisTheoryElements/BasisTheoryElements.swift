@@ -96,17 +96,6 @@ final public class BasisTheoryElements {
             return
         }
 
-        guard (getApiKey(apiKey).contains("pub")) || (getApiKey(apiKey).contains("sess")) else {
-            completion(nil, TokenizingError.invalidApiKey)
-            TelemetryLogging.warn("Tried to tokenize with a non-public or non session key with tokenize function", attributes: [
-                "endpoint": "POST /tokenize",
-                "BT-TRACE-ID": btTraceId,
-                "apiSuccess": false
-            ])
-            
-            return
-        }
-        
         BasisTheoryAPI.basePath = basePath
         TokenizeAPI.tokenizeWithRequestBuilder(body: AnyCodable(mutableBody)).addBasisTheoryElementHeaders(apiKey: getApiKey(apiKey), btTraceId: btTraceId).execute { result in
             completeApiRequest(endpoint: endpoint, btTraceId: btTraceId, result: result, completion: completion)
@@ -126,20 +115,10 @@ final public class BasisTheoryElements {
             completion(nil, TokenizingError.invalidInput) // error logged with more detail in replaceElementRefs
             return
         }
-        
+
         mutableBody.data = mutableData
-        
-        guard (getApiKey(apiKey).contains("pub")) || (getApiKey(apiKey).contains("sess")) else {
-            completion(nil, TokenizingError.invalidApiKey)
-            TelemetryLogging.warn("Tried to tokenize with a non-public or non session key with tokenize function", attributes: [
-                "endpoint": "POST /tokens",
-                "BT-TRACE-ID": btTraceId,
-                "apiSuccess": false
-            ])
-            
-            return
-        }
-        
+
+
         BasisTheoryAPI.basePath = basePath
         let createTokenRequest = mutableBody.toCreateTokenRequest()
         
