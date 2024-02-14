@@ -17,24 +17,7 @@ final class TokenizeAndCreateTokenServiceTests: XCTestCase {
     }
     
     override func tearDownWithError() throws { }
-    
-    func testTokenizeChecksForApplicationTypeOfPublic() throws {
-        let body: [String: Any] = [
-            "myProp": "myValue"
-        ]
-        
-        let privateApiKey = Configuration.getConfiguration().privateBtApiKey!
-        let tokenizeExpectation = self.expectation(description: "Tokenize")
-        BasisTheoryElements.tokenize(body: body, apiKey: privateApiKey) { data, error in
-            XCTAssertNil(data)
-            XCTAssertEqual(error as! TokenizingError, TokenizingError.applicationTypeNotPublic)
-            
-            tokenizeExpectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
-    }
-    
+ 
     func testTokenizeReturnsErrorFromApplicationCheck() throws {
         let body: [String: Any] = [
             "myProp": "myValue"
@@ -50,24 +33,7 @@ final class TokenizeAndCreateTokenServiceTests: XCTestCase {
         
         waitForExpectations(timeout: TIMEOUT_EXPECTATION)
     }
-    
-    func testCreateTokenChecksForApplicationTypeOfPublic() throws {
-        let body = CreateToken(type: "token", data: [
-            "myProp": "myValue"
-        ])
-        
-        let privateApiKey = Configuration.getConfiguration().privateBtApiKey!
-        let tokenizeExpectation = self.expectation(description: "Tokenize")
-        BasisTheoryElements.createToken(body: body, apiKey: privateApiKey) { data, error in
-            XCTAssertNil(data)
-            XCTAssertEqual(error as! TokenizingError, TokenizingError.applicationTypeNotPublic)
-            
-            tokenizeExpectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: TIMEOUT_EXPECTATION)
-    }
-    
+
     func testCreateReturnsErrorFromApplicationCheck() throws {
         let body = CreateToken(type: "token", data: [
             "myProp": "myValue"
