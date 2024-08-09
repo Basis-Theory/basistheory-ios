@@ -27,7 +27,6 @@ xcodebuild clean test \
     -project ./IntegrationTester/IntegrationTester.xcodeproj \
     -scheme IntegrationTester \
     -configuration Debug \
-		-sdk iphonesimulator \
     -destination platform="iOS Simulator,OS=latest,name=iPhone 15" \
 		CODE_SIGNING_ALLOWED="NO"
     | xcpretty
