@@ -28,8 +28,4 @@ xcodebuild clean test \
     -scheme IntegrationTester \
     -configuration Debug \
     -destination platform="iOS Simulator,OS=16.1,name=iPhone 14 Pro" \
-		CODE_SIGN_STYLE=Automatic \
-		CODE_SIGN_IDENTITY=- \
-		AD_HOC_CODE_SIGNING_ALLOWED=YES \
-		DEVELOPMENT_TEAM=BASISTHEORY \
     | xcpretty
