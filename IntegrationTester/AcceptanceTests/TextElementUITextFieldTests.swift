@@ -79,9 +79,7 @@ final class IntegrationTesterUITests: XCTestCase {
         
         nameFieldCopyIcon.tap()
         
-        // doubleTap doesn't work because it has a certain delay to display the menu
-        phoneNumberTextField.tap()
-        phoneNumberTextField.tap()
+        phoneNumberTextField.press(forDuration: 1)
         
         let pasteOption = app.menuItems["Paste"]
 
@@ -106,9 +104,7 @@ final class IntegrationTesterUITests: XCTestCase {
         
         readOnlyFieldCopyIcon.tap()
         
-        // doubleTap doesn't work because it has a certain delay to display the menu
-        phoneNumberTextField.tap()
-        phoneNumberTextField.tap()
+        phoneNumberTextField.press(forDuration: 1)
         
         let pasteOption = app.menuItems["Paste"]
 
