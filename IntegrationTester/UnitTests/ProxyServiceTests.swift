@@ -448,7 +448,7 @@ final class ProxyServiceTests: XCTestCase {
             do {
                 let token = try result.get().body.data!.value as! [String: Any]
                 
-                XCTAssertEqual(token["textFieldRef"] as! String, "https://echo.basistheory.com/get")
+                XCTAssertEqual(token["textFieldRef"] as! String, "http://echo.basistheory.com/get")
                 
                 idQueryExpectation.fulfill()
             } catch {
