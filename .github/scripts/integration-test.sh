@@ -27,5 +27,5 @@ xcodebuild clean test \
     -project ./IntegrationTester/IntegrationTester.xcodeproj \
     -scheme IntegrationTester \
     -configuration Debug \
-    -destination platform="iOS Simulator,OS=latest,name=iPhone 15 Pro" \
+    -destination platform="iOS Simulator,OS=16.4,name=iPhone 14 Pro" \
     | xcpretty
