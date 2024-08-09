@@ -70,7 +70,11 @@ struct ProxyHelpers {
     
     static func executeRequest(endpoint: String, btTraceId: String, request: URLRequest, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) {
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-            let shouldExposeRawProxyResponse = (response as? HTTPURLResponse)?.allHeaderFields["bt-expose-raw-proxy-response"] as? String != nil
+            let shouldExposeRawProxyResponse = (response as? HTTPURLResponse)?
+                .allHeaderFields
+                .contains { (key, _) in
+                    (key as? String)?.lowercased() == "bt-expose-raw-proxy-response"
+                } == true
             
             if let response = response {
                 if let data = data, !data.isEmpty {
