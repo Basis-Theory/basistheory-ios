@@ -28,6 +28,6 @@ xcodebuild clean test \
     -scheme IntegrationTester \
     -configuration Debug \
 		-sdk iphonesimulator \
-    -destination platform="iOS Simulator,OS=16.1,name=iPhone 14 Pro" \
-		CODE_SIGNING_ALLOWED='NO'
+    -destination platform="iOS Simulator,OS=latest,name=iPhone 15" \
+		CODE_SIGNING_ALLOWED="NO"
     | xcpretty
