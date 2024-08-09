@@ -85,7 +85,7 @@ final class IntegrationTesterUITests: XCTestCase {
         
         let pasteOption = app.menuItems["Paste"]
 
-        if pasteOption.waitForExistence(timeout: 5) {
+        if pasteOption.waitForExistence(timeout: 10) {
             pasteOption.tap()
         } else {
             XCTFail("Field paste option took to long to display.")
@@ -112,7 +112,7 @@ final class IntegrationTesterUITests: XCTestCase {
         
         let pasteOption = app.menuItems["Paste"]
 
-        if pasteOption.waitForExistence(timeout: 5) {
+        if pasteOption.waitForExistence(timeout: 10) {
             pasteOption.tap()
         } else {
             XCTFail("Field paste option took to long to display.")

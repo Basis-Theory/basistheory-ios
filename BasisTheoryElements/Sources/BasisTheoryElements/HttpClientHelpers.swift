@@ -73,12 +73,16 @@ private func encodeParamsToFormUrlEncoded(_ formParams: [String: Any]) -> String
 
 struct HttpClientHelpers {
     static func executeRequest(method: HttpMethod, url: String, payload: [String: Any]?, config: Config?, completion: @escaping ((_ request: URLResponse?, _ data: JSON?, _ error: Error?) -> Void)) -> Void {
-        guard let url = URL(string: url) else {
+        guard var components = URLComponents(string: url), components.scheme != nil else {
             completion(nil, nil, HttpClientError.invalidURL)
             return
         }
-        
-        
+
+        guard let url = components.url else {
+            completion(nil, nil, HttpClientError.invalidURL)
+            return
+        }
+
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
         
