@@ -27,5 +27,7 @@ xcodebuild clean test \
     -project ./IntegrationTester/IntegrationTester.xcodeproj \
     -scheme IntegrationTester \
     -configuration Debug \
+		-sdk iphonesimulator \
     -destination platform="iOS Simulator,OS=16.1,name=iPhone 14 Pro" \
+		CODE_SIGNING_ALLOWED='NO'
     | xcpretty
