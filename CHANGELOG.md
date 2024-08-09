@@ -1,3 +1,11 @@
+### [4.1.2](https://github.com/Basis-Theory/basistheory-ios/compare/4.1.1...4.1.2) (2024-08-09)
+
+
+### Bug Fixes
+
+* ignore casing when checking bt-expose-raw-proxy-response header ([#74](https://github.com/Basis-Theory/basistheory-ios/issues/74)) ([17bd44d](https://github.com/Basis-Theory/basistheory-ios/commit/17bd44d87908a42206d38ca454315743322db15d))
+
+
 ### [4.1.1](https://github.com/Basis-Theory/basistheory-ios/compare/4.1.0...4.1.1) (2024-02-14)
 
 
