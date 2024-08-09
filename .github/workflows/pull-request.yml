@@ -17,9 +17,13 @@ jobs:
         run: |
           curl -o AppleWWDRCA.cer http://developer.apple.com/certificationauthority/AppleWWDRCA.cer
 
+      - name: Convert Apple WWDR certificate to PEM format
+        run: |
+          openssl x509 -inform DER -in AppleWWDRCA.cer -out AppleWWDRCA.pem
+
       - name: Install Apple WWDR certificate
         run: |
-          sudo security import AppleWWDRCA.cer -k /Library/Keychains/System.keychain -A
+          sudo security import AppleWWDRCA.pem -k /Library/Keychains/System.keychain -A
           sudo security trust-settings-import /Library/Keychains/System.keychain -d
 
       - name: Verify installation
