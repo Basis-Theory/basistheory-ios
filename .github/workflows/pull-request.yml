@@ -13,9 +13,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Download Apple WWDR certificate
+        run: |
+          curl -o AppleWWDRCA.cer http://developer.apple.com/certificationauthority/AppleWWDRCA.cer
+
+      - name: Install Apple WWDR certificate
+        run: |
+          sudo security import AppleWWDRCA.cer -k /Library/Keychains/System.keychain -A
+          sudo security trust-settings-import /Library/Keychains/System.keychain -d
+
+      - name: Verify installation
+        run: |
+          security find-certificate -a -c "Apple Worldwide Developer Relations Certification Authority" /Library/Keychains/System.keychain
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '14.1.0'
+          xcode-version: 'latest-stable'
+
+      - name: Clean Derived Data
+        run: rm -rf ~/Library/Developer/Xcode/DerivedData/*
 
       - name: Testing with IntegrationTester app
         run: exec .github/scripts/integration-test.sh
