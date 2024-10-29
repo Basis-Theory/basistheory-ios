@@ -7,6 +7,7 @@ on:
 
 jobs:
   test:
+    environment: PR
     name: Testing BasisTheoryElements Package
     runs-on: macOS-latest
     steps:
@@ -24,6 +25,7 @@ jobs:
           DEV_PRIVATE_BT_API_KEY: ${{ secrets.DEV_PRIVATE_BT_API_KEY }}
 
   pod-linting:
+    environment: PR
     name: Pod Linting
     runs-on: macOS-latest
     steps:
@@ -34,6 +36,7 @@ jobs:
         run: pod lib lint --allow-warnings
 
   dependency-check-test:
+    environment: PR
     name: Dependency Check Test
     runs-on: ubuntu-latest
 
