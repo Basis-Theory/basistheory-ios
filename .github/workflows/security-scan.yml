@@ -2,7 +2,7 @@ name: Security Scan
 
 on:
   schedule:
-    - cron: '0 12 * * 1' # 12pm UTC every Monday
+    - cron: "0 12 * * 1" # 12pm UTC every Monday
   workflow_dispatch:
 
 jobs:
@@ -22,16 +22,27 @@ jobs:
         if: success() || failure()
         uses: actions/upload-artifact@master
         with:
-           name: Dependency check report
-           path: ${{github.workspace}}/reports
+          name: Dependency check report
+          path: ${{github.workspace}}/reports
 
       - name: Slack Alert on Failure
-        uses: 8398a7/action-slack@v3
         if: failure()
+        id: slack
+        uses: slackapi/slack-github-action@v1.27.0
         with:
-          author_name: Security Scan
-          status: ${{ job.status }}
-          channel: ${{ secrets.SLACK_SECURITY_SCAN_ALERT_CHANNEL_ID }}
-          fields: 'repo,workflow'
+          channel-id: ${{ vars.SLACK_DUCKBOT_SECURITY_SCAN_ALERT_CHANNEL_ID}}
+          payload: |
+            {
+              "text": "Security Scan Failed"
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "GitHub Action build result: ${{ job.status }}\nhttps://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                  }
+                }
+              ]
+            }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_DUCKBOT_API_KEY }}
