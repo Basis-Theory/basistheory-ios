@@ -54,3 +54,8 @@ jobs:
         with:
            name: Dependency check report
            path: ${{github.workspace}}/reports
+
+  pr-security-check:
+    name: PR Security Check
+    uses: Basis-Theory/public-security-workflows/.github/workflows/pr-check.yml@master
+    secrets: inherit
